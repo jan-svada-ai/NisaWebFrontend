@@ -1,8 +1,9 @@
 "use client";
+
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Phone, Mail, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Mail, Phone, Users } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
 interface MaklerCard {
@@ -48,9 +49,9 @@ export default function NasTymPage() {
       <div className="mx-auto max-w-screen-2xl px-4 py-12">
         <div className="mb-10">
           <p className="text-sm uppercase tracking-[0.2em] text-black/50">
-            NisaCentrum Reality
+            Nisa Centrum Reality
           </p>
-          <h1 className="mt-3 text-4xl font-semibold md:text-5xl text-black">
+          <h1 className="mt-3 text-4xl font-semibold text-black md:text-5xl">
             Náš tým
           </h1>
           <div className="mt-4 h-[3px] w-16 rounded-full bg-[color:var(--gold1)]/70" />
@@ -71,8 +72,10 @@ export default function NasTymPage() {
                     <Image
                       src={m.fotoUrl}
                       alt={m.jmeno}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center text-black/40">
@@ -105,8 +108,8 @@ export default function NasTymPage() {
                     )}
                   </div>
 
-                  <div className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-6 py-3 text-base font-semibold text-black transition group-hover:bg-[color:var(--gold2)]">
-                    DETAIL
+                  <div className="btn-main mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-6 py-3 text-base font-semibold text-black">
+                    Detail
                   </div>
                 </div>
               </Link>
@@ -114,7 +117,7 @@ export default function NasTymPage() {
           </div>
         ) : (
           <div className="py-12 text-center text-black/60">
-            Maklery nejsou k dispozici. Zkontrolujte, že je API server spuštěný.
+            Makléři nejsou k dispozici. Zkontrolujte, že je API server spuštěný.
           </div>
         )}
       </div>

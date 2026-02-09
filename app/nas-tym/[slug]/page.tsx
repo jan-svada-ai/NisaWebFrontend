@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, use } from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin, Users } from "lucide-react";
+import { useEffect, useState, use } from "react";
+import { Mail, MapPin, Phone, Users } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
 interface Inzerat {
@@ -86,8 +86,10 @@ export default function MaklerDetailPage({
                 <Image
                   src={makler.fotoUrl}
                   alt={makler.jmeno}
+                  fill
+                  sizes="(min-width: 1024px) 35vw, 100vw"
                   loading="lazy"
-                  className="h-full w-full object-cover"
+                  className="object-cover"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-black/40">
@@ -159,7 +161,7 @@ export default function MaklerDetailPage({
                 />
                 <button
                   type="submit"
-                  className="rounded-xl bg-[color:var(--gold1)] px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-[color:var(--gold2)]"
+                  className="btn-main rounded-xl bg-[color:var(--gold1)] px-4 py-2.5 text-sm font-semibold text-black"
                 >
                   Odeslat
                 </button>
@@ -169,9 +171,7 @@ export default function MaklerDetailPage({
         </div>
 
         <div className="mt-12">
-          <h2 className="text-2xl font-semibold text-black">
-            Aktivní inzeráty
-          </h2>
+          <h2 className="text-2xl font-semibold text-black">Aktivní inzeráty</h2>
           {makler.inzeraty.length === 0 ? (
             <p className="mt-3 text-sm text-black/60">
               Zatím žádné aktivní inzeráty.
@@ -188,8 +188,10 @@ export default function MaklerDetailPage({
                       <Image
                         src={i.obrazky[0].url}
                         alt={i.nazev}
+                        fill
+                        sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-black/40">
@@ -201,9 +203,7 @@ export default function MaklerDetailPage({
                   <h3 className="mt-3 text-lg font-semibold text-black">
                     {i.nazev}
                   </h3>
-                  <p className="text-sm text-black/60">
-                    {i.mesto?.nazev || ""}
-                  </p>
+                  <p className="text-sm text-black/60">{i.mesto?.nazev || ""}</p>
                   {i.cena && (
                     <p className="mt-2 text-base font-semibold text-black">
                       {i.cena.toLocaleString("cs-CZ")} {i.mena || "CZK"}
@@ -212,7 +212,7 @@ export default function MaklerDetailPage({
 
                   <Link
                     href={`/nabidka/${i.slug}`}
-                    className="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[color:var(--gold2)]"
+                    className="btn-main mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black"
                   >
                     Detail nabídky
                   </Link>
