@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, use } from "react";
-import { Mail, MapPin, Phone, Users } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Users } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
 interface Inzerat {
@@ -161,8 +161,9 @@ export default function MaklerDetailPage({
                 />
                 <button
                   type="submit"
-                  className="btn-main rounded-xl bg-[color:var(--gold1)] px-4 py-2.5 text-sm font-semibold text-black"
+                  className="btn-main inline-flex items-center justify-center gap-2 rounded-xl bg-[color:var(--gold1)] px-4 py-2.5 text-sm font-semibold text-black"
                 >
+                  <Send className="h-4 w-4" />
                   Odeslat
                 </button>
               </form>
