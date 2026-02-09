@@ -41,7 +41,7 @@ const saleSteps: StepCard[] = [
     number: 1,
     title: "Konzultace",
     description: "Probereme cíle, stav nemovitosti a navrhneme realistický plán.",
-    duration: "0,25-0,5 měsíce",
+    duration: "1-2 týdny",
     icon: "users",
   },
   {
@@ -49,7 +49,7 @@ const saleSteps: StepCard[] = [
     number: 2,
     title: "Nacenění",
     description: "Na základě dat z trhu nastavíme cenu s potenciálem rychlého prodeje.",
-    duration: "0,25 měsíce",
+    duration: "3-7 dní",
     icon: "handCoins",
   },
   {
@@ -57,7 +57,7 @@ const saleSteps: StepCard[] = [
     number: 3,
     title: "Foto a homestaging",
     description: "Připravíme prostor, foto i video tak, aby nabídka zaujala na první pohled.",
-    duration: "0,25 měsíce",
+    duration: "4-10 dní",
     icon: "camera",
   },
   {
@@ -65,7 +65,7 @@ const saleSteps: StepCard[] = [
     number: 4,
     title: "Inzerce",
     description: "Spouštíme inzerci na klíčových portálech a cílenou propagaci.",
-    duration: "0,25 měsíce",
+    duration: "2-5 dní",
     icon: "megaphone",
   },
   {
@@ -73,7 +73,7 @@ const saleSteps: StepCard[] = [
     number: 5,
     title: "Prohlídky",
     description: "Organizujeme prohlídky, řešíme dotazy a vedeme vyjednávání.",
-    duration: "0,25-1,5 měsíce",
+    duration: "1-6 týdnů",
     icon: "home",
   },
   {
@@ -81,7 +81,7 @@ const saleSteps: StepCard[] = [
     number: 6,
     title: "Vytvoření a podepsání smluv",
     description: "Zajistíme smlouvy a bezpečný průběh transakce s právním servisem.",
-    duration: "0,5 měsíce",
+    duration: "2-3 týdny",
     icon: "fileSignature",
   },
   {
@@ -89,7 +89,7 @@ const saleSteps: StepCard[] = [
     number: 7,
     title: "Máme hotovo",
     description: "Dokončíme převod a předání. Kontrolujeme, aby vše sedělo do detailu.",
-    duration: "0,25 měsíce",
+    duration: "2-5 dní",
     icon: "checkCircle",
   },
 ];
@@ -100,7 +100,7 @@ const rentSteps: StepCard[] = [
     number: 1,
     title: "Konzultace",
     description: "Nastavíme strategii pronájmu a optimální cenovou hladinu.",
-    duration: "0,25 měsíce",
+    duration: "3-7 dní",
     icon: "users",
   },
   {
@@ -108,7 +108,7 @@ const rentSteps: StepCard[] = [
     number: 2,
     title: "Nacenění",
     description: "Spočítáme tržní nájemné podle lokality, dispozice a stavu.",
-    duration: "0,25 měsíce",
+    duration: "2-5 dní",
     icon: "handCoins",
   },
   {
@@ -116,7 +116,7 @@ const rentSteps: StepCard[] = [
     number: 3,
     title: "Foto a příprava inzerátu",
     description: "Vytvoříme prezentaci, která přitáhne kvalitní zájemce.",
-    duration: "0,25 měsíce",
+    duration: "3-7 dní",
     icon: "camera",
   },
   {
@@ -124,7 +124,7 @@ const rentSteps: StepCard[] = [
     number: 4,
     title: "Inzerce",
     description: "Zveřejníme nabídku a aktivně komunikujeme se zájemci.",
-    duration: "0,25 měsíce",
+    duration: "2-5 dní",
     icon: "megaphone",
   },
   {
@@ -132,7 +132,7 @@ const rentSteps: StepCard[] = [
     number: 5,
     title: "Prověření zájemců",
     description: "Prověříme bonitu a spolehlivost zájemců, aby pronájem byl bezpečný.",
-    duration: "0,25 měsíce",
+    duration: "3-7 dní",
     icon: "searchCheck",
   },
   {
@@ -140,7 +140,7 @@ const rentSteps: StepCard[] = [
     number: 6,
     title: "Prohlídky",
     description: "Vedeme prohlídky a vybereme nejvhodnějšího nájemníka.",
-    duration: "0,25-0,75 měsíce",
+    duration: "1-3 týdny",
     icon: "home",
   },
   {
@@ -148,7 +148,7 @@ const rentSteps: StepCard[] = [
     number: 7,
     title: "Vytvoření a podepsání smluv",
     description: "Připravíme nájemní dokumentaci a dohlédneme na její podpis.",
-    duration: "0,25 měsíce",
+    duration: "3-7 dní",
     icon: "fileSignature",
   },
   {
@@ -156,7 +156,7 @@ const rentSteps: StepCard[] = [
     number: 8,
     title: "Máme hotovo",
     description: "Proběhne předání bytu/domu a kompletní administrativa.",
-    duration: "0,25 měsíce",
+    duration: "1-3 dny",
     icon: "checkCircle",
   },
 ];
@@ -274,43 +274,71 @@ export default function ProdejPronajemPage() {
         </div>
       </section>
 
-      <section id="jak-probiha-prodej" className="border-t border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4">
+      <section
+        id="jak-probiha-prodej"
+        className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center"
+      >
+        <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
             title="Jak probíhá prodej?"
-            subtitle="Každý krok má jasný cíl, termín i výstup. Díky tomu víte, co se děje a proč."
+            subtitle="Každý krok má jasný cíl, termín i výstup. Díky tomu víte, co se děje, proč se to děje a jaký je další navazující krok."
           />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Prodej vedeme jako řízený proces. Nejde jen o inzerát, ale o správné
+            načasování, kvalitu prezentace, práci se zájemci a bezpečné
+            dotažení smluvní části. V každé fázi držíme přehled i tempo.
+          </p>
           <StepCarousel steps={saleSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
             Celkový odhad: přibližně 1-3 měsíce podle trhu a typu nemovitosti.
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-center text-sm leading-relaxed text-black/60">
+            U dobře naceněných nemovitostí v silné lokalitě se proces typicky
+            zkracuje. U specifických nemovitostí může být naopak potřeba delší
+            vyjednávání a více kol prohlídek.
           </p>
         </div>
       </section>
 
       <section
         id="jak-probiha-pronajem"
-        className="border-t border-black/10 py-20"
+        className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center"
       >
-        <div className="mx-auto max-w-screen-xl px-4">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
             title="Jak probíhá pronájem?"
-            subtitle="Pronájem je rychlejší, ale vyžaduje pečlivý výběr nájemce a správně nastavené smlouvy."
+            subtitle="Pronájem bývá rychlejší než prodej, ale klíčový je pečlivý výběr nájemce a kvalitně připravená smluvní dokumentace."
           />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            U pronájmu je cílem nejen rychlost obsazení, ale hlavně stabilita.
+            Proto věnujeme větší důraz prověření zájemců, jasným pravidlům
+            nájemního vztahu a kvalitnímu předání nemovitosti.
+          </p>
           <StepCarousel steps={rentSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
             Celkový odhad: přibližně 1-2 měsíce podle lokality a poptávky.
           </p>
+          <p className="mx-auto mt-3 max-w-3xl text-center text-sm leading-relaxed text-black/60">
+            Při silné poptávce se pronájem často uzavře výrazně rychleji.
+            Naopak u náročnějších dispozic nebo specifických podmínek počítejte
+            s delším filtrováním zájemců.
+          </p>
         </div>
       </section>
 
-      <section className="border-t border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4">
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
             title="Proč prodat nebo pronajmout s námi"
-            subtitle="Kombinujeme obchodní zkušenost, marketing a právní jistotu v jednom procesu."
+            subtitle="Kombinujeme obchodní zkušenost, marketing, procesní řízení a právní jistotu v jednom celku."
           />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Každý obchod stavíme na datech, komunikaci a důvěře. Díky tomu
+            nevznikají zbytečné prodlevy, klient má přehled a výsledek drží
+            kvalitu, kterou od profesionální realitní služby očekáváte.
+          </p>
           <div className="mx-auto mt-10 grid max-w-5xl gap-3">
             {benefits.map((item) => {
               const Icon = item.icon;
@@ -345,12 +373,16 @@ export default function ProdejPronajemPage() {
         </div>
       </section>
 
-      <section className="border-t border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 text-center">
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
           <SectionHeading
             title="Začněte ještě dnes"
-            subtitle="Stačí jeden kontakt. Navrhneme nejlepší postup přesně pro vaši situaci."
+            subtitle="Stačí jeden kontakt. Navrhneme nejlepší postup přesně pro vaši situaci a vezmeme za něj odpovědnost."
           />
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70">
+            Ať řešíte prodej, pronájem nebo jen potřebujete srovnat možnosti,
+            připravíme vám jasné kroky bez zbytečných komplikací.
+          </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
               href="/kontakt"
