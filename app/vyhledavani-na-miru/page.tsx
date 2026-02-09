@@ -1,251 +1,292 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import {
+  ArrowRight,
+  Compass,
+  Hourglass,
+  Mail,
+  Search,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import StepCarousel from "./StepCarousel";
 
 export const metadata: Metadata = {
   title: "Vyhledávání nemovitosti na míru | Nisa Centrum Reality",
   description:
-    "Hledáme nemovitost přesně podle vašich požadavků. Aktivně monitorujeme trh, spolupracujeme s makléři a najdeme i nevystavené nemovitosti.",
+    "Najdeme nemovitost podle vašich požadavků. Jasný postup, prověření nabídek a bezpečné dotažení celého procesu.",
 };
 
-// Ikona komponenta
-function Icon({ name, className = "" }: { name: string; className?: string }) {
-  const icons: Record<string, string> = {
-    search:
-      "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
-    check: "m4.5 12.75 6 6 9-13.5",
-    home: "m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25",
-    eye: "M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
-    users:
-      "M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z",
-    bell: "M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0",
-    shield:
-      "M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z",
-  };
+type StepCard = {
+  id: string;
+  number: number;
+  title: string;
+  description: string;
+  duration: string;
+  icon: "search" | "users" | "home" | "fileCheck" | "key";
+};
 
+const searchSteps: StepCard[] = [
+  {
+    id: "vyhledavani-zadani",
+    number: 1,
+    title: "Zadání požadavků",
+    description:
+      "Společně nastavíme parametry: lokalita, dispozice, rozpočet, termín a priority.",
+    duration: "1-3 dny",
+    icon: "search",
+  },
+  {
+    id: "vyhledavani-monitoring",
+    number: 2,
+    title: "Aktivní monitoring",
+    description:
+      "Průběžně sledujeme trh, reagujeme na nové nabídky a oslovujeme i neveřejné zdroje.",
+    duration: "2-4 týdny",
+    icon: "users",
+  },
+  {
+    id: "vyhledavani-predvyber",
+    number: 3,
+    title: "Předvýběr nabídek",
+    description:
+      "Vyfiltrujeme relevantní možnosti, aby šel váš čas jen do nemovitostí, které dávají smysl.",
+    duration: "3-10 dní",
+    icon: "home",
+  },
+  {
+    id: "vyhledavani-prohlidky",
+    number: 4,
+    title: "Prohlídky a porovnání",
+    description:
+      "Organizujeme prohlídky, porovnáváme plusy/mínusy a doporučíme nejlepší variantu.",
+    duration: "1-3 týdny",
+    icon: "key",
+  },
+  {
+    id: "vyhledavani-overeni",
+    number: 5,
+    title: "Prověření nemovitosti",
+    description:
+      "Kontrolujeme právní a technická rizika ještě před finálním rozhodnutím.",
+    duration: "3-10 dní",
+    icon: "fileCheck",
+  },
+  {
+    id: "vyhledavani-dokonceni",
+    number: 6,
+    title: "Vyjednání a dokončení",
+    description:
+      "Pomůžeme s vyjednáním podmínek a dotažením smluvního procesu do bezpečného konce.",
+    duration: "2-4 týdny",
+    icon: "fileCheck",
+  },
+];
+
+const benefits = [
+  {
+    icon: Compass,
+    title: "Jasná orientace na trhu",
+    text: "Nemusíte procházet stovky nabídek. Dostanete jen relevantní výběr.",
+    detail:
+      "Vybíráme podle priorit, ne podle množství. Šetříme čas a zvyšujeme šanci na kvalitní rozhodnutí.",
+  },
+  {
+    icon: Search,
+    title: "Rychlejší reakce",
+    text: "Sledujeme trh průběžně a umíme reagovat hned po zveřejnění nové nabídky.",
+    detail:
+      "U atraktivních nemovitostí rozhodují hodiny. Díky aktivnímu monitoringu máte náskok.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Nižší riziko chyb",
+    text: "Prověřujeme klíčové body, které často způsobují problémy až po podpisu.",
+    detail:
+      "Právní, technické i procesní detaily řešíme předem, aby nevznikaly drahé komplikace.",
+  },
+  {
+    icon: Sparkles,
+    title: "Lepší vyjednávací pozice",
+    text: "Pomáháme s cenou i podmínkami tak, aby výsledek odpovídal vašim cílům.",
+    detail:
+      "Díky datům, zkušenosti a správné přípravě je jednání věcné, rychlé a srozumitelné.",
+  },
+];
+
+function SectionHeading({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className={className || "h-6 w-6"}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d={icons[name]} />
-    </svg>
+    <div className="mx-auto max-w-4xl text-center">
+      <h2 className="text-3xl font-semibold text-black md:text-4xl">{title}</h2>
+      <div className="mx-auto mt-3 h-[6px] w-56 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+      <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">
+        {subtitle}
+      </p>
+    </div>
   );
 }
 
 export default function VyhledavaniNaMiruPage() {
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero sekce */}
-      <section className="relative overflow-hidden border-b border-black/10 bg-gradient-to-br from-[#F6E3B1]/20 via-white to-white pt-24 pb-16">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-black sm:text-5xl lg:text-6xl">
+    <main
+      className="min-h-screen"
+      style={{
+        background:
+          "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
+      }}
+    >
+      <section className="relative isolate min-h-dvh overflow-hidden">
+        <video
+          className="absolute inset-0 h-full w-full object-cover brightness-[1.2] contrast-[1.05] saturate-[1.05]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/hero-poster.jpg"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
+
+        <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
+          <div className="mx-auto max-w-5xl">
+            <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               Vyhledávání nemovitosti na míru
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-black/70">
-              Ušetříte čas a nenecháte si ujít tu pravou nemovitost. Aktivně
-              hledáme podle vašich požadavků a najdeme i ty, co nejsou veřejně
-              inzerované.
+            <div className="mx-auto mt-3 h-[6px] w-72 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+
+            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
+              Najdeme nabídky, které odpovídají vašim prioritám. Od zadání
+              požadavků až po bezpečné dotažení obchodu.
             </p>
-            <div className="mt-8">
+
+            <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
+              <a
+                href="#jak-funguje-vyhledavani"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+              >
+                <Search className="h-5 w-5" />
+                Jak funguje vyhledávání?
+              </a>
               <Link
                 href="/kontakt"
-                className="inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
-                Chci najít nemovitost
+                <Mail className="h-5 w-5" />
+                Kontaktujte nás
+              </Link>
+              <Link
+                href="/co-vse-pro-vas-udelame"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+              >
+                <ArrowRight className="h-5 w-5" />
+                Co vše pro vás uděláme
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Jak to funguje */}
-      <section className="border-b border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Jak funguje vyhledávání na míru
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Od zadání požadavků po předání klíčů - postaráme se o všechno
-            </p>
-          </div>
+      <section
+        id="jak-funguje-vyhledavani"
+        className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center"
+      >
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Jak funguje vyhledávání na míru"
+            subtitle="Jasný proces, který šetří čas a drží kvalitu výběru i bezpečnost celého obchodu."
+          />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Nepracujeme stylem „pošleme vše, co se objeví“. Nejprve nastavíme
+            kritéria, potom filtrujeme trh a až následně jdeme do prohlídek a
+            ověřování. Díky tomu máte přehled i jistotu.
+          </p>
+          <StepCarousel steps={searchSteps} />
+          <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
+            <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
+            Celkový odhad: přibližně 1-3 měsíce podle trhu a vašich priorit.
+          </p>
+        </div>
+      </section>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                step: "1",
-                title: "Konzultace",
-                desc: "Sejdeme se a podrobně probereme vaše požadavky, rozpočet, preferované lokality a časový harmonogram.",
-              },
-              {
-                step: "2",
-                title: "Aktivní hledání",
-                desc: "Denně sledujeme všechny portály, komunikujeme s dalšími makléři a vyhledáváme i nevystavené nemovitosti.",
-              },
-              {
-                step: "3",
-                title: "Výběr a prohlídky",
-                desc: "Předvýběr těch nejlepších nabídek podle vašich kritérií a organizace prohlídek v termínech, které vám vyhovují.",
-              },
-              {
-                step: "4",
-                title: "Dokončení",
-                desc: "Vyjednávání nejlepší ceny, asistence při podpisu smlouvy a kompletní právní dohled až do předání.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--gold1)]/35 text-2xl font-bold text-black">
-                  {item.step}
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm text-black/70">{item.desc}</p>
-              </div>
-            ))}
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Proč hledat nemovitost s námi"
+            subtitle="Vyhledávání vedeme datově a procesně. Cílem je lepší výsledek, ne více chaosu."
+          />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Dobrá koupě není náhoda. Je to kombinace rychlé reakce, kvalitního
+            výběru, prověření rizik a vyjednání podmínek, které dávají smysl.
+          </p>
+          <div className="mx-auto mt-10 grid max-w-5xl gap-3">
+            {benefits.map((item) => {
+              const Icon = item.icon;
+              return (
+                <details
+                  key={item.title}
+                  className="group rounded-2xl border border-black/10 bg-white/80 p-5 shadow-sm open:bg-white"
+                >
+                  <summary className="flex cursor-pointer list-none items-center gap-4">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F6E3B1] ring-1 ring-black/10">
+                      <Icon className="h-5 w-5 text-black" />
+                    </span>
+                    <span className="flex-1 text-left">
+                      <span className="block text-lg font-semibold text-black">
+                        {item.title}
+                      </span>
+                      <span className="mt-1 block text-sm text-black/70">
+                        {item.text}
+                      </span>
+                    </span>
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-black/70 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-4 border-l-2 border-[color:var(--gold1)]/35 pl-4 text-sm leading-relaxed text-black/65">
+                    {item.detail}
+                  </p>
+                </details>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Co zahrnuje služba */}
-      <section className="border-b border-black/10 bg-[#F6E3B1]/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Co služba zahrnuje
-            </h2>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: "search",
-                title: "Aktivní monitoring trhu",
-                desc: "Denně procházíme všechny realitní portály a okamžitě vás informujeme o nových nabídkách.",
-              },
-              {
-                icon: "users",
-                title: "Spolupráce s makléři",
-                desc: "Využíváme naši síť kontaktů a komunikujeme s dalšími realitními kancelářemi.",
-              },
-              {
-                icon: "home",
-                title: "Nevystavené nemovitosti",
-                desc: "Najdeme i nemovitosti, které nejsou veřejně inzerované, ale vlastníci je chtějí prodat.",
-              },
-              {
-                icon: "eye",
-                title: "Organizace prohlídek",
-                desc: "Domluvíme a zorganizujeme všechny prohlídky v termínech, které vám vyhovují.",
-              },
-              {
-                icon: "check",
-                title: "Prověření nemovitosti",
-                desc: "Zkontrolujeme právní stav, existence věcných břemen, dluhů nebo jiných závad.",
-              },
-              {
-                icon: "shield",
-                title: "Vyjednávání a asistence",
-                desc: "Vyjednáme nejlepší cenu, pomůžeme se smlouvou a právním dohledem až do předání.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm"
-              >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--gold1)]/35 text-black">
-                  <Icon name={item.icon} />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/70">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Proč s námi */}
-      <section className="py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Proč hledat nemovitost s námi
-            </h2>
-          </div>
-
-          <div className="mt-12 space-y-6">
-            {[
-              {
-                title: "Ušetříte čas",
-                desc: "Nemusíte denně procházet desítky inzerátů. My to uděláme za vás a pošleme pouze ty, které odpovídají vašim požadavkům.",
-              },
-              {
-                title: "Nenecháte si ujít příležitost",
-                desc: "Díky dennímu monitoringu a síti kontaktů se o nových nabídkách dozvíte jako první a budete mít náskok před ostatními zájemci.",
-              },
-              {
-                title: "Přístup k nevystaveným nemovitostem",
-                desc: "Máme přístup k nemovitostem, které nejsou veřejně inzerované, ale majitelé je chtějí prodat.",
-              },
-              {
-                title: "Bezpečnost a právní ochrana",
-                desc: "Prověříme právní stav nemovitosti a zajistíme kompletní právní dohled při koupi.",
-              },
-              {
-                title: "Lepší vyjednávací pozice",
-                desc: "S naší pomocí dosáhnete lepší ceny a podmínek. Známe trh a víme, jak vyjednávat.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm"
-              >
-                <h3 className="text-xl font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 leading-relaxed text-black/70">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA sekce */}
-      <section className="border-t border-black/10 bg-gradient-to-br from-[#F6E3B1]/20 to-white py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Začněme hledat váš nový domov
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Domluvte si schůzku a probereme vaše požadavky. Pak se pustíme do
-              aktivního hledání.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Link
-                href="/kontakt"
-                className="inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
-              >
-                Domluvit schůzku
-              </Link>
-              <Link
-                href="/#faq"
-                className="inline-flex items-center justify-center rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black transition hover:border-[color:var(--gold1)]"
-              >
-                Časté dotazy
-              </Link>
-            </div>
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
+          <SectionHeading
+            title="Začněte ještě dnes"
+            subtitle="Stačí jeden kontakt a připravíme konkrétní plán vyhledávání pro vaše zadání."
+          />
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70">
+            Ať hledáte byt, dům nebo investiční nemovitost, nastavíme proces tak,
+            aby byl přehledný, rychlý a bezpečný.
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/kontakt"
+              className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
+            >
+              <Mail className="h-4 w-4" />
+              Domluvit schůzku
+            </Link>
+            <Link
+              href="/co-vse-pro-vas-udelame"
+              className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
+            >
+              <ArrowRight className="h-4 w-4" />
+              Podrobný popis služeb
+            </Link>
           </div>
         </div>
       </section>
