@@ -81,7 +81,8 @@ export default function SiteHeader() {
             >
               <KeyRound className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Prodej a pronájem</span>
+                <span className="block">Prodej a</span>
+                <span className="block">pronájem</span>
                 <span className="block">nemovitosti</span>
               </span>
             </Link>
