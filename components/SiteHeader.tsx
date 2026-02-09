@@ -125,7 +125,10 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/#sluzby" className={`${itemBase} ${withDivider}`}>
+            <Link
+              href="/co-vse-pro-vas-udelame"
+              className={`${itemBase} ${withDivider}`}
+            >
               <Layers className={`${icon} row-span-2`} />
               <span className={centerLabel}>
                 <span className="block">Co vše</span>
@@ -266,7 +269,7 @@ export default function SiteHeader() {
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
-                href="/#sluzby"
+                href="/co-vse-pro-vas-udelame"
                 icon={<Layers className="h-5 w-5 text-black/70" />}
                 title="Naše služby"
                 onClick={() => setMobileOpen(false)}
