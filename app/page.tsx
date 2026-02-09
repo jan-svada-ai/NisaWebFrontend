@@ -726,7 +726,7 @@ export default function Home() {
               alt="Člen týmu Nisa Centrum Reality"
               width={520}
               height={740}
-              className="h-auto w-[420px] rounded-2xl object-cover"
+              className="h-auto w-[420px] -scale-x-100 rounded-2xl object-cover"
             />
           </div>
 
