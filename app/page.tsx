@@ -23,7 +23,8 @@ function Icon({
     | "arrowRight"
     | "question"
     | "user"
-    | "layers";
+    | "layers"
+    | "briefcase";
   className?: string;
 }) {
   const common = {
@@ -171,6 +172,14 @@ function Icon({
           <polyline points="2 17 12 12 22 17" />
         </svg>
       );
+    case "briefcase":
+      return (
+        <svg {...common}>
+          <rect x="3" y="7" width="18" height="13" rx="2" />
+          <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          <path d="M3 12h18" />
+        </svg>
+      );
   }
 }
 
@@ -259,7 +268,7 @@ export default function Home() {
         </video>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_38%,rgba(0,0,0,0.2)_70%,rgba(0,0,0,0.08)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
 
         <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center pt-28">
           <div className="w-full max-w-6xl px-6 text-center md:px-12 lg:px-16">
@@ -297,7 +306,7 @@ export default function Home() {
                 href="/#proc-maklere"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
-                <Icon name="question" className="h-5 w-5" />
+                <Icon name="user" className="h-5 w-5" />
                 Proč mít svého makléře
               </Link>
               <Link
@@ -310,7 +319,7 @@ export default function Home() {
                 href="/#sluzby"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-3"
               >
-                <Icon name="layers" className="h-5 w-5" />
+                <Icon name="briefcase" className="h-5 w-5" />
                 Služby
               </Link>
               <Link
