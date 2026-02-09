@@ -719,8 +719,9 @@ export default function Home() {
         title="Časté dotazy"
         subtitle="Nejčastější otázky k prodeji, pronájmu, provizím, smlouvám a bezpečnosti převodu."
       >
-        <div className="grid gap-3">
-          {[
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-start">
+          <div className="grid gap-3">
+            {[
             {
               q: "Jaké služby nabízíte a co vše je jejich součástí?",
               a: "Zajišťujeme ocenění nemovitosti (zdarma a nezávazně), kompletní prodej i pronájem. Součástí je příprava prezentace (home staging, foto/video), inzerce, cílená propagace, prohlídky, komunikace se zájemci a dohled nad celým procesem.",
@@ -753,22 +754,41 @@ export default function Home() {
               q: "Jak určíte správnou cenu mé nemovitosti?",
               a: "Cenu neurčujeme od stolu. Podíváme se na nemovitost osobně, zohledníme stav, lokalitu a srovnatelné prodeje. Odhad vždy vysvětlíme a nastavíme společně realistický plán.",
             },
-          ].map((x) => (
-            <details
-              key={x.q}
-              className="group rounded-2xl border border-black/10 bg-white/70 p-5 shadow-sm open:bg-white/80"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-black">
-                <span>{x.q}</span>
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-black/70 transition group-open:rotate-45">
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-black/70">
-                {x.a}
+            ].map((x) => (
+              <details
+                key={x.q}
+                className="group rounded-2xl border border-black/10 bg-white/70 p-5 shadow-sm open:bg-white/80"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-black">
+                  <span>{x.q}</span>
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-black/70 transition group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-black/70">
+                  {x.a}
+                </p>
+              </details>
+            ))}
+          </div>
+
+          <aside className="overflow-hidden rounded-3xl border border-black/10 bg-white/75 shadow-sm lg:sticky lg:top-28">
+            <div className="relative aspect-[4/5] w-full">
+              <Image
+                src="/Mirek.png"
+                alt="Člen týmu Nisa Centrum Reality"
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            <div className="border-t border-black/10 p-5">
+              <p className="text-lg font-semibold text-black">Máte další otázky?</p>
+              <p className="mt-2 text-sm leading-relaxed text-black/70">
+                Ozvěte se nám a projdeme vaši situaci krok za krokem. Rychle,
+                srozumitelně a bez závazků.
               </p>
-            </details>
-          ))}
+            </div>
+          </aside>
         </div>
 
         <div className="mt-8 flex justify-center">

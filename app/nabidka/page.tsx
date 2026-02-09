@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, MapPin, Home } from "lucide-react";
+import { ChevronLeft, ChevronRight, Home, MapPin, RotateCcw, Search } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
 interface Listing {
@@ -38,7 +38,6 @@ export default function NabidkaPage() {
   });
   const [loading, setLoading] = useState(false);
 
-  // Filters
   const [type, setType] = useState("");
   const [offerType, setOfferType] = useState("");
   const [priceMin, setPriceMin] = useState("");
@@ -71,7 +70,7 @@ export default function NabidkaPage() {
           setPagination(result.pagination);
         }
       } catch (error) {
-        console.error("Failed to fetch listings:", error);
+        console.error("Nepodařilo se načíst nabídky:", error);
       } finally {
         setLoading(false);
       }
@@ -91,8 +90,6 @@ export default function NabidkaPage() {
     setAreaMin("");
     setAreaMax("");
     setSort("vytvoren-desc");
-
-    // počkej na promítnutí state, pak načti default
     setTimeout(() => fetchListings(1), 0);
   }, [fetchListings]);
 
@@ -109,21 +106,20 @@ export default function NabidkaPage() {
       }}
     >
       <div className="mx-auto max-w-screen-2xl px-4 py-12">
-        {/* Nadpis */}
-        <div className="mb-12">
+        <div className="mb-12 text-center">
           <p className="text-sm uppercase tracking-[0.2em] text-black/50">
-            NisaCentrum Reality
+            Nisa Centrum Reality
           </p>
-          <h1 className="mt-3 text-4xl font-semibold md:text-5xl text-black">
-            Aktuální nabídka nemovitostí
+          <h1 className="mt-3 text-4xl font-semibold text-black md:text-5xl">
+            <span className="inline-flex flex-col items-center">
+              <span>Aktuální nabídka nemovitostí</span>
+              <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+            </span>
           </h1>
-          <div className="mt-4 h-[3px] w-16 rounded-full bg-[color:var(--gold1)]/70" />
         </div>
 
-        {/* FILTERS */}
         <div className="mb-10 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur-sm">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {/* Type */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Typ nemovitosti
@@ -141,7 +137,6 @@ export default function NabidkaPage() {
               </select>
             </div>
 
-            {/* Offer Type */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Typ nabídky
@@ -157,7 +152,6 @@ export default function NabidkaPage() {
               </select>
             </div>
 
-            {/* Price Min */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Cena od (Kč)
@@ -171,7 +165,6 @@ export default function NabidkaPage() {
               />
             </div>
 
-            {/* Price Max */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Cena do (Kč)
@@ -185,7 +178,6 @@ export default function NabidkaPage() {
               />
             </div>
 
-            {/* Area Min */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Plocha od (m²)
@@ -199,7 +191,6 @@ export default function NabidkaPage() {
               />
             </div>
 
-            {/* Area Max */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Plocha do (m²)
@@ -213,7 +204,6 @@ export default function NabidkaPage() {
               />
             </div>
 
-            {/* Sort */}
             <div>
               <label className="block text-sm font-semibold text-black/70">
                 Řazení
@@ -232,26 +222,25 @@ export default function NabidkaPage() {
             </div>
           </div>
 
-          {/* Buttons */}
-          <div className="mt-4 flex gap-3">
+          <div className="mt-4 flex flex-wrap gap-3">
             <button
               onClick={handleSearch}
               disabled={loading}
-              className="flex items-center gap-2 rounded-xl bg-[color:var(--gold1)] px-6 py-2.5 font-semibold text-black transition hover:bg-[color:var(--gold2)] disabled:opacity-50"
+              className="btn-main inline-flex items-center gap-2 rounded-xl bg-[color:var(--gold1)] px-6 py-2.5 font-semibold text-black transition disabled:opacity-50"
             >
               <Search className="h-4 w-4" />
               Hledat
             </button>
             <button
               onClick={handleReset}
-              className="rounded-xl border border-black/20 px-6 py-2.5 font-semibold text-black transition hover:bg-white/40"
+              className="btn-main inline-flex items-center gap-2 rounded-xl border border-black/20 bg-white px-6 py-2.5 font-semibold text-black"
             >
+              <RotateCcw className="h-4 w-4" />
               Vymazat
             </button>
           </div>
         </div>
 
-        {/* RESULTS */}
         <div className="mb-8">
           <p className="text-sm font-medium text-black/60">
             Nalezeno{" "}
@@ -273,9 +262,8 @@ export default function NabidkaPage() {
                 <Link
                   key={listing.id}
                   href={`/nabidka/${listing.slug}`}
-                  className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 backdrop-blur-sm"
+                  className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
-                  {/* Image */}
                   <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-black/5 to-black/10">
                     {listing.obrazky[0] ? (
                       <Image
@@ -289,7 +277,6 @@ export default function NabidkaPage() {
                         <Home className="h-12 w-12 text-black/20" />
                       </div>
                     )}
-                    {/* Badge */}
                     {listing.typPonuky && (
                       <div className="absolute top-3 right-3">
                         <span className="rounded-full bg-[color:var(--gold1)] px-3 py-1 text-xs font-bold text-black">
@@ -303,9 +290,8 @@ export default function NabidkaPage() {
                     )}
                   </div>
 
-                  {/* Content */}
                   <div className="p-5">
-                    <h3 className="mb-3 font-semibold text-black line-clamp-2 text-lg">
+                    <h3 className="mb-3 line-clamp-2 text-lg font-semibold text-black">
                       {listing.nazev}
                     </h3>
 
@@ -314,16 +300,14 @@ export default function NabidkaPage() {
                       {listing.mesto?.nazev || "N/A"}
                     </div>
 
-                    <div className="mb-4 grid grid-cols-2 gap-3 text-sm border-y border-black/5 py-3">
+                    <div className="mb-4 grid grid-cols-2 gap-3 border-y border-black/5 py-3 text-sm">
                       {listing.cena && (
                         <div>
                           <p className="text-xs uppercase tracking-wide text-black/50">
                             Cena
                           </p>
                           <p className="font-bold text-black">
-                            {new Intl.NumberFormat("cs-CZ").format(
-                              listing.cena,
-                            )}{" "}
+                            {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
                             <span className="text-xs text-black/60">
                               {listing.mena || "Kč"}
                             </span>
@@ -335,9 +319,7 @@ export default function NabidkaPage() {
                           <p className="text-xs uppercase tracking-wide text-black/50">
                             Plocha
                           </p>
-                          <p className="font-bold text-black">
-                            {listing.plocha} m²
-                          </p>
+                          <p className="font-bold text-black">{listing.plocha} m²</p>
                         </div>
                       )}
                     </div>
@@ -361,41 +343,42 @@ export default function NabidkaPage() {
             </div>
 
             {pagination.totalPages > 1 && (
-              <div className="mt-10 flex justify-center gap-2">
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
                 {pagination.page > 1 && (
                   <button
                     onClick={() => fetchListings(pagination.page - 1)}
-                    className="rounded-xl border border-black/20 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-black/5"
+                    className="btn-main inline-flex items-center gap-2 rounded-xl border border-black/20 bg-white px-4 py-2.5 text-sm font-semibold text-black"
                   >
+                    <ChevronLeft className="h-4 w-4" />
                     Předchozí
                   </button>
                 )}
 
                 <div className="flex items-center gap-1">
-                  {Array.from(
-                    { length: pagination.totalPages },
-                    (_, i) => i + 1,
-                  ).map((pageNum) => (
-                    <button
-                      key={pageNum}
-                      onClick={() => fetchListings(pageNum)}
-                      className={`rounded-xl px-3 py-2 text-sm font-semibold transition ${
-                        pageNum === pagination.page
-                          ? "bg-[color:var(--gold1)] text-black"
-                          : "border border-black/20 text-black hover:bg-white/40"
-                      }`}
-                    >
-                      {pageNum}
-                    </button>
-                  ))}
+                  {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(
+                    (pageNum) => (
+                      <button
+                        key={pageNum}
+                        onClick={() => fetchListings(pageNum)}
+                        className={`btn-main rounded-xl px-3 py-2 text-sm font-semibold ${
+                          pageNum === pagination.page
+                            ? "bg-[color:var(--gold1)] text-black"
+                            : "border border-black/20 bg-white text-black"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    ),
+                  )}
                 </div>
 
                 {pagination.page < pagination.totalPages && (
                   <button
                     onClick={() => fetchListings(pagination.page + 1)}
-                    className="rounded-xl border border-black/20 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-black/5"
+                    className="btn-main inline-flex items-center gap-2 rounded-xl border border-black/20 bg-white px-4 py-2.5 text-sm font-semibold text-black"
                   >
                     Další
+                    <ChevronRight className="h-4 w-4" />
                   </button>
                 )}
               </div>

@@ -123,6 +123,17 @@ function Footer() {
         <div className="mt-8 flex flex-col gap-2 border-t border-black/10 pt-6 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Nisa Centrum Reality</p>
           <p>Prodej • Pronájem • Vyhledání nemovitosti • Ocenění zdarma</p>
+          <p>
+            Web vytvořilo{" "}
+            <a
+              href="https://www.setio.cz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-black hover:text-black/70"
+            >
+              SetIO
+            </a>
+          </p>
         </div>
       </div>
     </footer>
