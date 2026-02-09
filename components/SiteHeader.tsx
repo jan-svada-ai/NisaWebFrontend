@@ -24,7 +24,7 @@ export default function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
 
-  // kdy� je otev�en� mobiln� menu, nechceme scrollovat str�nkou pod t�m
+  // když je otevřené mobilní menu, nechceme scrollovat stránkou pod tím
   useEffect(() => {
     if (!mobileOpen) return;
     const prev = document.body.style.overflow;
@@ -52,7 +52,7 @@ export default function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="border-b border-black/10 bg-white/65 backdrop-blur-xl">
-        {/* ni��� header */}
+        {/* nižší header */}
         <div className="mx-auto flex h-16 max-w-screen-2xl items-stretch gap-4 pl-2 pr-3 sm:pl-2 sm:pr-6 lg:pl-3 lg:pr-8">
           {/* LOGO */}
           <Link href="/" className="flex items-stretch self-stretch">
@@ -72,7 +72,7 @@ export default function SiteHeader() {
           <nav className="hidden md:flex items-center">
             <Link href="/" className={`${itemBase} ${withDivider}`}>
               <Home className={`${icon} row-span-2`} />
-              <span className={centerLabel}>�vod</span>
+              <span className={centerLabel}>Úvod</span>
             </Link>
 
             <Link
@@ -81,14 +81,14 @@ export default function SiteHeader() {
             >
               <KeyRound className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Prodej a pron�jem</span>
+                <span className="block">Prodej a pronájem</span>
                 <span className="block">nemovitosti</span>
               </span>
             </Link>
             <Link href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9" className={`${itemBase} ${withDivider}`}>
               <HandCoins className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Ocen�n�</span>
+                <span className="block">Ocenění</span>
                 <span className="block">nemovitosti</span>
                 <span className="block">zdarma</span>
               </span>
@@ -100,9 +100,9 @@ export default function SiteHeader() {
             >
               <Search className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Vyhled�v�n�</span>
+                <span className="block">Vyhledávání</span>
                 <span className="block">nemovitosti</span>
-                <span className="block">na m�ru</span>
+                <span className="block">na míru</span>
               </span>
             </Link>
 
@@ -112,7 +112,7 @@ export default function SiteHeader() {
             >
               <Gift className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Po�li tip</span>
+                <span className="block">Pošli tip</span>
                 <span className="block">na reality</span>
               </span>
             </Link>
@@ -120,8 +120,8 @@ export default function SiteHeader() {
             <Link href="/nabidka" className={`${itemBase} ${withDivider}`}>
               <ListChecks className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Aktu�ln�</span>
-                <span className="block">nab�dka</span>
+                <span className="block">Aktuální</span>
+                <span className="block">nabídka</span>
               </span>
             </Link>
 
@@ -131,21 +131,21 @@ export default function SiteHeader() {
             >
               <Layers className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">Co v�e</span>
-                <span className="block">pro V�s</span>
-                <span className="block">ud�l�me</span>
+                <span className="block">Co vše</span>
+                <span className="block">pro Vás</span>
+                <span className="block">uděláme</span>
               </span>
             </Link>
 
             <Link href="/nas-tym" className={`${itemBase} ${withDivider}`}>
               <Handshake className={`${icon} row-span-2`} />
               <span className={centerLabel}>
-                <span className="block">N�</span>
-                <span className="block">t�m</span>
+                <span className="block">Náš</span>
+                <span className="block">tým</span>
               </span>
             </Link>
 
-            {/* V�CE � desktop dropdown (hover) */}
+            {/* VÍCE - desktop dropdown (hover) */}
             <div className={`${itemBase} ${withDivider} relative`}>
               <button
                 type="button"
@@ -155,7 +155,7 @@ export default function SiteHeader() {
                 <MoreHorizontal className={icon} />
                 <span className={centerLabel}>
                   <span className="inline-flex items-center gap-1">
-                    V�ce
+                    Více
                     <ChevronDown className="h-3.5 w-3.5 text-black/55 transition group-hover:text-[color:var(--gold2)]" />
                   </span>
                 </span>
@@ -188,7 +188,7 @@ export default function SiteHeader() {
             type="button"
             className="ml-auto my-2 inline-flex md:hidden h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-white/70 text-black/80 shadow-sm backdrop-blur transition hover:bg-white/85"
             onClick={() => setMobileOpen(true)}
-            aria-label="Otev��t menu"
+            aria-label="Otevřít menu"
           >
             <Menu className="h-6 w-6" />
           </button>
@@ -219,7 +219,7 @@ export default function SiteHeader() {
                 type="button"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-white/70 text-black/80"
                 onClick={() => setMobileOpen(false)}
-                aria-label="Zav��t menu"
+                aria-label="Zavřít menu"
               >
                 <X className="h-6 w-6" />
               </button>
@@ -229,59 +229,59 @@ export default function SiteHeader() {
               <MobileItem
                 href="/"
                 icon={<Home className="h-5 w-5 text-black/70" />}
-                title="�vod"
+                title="Úvod"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
                 icon={<HandCoins className="h-5 w-5 text-black/70" />}
-                title="Ocen�n� nemovitosti zdarma"
+                title="Ocenění nemovitosti zdarma"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/prodej-pronajem"
                 icon={<KeyRound className="h-5 w-5 text-black/70" />}
-                title="Prodej a pron�jem nemovitosti"
+                title="Prodej a pronájem nemovitosti"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/vyhledavani-na-miru"
                 icon={<Search className="h-5 w-5 text-black/70" />}
-                title="Vyhled�v�n� nemovitosti na m�ru"
+                title="Vyhledávání nemovitosti na míru"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/tipni-realitu"
                 icon={<Gift className="h-5 w-5 text-black/70" />}
-                title="Po�li tip na reality"
+                title="Pošli tip na reality"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/nabidka"
                 icon={<ListChecks className="h-5 w-5 text-black/70" />}
-                title="Aktu�ln� nab�dka"
+                title="Aktuální nabídka"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/#proc-maklere"
                 icon={<Handshake className="h-5 w-5 text-black/70" />}
-                title="Pro� m�t sv�ho makl��e?"
+                title="Proč mít svého makléře?"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/co-vse-pro-vas-udelame"
                 icon={<Layers className="h-5 w-5 text-black/70" />}
-                title="Na�e slu�by"
+                title="Naše služby"
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
                 href="/nas-tym"
                 icon={<Handshake className="h-5 w-5 text-black/70" />}
-                title="N� t�m"
+                title="Náš tým"
                 onClick={() => setMobileOpen(false)}
               />
 
-              {/* Mobile "V�ce" jako accordion */}
+              {/* Mobile "Více" jako accordion */}
               <div className="mt-2 relative z-10">
                 <button
                   type="button"
@@ -295,7 +295,7 @@ export default function SiteHeader() {
                 >
                   <span className="inline-flex items-center gap-3">
                     <MoreHorizontal className="h-5 w-5 text-black/70" />
-                    V�ce
+                    Více
                   </span>
                   <ChevronDown
                     className={[
@@ -393,5 +393,6 @@ function MobileSubItem({
     </Link>
   );
 }
+
 
 

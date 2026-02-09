@@ -15,26 +15,26 @@ const organizationSchema = {
   email: "info@nisacentrum.cz",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Z�me�nick� 563/8",
+    streetAddress: "Zámečnická 563/8",
     addressLocality: "Liberec",
     postalCode: "46001",
     addressCountry: "CZ",
   },
   areaServed: [
-    "Libereck� kraj",
-    "�steck� kraj",
-    "Kr�lov�hradeck� kraj",
-    "St�edo�esk� kraj",
-    "Praha a okol�",
+    "Liberecký kraj",
+    "Ústecký kraj",
+    "Královéhradecký kraj",
+    "Středočeský kraj",
+    "Praha a okolí",
   ],
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title:
-    "Vendy Hornov� | Reality Liberec, Praha, �st� nad Labem, Hradec Kr�lov� a okol�",
+    "Vendy Hornová | Reality Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí",
   description:
-    "Prodej a pron�jem nemovitost� v oblasti Liberec, Praha, �st� nad Labem, Hradec Kr�lov� a okol�. Ocen�n� nemovitosti zdarma. Profesion�ln� marketing, homestaging a pr�vn� servis.",
+    "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma. Profesionální marketing, homestaging a právní servis.",
   alternates: {
     canonical: "/",
   },
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "Nisa Centrum Reality",
     title:
-      "Vendy Hornov� | Reality Liberec, Praha, �st� nad Labem, Hradec Kr�lov� a okol�",
+      "Vendy Hornová | Reality Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí",
     description:
-      "Prodej a pron�jem nemovitost� v oblasti Liberec, Praha, �st� nad Labem, Hradec Kr�lov� a okol�. Ocen�n� nemovitosti zdarma.",
+      "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma.",
   },
 };
 
@@ -58,7 +58,7 @@ function Footer() {
           <div>
             <p className="font-semibold text-black">Nisa Centrum Reality</p>
             <p className="mt-1">
-              Liberec, Praha, �st� nad Labem, Hradec Kr�lov� a okol�
+              Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí
             </p>
           </div>
 
@@ -87,9 +87,9 @@ function Footer() {
               <div>
                 <p className="text-xs font-medium text-black/60">Adresa</p>
                 <p className="text-black">
-                  Z�me�nick� 563/8
+                  Zámečnická 563/8
                   <br />
-                  Liberec IV � Per�t�n
+                  Liberec IV – Perštýn
                   <br />
                   46001 Liberec
                 </p>
@@ -97,23 +97,23 @@ function Footer() {
             </div>
           </div>
 
-          {/* O n�s */}
+          {/* O nás */}
           <div>
-            <p className="font-semibold text-black">O n�s</p>
+            <p className="font-semibold text-black">O nás</p>
             <div className="mt-2 space-y-2 text-xs">
               <div>
                 <p className="font-medium text-black">NISACENTRUM s.r.o.</p>
               </div>
               <div>
-                <p className="font-medium text-black/60">I�O</p>
+                <p className="font-medium text-black/60">IČO</p>
                 <p className="text-black">27273385</p>
               </div>
               <div>
-                <p className="font-medium text-black/60">DI�</p>
+                <p className="font-medium text-black/60">DIČ</p>
                 <p className="text-black">CZ27273385</p>
               </div>
               <div>
-                <p className="font-medium text-black/60">Datov� schr�nka</p>
+                <p className="font-medium text-black/60">Datová schránka</p>
                 <p className="text-black">yqkqb7n</p>
               </div>
             </div>
@@ -121,8 +121,8 @@ function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col gap-2 border-t border-black/10 pt-6 md:flex-row md:items-center md:justify-between">
-          <p>� {new Date().getFullYear()} Nisa Centrum Reality</p>
-          <p>Prodej � Pron�jem � Vyhled�n� nemovitosti � Ocen�n� zdarma</p>
+          <p>© {new Date().getFullYear()} Nisa Centrum Reality</p>
+          <p>Prodej • Pronájem • Vyhledání nemovitosti • Ocenění zdarma</p>
         </div>
       </div>
     </footer>
@@ -151,4 +151,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
