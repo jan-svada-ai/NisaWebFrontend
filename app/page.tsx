@@ -605,7 +605,7 @@ export default function Home() {
         subtitle="Vyberte, co aktuálně řešíte. Rádi vám doporučíme nejrychlejší a nejbezpečnější postup."
       >
         <div className="relative">
-          <div className="pointer-events-none absolute right-0 top-8 z-0 hidden translate-x-[88%] lg:block">
+          <div className="pointer-events-none absolute right-0 -top-10 z-0 hidden translate-x-[88%] lg:block">
             <Image
               src="/Terka.png"
               alt="Tým NISA CENTRUM REALITY"
