@@ -278,7 +278,7 @@ export default function Home() {
               </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white/92">
+            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
               Ocenění, profesionální prezentace a cílená propagace. Bezpečný
               průběh zajišťujeme ve spolupráci s advokátní kanceláří.
             </p>
