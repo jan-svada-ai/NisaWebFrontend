@@ -109,7 +109,7 @@ export default function StatsSection({ stats }: StatsSectionProps) {
             >
               {/* Icon */}
               {stat.icon && (
-                <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#F6E3B1] text-black ring-1 ring-black/10 group-hover:scale-110 transition-transform duration-300">
+                <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10 group-hover:scale-110 transition-transform duration-300">
                   {getIcon(stat.icon)}
                 </div>
               )}

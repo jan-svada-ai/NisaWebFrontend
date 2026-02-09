@@ -27,6 +27,7 @@ body {
 
 html {
   scroll-behavior: smooth;
+  font-size: 17px;
 }
 html,
 body {
@@ -47,6 +48,52 @@ body {
       transparent 60%
     ),
     linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2));
+}
+
+@media (min-width: 1280px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@layer components {
+  .btn-main {
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 240ms ease,
+      box-shadow 240ms ease,
+      filter 240ms ease;
+  }
+
+  .btn-main::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.25) 48%,
+      rgba(255, 255, 255, 0) 66%
+    );
+    transform: translateX(-130%);
+    transition: transform 420ms ease;
+    pointer-events: none;
+  }
+
+  .btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    filter: saturate(1.05);
+  }
+
+  .btn-main:hover::after {
+    transform: translateX(130%);
+  }
+
+  .btn-main:active {
+    transform: translateY(0);
+  }
 }
 
 ::selection {

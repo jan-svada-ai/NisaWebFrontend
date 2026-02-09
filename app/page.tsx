@@ -258,111 +258,68 @@ export default function Home() {
           <source src="/hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Lehčí překrytí – aby video nepůsobilo tak tmavě */}
-        {/* jemný overlay shora/dola */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/5 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.42)_38%,rgba(0,0,0,0.2)_70%,rgba(0,0,0,0.08)_100%)]" />
 
-        {/* čitelnost textu jen vlevo (video zůstane "světlé" a reprezentativní) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/25 to-transparent" />
+        <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center pt-28">
+          <div className="w-full max-w-6xl px-6 text-center md:px-12 lg:px-16">
+            <p className="mb-4 text-base uppercase tracking-[0.2em] text-white/85">
+              Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a
+              okolí
+            </p>
 
-        <div className="pointer-events-none absolute inset-0 shadow-[inset_0_-140px_180px_rgba(0,0,0,0.25)]" />
+            <h1 className="mx-auto max-w-5xl text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+              <span className="inline-flex flex-col items-center">
+                <span>Prodej a pronájem bez stresu.</span>
+                <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+              </span>
+              <span className="mt-4 block text-[0.7em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
+                S důrazem na cenu, rychlost a jistotu.
+              </span>
+            </h1>
 
-        <div className="relative z-10 flex min-h-dvh flex-col justify-center pt-28">
-          <div className="w-full px-6 md:px-12 lg:px-16">
-            <div className="max-w-[720px]">
-              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-white/85">
-                Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a
-                okolí
-              </p>
+            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white/92">
+              Ocenění, profesionální prezentace a cílená propagace. Bezpečný
+              průběh zajišťujeme ve spolupráci s advokátní kanceláří.
+            </p>
 
-              <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_28px_rgba(0,0,0,0.65)]">
-                Prodej a pronájem bez stresu.
-                <span className="block text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
-                  S důrazem na cenu, rychlost a jistotu.
-                </span>
-              </h1>
-
-              <div className="mt-6 max-w-2xl rounded-3xl border border-white/15 bg-black/30 p-5 sm:p-6 shadow-xl backdrop-blur-md">
-                <p className="text-sm sm:text-base font-medium leading-relaxed text-white/90">
-                  Ocenění, profesionální prezentace a cílená propagace. Bezpečný
-                  průběh zajišťujeme ve spolupráci s advokátní kanceláří.
-                </p>
-
-                <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                  <div className="flex items-center gap-2 rounded-2xl bg-white/10 px-3 py-2 ring-1 ring-white/10">
-                    <Icon
-                      name="camera"
-                      className="h-5 w-5 text-[color:var(--gold1)]"
-                    />
-                    <span className="text-xs font-semibold text-white/90">
-                      Home staging • foto • video
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-2xl bg-white/10 px-3 py-2 ring-1 ring-white/10">
-                    <Icon
-                      name="shield"
-                      className="h-5 w-5 text-[color:var(--gold1)]"
-                    />
-                    <span className="text-xs font-semibold text-white/90">
-                      Advokátní servis • úschova
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-2xl bg-white/10 px-3 py-2 ring-1 ring-white/10">
-                    <Icon
-                      name="map"
-                      className="h-5 w-5 text-[color:var(--gold1)]"
-                    />
-                    <span className="text-xs font-semibold text-white/90">
-                      Liberec, Ústí, Hradec, Praha
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3">
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_14px_40px_rgba(0,0,0,0.25)] transition hover:bg-[color:var(--gold1)]/90"
-                  >
-                    <Icon name="handCoins" className="h-5 w-5" />
-                    Ocenění nemovitosti
-                  </Link>
-                  <Link
-                    href="/#proc-maklere"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(0,0,0,0.15)] backdrop-blur-sm transition hover:bg-white/20"
-                  >
-                    <Icon name="question" className="h-5 w-5" />
-                    Proč mít svého makléře
-                  </Link>
-                </div>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href="/#o-nas"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_14px_40px_rgba(0,0,0,0.25)] transition hover:bg-[color:var(--gold1)]/90"
-                  >
-                    <Icon name="user" className="h-5 w-5" />O nás
-                  </Link>
-                  <Link
-                    href="/#sluzby"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(0,0,0,0.15)] backdrop-blur-sm transition hover:bg-white/20"
-                  >
-                    <Icon name="layers" className="h-5 w-5" />
-                    Služby
-                  </Link>
-                  <Link
-                    href="/#faq"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_14px_40px_rgba(0,0,0,0.25)] transition hover:bg-[color:var(--gold1)]/90"
-                  >
-                    <Icon name="question" className="h-5 w-5" />
-                    Časté dotazy
-                  </Link>
-                </div>
-              </div>
+            <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
+              <Link
+                href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+              >
+                <Icon name="handCoins" className="h-5 w-5" />
+                Ocenění nemovitosti
+              </Link>
+              <Link
+                href="/#proc-maklere"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
+              >
+                <Icon name="question" className="h-5 w-5" />
+                Proč mít svého makléře
+              </Link>
+              <Link
+                href="/#o-nas"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+              >
+                <Icon name="user" className="h-5 w-5" />O nás
+              </Link>
+              <Link
+                href="/#sluzby"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-3"
+              >
+                <Icon name="layers" className="h-5 w-5" />
+                Služby
+              </Link>
+              <Link
+                href="/#faq"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-3"
+              >
+                <Icon name="question" className="h-5 w-5" />
+                Časté dotazy
+              </Link>
             </div>
           </div>
         </div>
@@ -427,7 +384,7 @@ export default function Home() {
           {/* Karty */}
           <div className="mb-12">
             <div className="mt-8 grid gap-6 sm:grid-cols-3">
-              <div className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm text-center">
+              <div className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="flex justify-center mb-4">
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
                     <Icon name="camera" />
@@ -441,7 +398,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm text-center">
+              <div className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="flex justify-center mb-4">
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
                     <Icon name="shield" />
@@ -455,7 +412,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm text-center">
+              <div className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="flex justify-center mb-4">
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
                     <Icon name="map" />
@@ -512,8 +469,8 @@ export default function Home() {
 
           {/* CONTENT - KARTIČKY - uprostřed */}
           <div className="relative z-10 mx-auto flex max-w-[90%] flex-col items-start gap-6 px-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
+            {(() => {
+              const items = [
                 {
                   icon: "handshake" as const,
                   title: "Správné nacenění a strategie",
@@ -556,13 +513,18 @@ export default function Home() {
                   detail:
                     "Aktivně vyhledáváme nemovitosti odpovídající vašim kritériím. Využíváme naši databázi i neveřejné nabídky. Šetříme váš čas a pomáháme najít ten pravý domov.",
                 },
-              ].map((item) => (
+              ];
+
+              const leftCol = items.filter((_, idx) => idx % 2 === 0);
+              const rightCol = items.filter((_, idx) => idx % 2 === 1);
+
+              const renderItem = (item: (typeof items)[number]) => (
                 <details
                   key={item.title}
                   className="group rounded-2xl border border-black/10 bg-white/90 shadow-sm transition-all hover:shadow-md open:bg-white"
                 >
                   <summary className="flex cursor-pointer items-center gap-3 p-4 list-none">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#F6E3B1] text-black ring-1 ring-black/10">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
                       <Icon name={item.icon} className="h-5 w-5 text-black" />
                     </div>
                     <div className="flex-1">
@@ -578,13 +540,20 @@ export default function Home() {
                     </div>
                   </summary>
                   <div className="px-4 pb-4 pl-[4.5rem]">
-                    <p className="text-sm leading-relaxed text-black/60 border-l-2 border-[color:var(--gold1)]/30 pl-4">
+                    <p className="border-l-2 border-[color:var(--gold1)]/30 pl-4 text-sm leading-relaxed text-black/60">
                       {item.detail}
                     </p>
                   </div>
                 </details>
-              ))}
-            </div>
+              );
+
+              return (
+                <div className="grid gap-3 sm:grid-cols-2 sm:items-start">
+                  <div className="flex flex-col gap-3">{leftCol.map(renderItem)}</div>
+                  <div className="flex flex-col gap-3">{rightCol.map(renderItem)}</div>
+                </div>
+              );
+            })()}
 
             {/* CALLOUT CTA */}
             <div className="mt-6 w-full">
@@ -599,14 +568,14 @@ export default function Home() {
                 <div className="mt-4 grid gap-2 sm:grid-cols-2 sm:justify-items-center">
                   <a
                     href="tel:+420702064442"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_14px_40px_rgba(0,0,0,0.12)] transition hover:bg-[color:var(--gold1)]/90"
+                    className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
                   >
                     <Icon name="phone" className="h-4 w-4" />
                     Zavolejte nám
                   </a>
                   <a
                     href="mailto:info@nisacentrum.cz"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/85"
+                    className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
                   >
                     <Icon name="mail" className="h-4 w-4" />
                     Napište nám e-mail
@@ -626,7 +595,18 @@ export default function Home() {
         title="Služby"
         subtitle="Vyberte, co aktuálně řešíte. Rádi vám doporučíme nejrychlejší a nejbezpečnější postup."
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="relative">
+          <div className="pointer-events-none absolute right-0 top-10 z-0 hidden translate-x-[84%] lg:block">
+            <Image
+              src="/Terka.png"
+              alt="Tým NISA CENTRUM REALITY"
+              width={420}
+              height={630}
+              className="h-auto w-[360px] rounded-2xl object-cover"
+            />
+          </div>
+
+          <div className="relative z-10 grid gap-4 md:grid-cols-2">
           {[
             {
               icon: "keyRound" as const,
@@ -679,7 +659,7 @@ export default function Home() {
                         href={x.cta[1]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-black/85"
+                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white"
                       >
                         <Icon name={x.icon} className="h-4 w-4" />
                         {x.cta[0]}
@@ -687,7 +667,7 @@ export default function Home() {
                     ) : (
                       <Link
                         href={x.cta[1]}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-black/85"
+                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white"
                       >
                         <Icon name={x.icon} className="h-4 w-4" />
                         {x.cta[0]}
@@ -695,7 +675,7 @@ export default function Home() {
                     )}
                     <Link
                       href={x.detail}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_14px_40px_rgba(0,0,0,0.12)] transition hover:bg-[color:var(--gold1)]/90"
+                      className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
                     >
                       <Icon name="arrowRight" className="h-4 w-4" />
                       Detail
@@ -705,6 +685,7 @@ export default function Home() {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </Section>
 
@@ -771,7 +752,7 @@ export default function Home() {
         <div className="mt-8 flex justify-center">
           <Link
             href="/kontakt"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-3.5 text-base font-semibold text-black shadow-[0_14px_40px_rgba(0,0,0,0.12)] transition hover:bg-[color:var(--gold1)]/90"
+            className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-3.5 text-base font-semibold text-black"
           >
             <Icon name="mail" className="h-4 w-4" />
             Poslat jiný dotaz
@@ -861,14 +842,14 @@ export default function Home() {
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
                 href="tel:+420702064442"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
               >
                 <Icon name="phone" className="h-4 w-4" />
                 Zavolat
               </a>
               <a
                 href="mailto:info@nisacentrum.cz"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white/60 px-6 py-3 text-sm font-semibold text-black transition hover:border-[color:var(--gold1)]"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white/60 px-6 py-3 text-sm font-semibold text-black"
               >
                 <Icon name="mail" className="h-4 w-4" />
                 Napsat e-mail
@@ -877,8 +858,9 @@ export default function Home() {
                 href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/85"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
               >
+                <Icon name="handCoins" className="h-4 w-4" />
                 Ocenění zdarma
               </a>
             </div>
@@ -914,7 +896,7 @@ export default function Home() {
             <div className="mt-6">
               <Link
                 href="/kontakt"
-                className="inline-flex items-center justify-center rounded-full border border-black/15 bg-white/60 px-6 py-3 text-sm font-semibold text-black transition hover:border-[color:var(--gold1)]"
+                className="btn-main inline-flex items-center justify-center rounded-full border border-black/15 bg-white/60 px-6 py-3 text-sm font-semibold text-black"
               >
                 Kontaktní stránka →
               </Link>
