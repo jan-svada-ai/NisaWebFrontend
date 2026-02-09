@@ -1,23 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Pro vývoj: proxy na backend
-  rewrites: async () => {
-    return {
-      beforeFiles: [
-        {
-          source: "/api/:path*",
-          destination: `${
-            process.env.BACKEND_URL || "https://nisawebapi.onrender.com"
-          }/api/:path*`,
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
-  },
+  output: "export",
+  trailingSlash: true,
   images: {
-    unoptimized: true, // Nutné pro static export
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
