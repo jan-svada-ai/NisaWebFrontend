@@ -207,7 +207,7 @@ export default function MaklerDetailClient({ slug }: { slug: string }) {
                   )}
 
                   <Link
-                    href={`/nabidka/${i.slug}`}
+                    href={`/nabidka/detail?slug=${encodeURIComponent(i.slug)}`}
                     className="btn-main mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black"
                   >
                     Detail nabídky

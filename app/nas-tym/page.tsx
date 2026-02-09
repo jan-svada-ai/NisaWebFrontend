@@ -64,7 +64,7 @@ export default function NasTymPage() {
             {makleri.map((m) => (
               <Link
                 key={m.id}
-                href={`/nas-tym/${m.slug}`}
+                href={`/nas-tym/detail?slug=${encodeURIComponent(m.slug)}`}
                 className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 p-5 text-center shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-black/5">

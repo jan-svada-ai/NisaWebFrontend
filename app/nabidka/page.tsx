@@ -261,7 +261,7 @@ export default function NabidkaPage() {
               {listings.map((listing) => (
                 <Link
                   key={listing.id}
-                  href={`/nabidka/${listing.slug}`}
+                  href={`/nabidka/detail?slug=${encodeURIComponent(listing.slug)}`}
                   className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-black/5 to-black/10">
