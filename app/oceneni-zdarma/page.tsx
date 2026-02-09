@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Oceneni nemovitosti zdarma | Nisa Centrum Reality",
+  title: "Ocenění nemovitosti zdarma | Nisa Centrum Reality",
   description:
     "Nezavazne a profesionalni oceneni vasi nemovitosti zdarma. Ziskejte realnou trzni hodnotu na zaklade prohlidky a analyzy trhu.",
 };
@@ -41,7 +41,7 @@ export default function OceneniZdarmaPage() {
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-5xl font-bold tracking-tight text-black sm:text-6xl lg:text-7xl">
-              Oceneni nemovitosti zdarma
+              Ocenění nemovitosti zdarma
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-black/70">
               Zjistete realnou trzni hodnotu vasi nemovitosti. Nezavazne,

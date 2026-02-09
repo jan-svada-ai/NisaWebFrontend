@@ -279,11 +279,11 @@ export default function Home() {
 
             <h1 className="mx-auto max-w-5xl text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               <span className="inline-flex flex-col items-center">
-                <span>Prodej a pronajem bez stresu.</span>
+                <span>Prodej a pronájem bez stresu.</span>
                 <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
               </span>
               <span className="mt-4 block text-[0.7em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
-                S durazem na cenu, rychlost a jistotu.
+                S důrazem na cenu, rychlost a jistotu.
               </span>
             </h1>
 
@@ -632,7 +632,8 @@ export default function Home() {
                 "Získat ocenění",
                 "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
               ],
-              detail: "/oceneni-zdarma",
+              detail:
+                "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
             },
             {
               icon: "search" as const,
@@ -682,13 +683,25 @@ export default function Home() {
                         {x.cta[0]}
                       </Link>
                     )}
-                    <Link
-                      href={x.detail}
-                      className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
-                    >
-                      <Icon name="arrowRight" className="h-4 w-4" />
-                      Detail
-                    </Link>
+                    {x.detail.startsWith("http") ? (
+                      <a
+                        href={x.detail}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
+                      >
+                        <Icon name="arrowRight" className="h-4 w-4" />
+                        Detail
+                      </a>
+                    ) : (
+                      <Link
+                        href={x.detail}
+                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
+                      >
+                        <Icon name="arrowRight" className="h-4 w-4" />
+                        Detail
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

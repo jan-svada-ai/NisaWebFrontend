@@ -13,7 +13,7 @@ import {
 import StepCarousel from "./StepCarousel";
 
 export const metadata: Metadata = {
-  title: "Prodej a pronajem nemovitosti | Nisa Centrum Reality",
+  title: "Prodej a pronájem nemovitostí | Nisa Centrum Reality",
   description:
     "Postup prodeje a pronajmu krok za krokem: od konzultace pres prezentaci, inzerci a prohlidky az po smlouvy a bezpecne predani.",
 };
@@ -253,7 +253,7 @@ export default function ProdejPronajemPage() {
         <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
           <div className="mx-auto max-w-5xl">
             <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
-              Prodej a pronajem nemovitosti
+              Prodej a pronájem nemovitostí
             </h1>
             <div className="mx-auto mt-3 h-[6px] w-80 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
 

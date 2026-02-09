@@ -12,7 +12,7 @@ import {
 import StepCarousel from "./StepCarousel";
 
 export const metadata: Metadata = {
-  title: "Vyhledavani nemovitosti na miru | Nisa Centrum Reality",
+  title: "Vyhledávání nemovitosti na míru | Nisa Centrum Reality",
   description:
     "Najdeme nemovitost podle vasich pozadavku. Jasny postup, provereni nabidek a bezpecne dotazeni celeho procesu.",
 };
@@ -160,7 +160,7 @@ export default function VyhledavaniNaMiruPage() {
         <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
           <div className="mx-auto max-w-5xl">
             <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
-              Vyhledavani nemovitosti na miru
+              Vyhledávání nemovitosti na míru
             </h1>
             <div className="mx-auto mt-3 h-[6px] w-80 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
 

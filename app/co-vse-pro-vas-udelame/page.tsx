@@ -2,7 +2,7 @@
 import { Clock3, FileText, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Co vse pro vas udelame | Nisa Centrum Reality",
+  title: "Co vše pro vás uděláme | Nisa Centrum Reality",
   description:
     "Detailni prehled sluzeb pri prodeji a pronajmu nemovitosti krok za krokem.",
 };
@@ -115,7 +115,7 @@ export default function CoVseProVasUdelamePage() {
             NISA CENTRUM REALITY
           </p>
           <h1 className="mt-3 text-5xl font-semibold text-black md:text-6xl">
-            Co vse pro vas udelame
+            Co vše pro vás uděláme
           </h1>
           <div className="mx-auto mt-3 h-[6px] w-64 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
           <p className="mt-4 text-base text-black/70 md:text-lg">

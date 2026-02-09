@@ -58,7 +58,7 @@ export default function Page() {
         <p className="text-sm uppercase tracking-[0.2em] text-black/60">
           Nisa Centrum Reality
         </p>
-        <h1 className="mt-2 text-5xl font-semibold">Kontaktujte nas</h1>
+        <h1 className="mt-2 text-5xl font-semibold">Kontaktujte nás</h1>
         <p className="mt-4 max-w-3xl text-black/70">
           Mate otazky? Chcete domluvit konzultaci nebo zjistit realny postup pro
           prodej, pronajem nebo vyhledavani nemovitosti? Napiste nam nebo
