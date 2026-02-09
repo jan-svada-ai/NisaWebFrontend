@@ -720,7 +720,7 @@ export default function Home() {
         subtitle="Nejčastější otázky k prodeji, pronájmu, provizím, smlouvám a bezpečnosti převodu."
       >
         <div className="relative">
-          <div className="pointer-events-none absolute left-0 -top-8 z-0 hidden -translate-x-[88%] lg:block">
+          <div className="pointer-events-none absolute left-0 -top-8 z-0 hidden -translate-x-[80%] lg:block">
             <Image
               src="/Mirek.png"
               alt="Člen týmu Nisa Centrum Reality"
