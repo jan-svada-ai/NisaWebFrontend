@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Home, Building2, Star, Briefcase } from "lucide-react";
+import { Home, Building2, Star, Briefcase, Clock3 } from "lucide-react";
 
 interface StatItem {
   value: number;
   label: string;
   suffix?: string;
   duration?: number;
-  icon?: "home" | "building" | "star" | "briefcase";
+  icon?: "home" | "building" | "star" | "briefcase" | "clock";
 }
 
 interface StatsSectionProps {
@@ -78,6 +78,8 @@ function getIcon(iconName?: string) {
       return <Star className={iconProps} />;
     case "briefcase":
       return <Briefcase className={iconProps} />;
+    case "clock":
+      return <Clock3 className={iconProps} />;
     default:
       return null;
   }

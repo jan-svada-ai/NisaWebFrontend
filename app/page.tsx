@@ -349,7 +349,7 @@ export default function Home() {
             suffix: "+",
             icon: "building",
           },
-          { value: 15, label: "Let v oboru", suffix: "+", icon: "briefcase" },
+          { value: 15, label: "Let v oboru", suffix: "+", icon: "clock" },
           {
             value: 300,
             label: "Uskutečněných obchodů",
@@ -471,7 +471,7 @@ export default function Home() {
               alt="Tým NISA CENTRUM REALITY"
               width={420}
               height={630}
-              className="h-auto w-[380px] rounded-2xl object-cover scale-x-[-1]"
+              className="h-auto w-[300px] rounded-2xl object-cover scale-x-[-1]"
               priority
             />
           </div>
@@ -481,7 +481,7 @@ export default function Home() {
             {(() => {
               const items = [
                 {
-                  icon: "handshake" as const,
+                  icon: "handCoins" as const,
                   title: "Správné nacenění a strategie",
                   text: 'Cenu nenastavujeme "od stolu". Vycházíme z prohlídky, dat a reálné poptávky v lokalitě.',
                   detail:
@@ -605,17 +605,17 @@ export default function Home() {
         subtitle="Vyberte, co aktuálně řešíte. Rádi vám doporučíme nejrychlejší a nejbezpečnější postup."
       >
         <div className="relative">
-          <div className="pointer-events-none absolute right-0 top-10 z-0 hidden translate-x-[84%] lg:block">
+          <div className="pointer-events-none absolute right-0 top-8 z-0 hidden translate-x-[88%] lg:block">
             <Image
               src="/Terka.png"
               alt="Tým NISA CENTRUM REALITY"
-              width={420}
-              height={630}
-              className="h-auto w-[360px] rounded-2xl object-cover"
+              width={540}
+              height={760}
+              className="h-auto w-[440px] rounded-2xl object-cover"
             />
           </div>
 
-          <div className="relative z-10 grid gap-4 md:grid-cols-2">
+          <div className="relative z-10 mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
           {[
             {
               icon: "keyRound" as const,
