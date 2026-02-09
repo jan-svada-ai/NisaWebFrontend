@@ -38,10 +38,10 @@ export default function SiteHeader() {
     "h-5 w-5 shrink-0 text-black/55 transition group-hover:text-[color:var(--gold2)]";
 
   const centerLabel =
-    "pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center leading-tight";
+    "pointer-events-none absolute left-1/2 top-1/2 w-[calc(100%-2.5rem)] -translate-x-1/2 -translate-y-1/2 text-center leading-tight";
 
   const itemBase =
-    "group relative flex h-14 w-40 items-center px-3 text-[14px] font-medium text-black/80 transition hover:bg-black/5";
+    "group relative flex h-14 w-28 items-center px-2 text-[13px] font-medium text-black/80 transition hover:bg-black/5 lg:w-32 lg:text-[14px] xl:w-36";
 
   const withDivider =
     "after:absolute after:right-0 after:top-2 after:bottom-2 after:w-[2px] after:bg-[color:var(--gold1)]/70 last:after:hidden";
@@ -154,16 +154,14 @@ export default function SiteHeader() {
             <div className={`${itemBase} ${withDivider} relative`}>
               <button
                 type="button"
-                className="flex h-full w-full items-center gap-2"
+                className="flex h-full w-full items-center pl-2 pr-2"
                 aria-haspopup="menu"
               >
                 <MoreHorizontal className={icon} />
                 <span className={centerLabel}>
-                  <span className="inline-flex items-center gap-1">
-                    Více
-                    <ChevronDown className="h-3.5 w-3.5 text-black/55 transition group-hover:text-[color:var(--gold2)]" />
-                  </span>
+                  Více
                 </span>
+                <ChevronDown className="ml-auto h-3.5 w-3.5 text-black/55 transition group-hover:text-[color:var(--gold2)]" />
               </button>
 
               <div className="absolute left-0 top-full z-50 pt-2 opacity-0 translate-y-1 pointer-events-none transition group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
