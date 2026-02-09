@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { use } from "react";
+import { useEffect, useState, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  MapPin,
-  Home,
-  Phone,
-  Mail,
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
+  Home,
+  Mail,
+  MapPin,
+  Phone,
   X,
 } from "lucide-react";
 import { apiUrl } from "@/lib/api";
@@ -58,7 +57,7 @@ export default function DetailPage({
         const result = await response.json();
         setListing(result.data ?? result);
       } catch (error) {
-        console.error("Failed to fetch listing:", error);
+        console.error("Nepodařilo se načíst detail inzerátu:", error);
       } finally {
         setLoading(false);
       }
@@ -77,8 +76,8 @@ export default function DetailPage({
         }}
       >
         <div className="mx-auto max-w-screen-2xl px-4 py-12">
-          <div className="text-center py-12 text-black/50">
-            Načítání detailů...
+          <div className="py-12 text-center text-black/50">
+            Načítání detailu...
           </div>
         </div>
       </main>
@@ -97,12 +96,12 @@ export default function DetailPage({
         <div className="mx-auto max-w-screen-2xl px-4 py-12">
           <Link
             href="/nabidka"
-            className="inline-flex items-center gap-2 text-black/70 hover:text-black mb-6"
+            className="btn-main mb-6 inline-flex items-center gap-2 rounded-full border border-black/20 bg-white px-5 py-2.5 text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             Zpět na nabídku
           </Link>
-          <div className="text-center py-12 text-black/50">
+          <div className="py-12 text-center text-black/50">
             Inzerát nebyl nalezen.
           </div>
         </div>
@@ -121,22 +120,19 @@ export default function DetailPage({
       }}
     >
       <div className="mx-auto max-w-screen-2xl px-4 py-12">
-        {/* Zpět na seznam */}
         <Link
           href="/nabidka"
-          className="inline-flex items-center gap-2 text-black/70 hover:text-black mb-8 transition"
+          className="btn-main mb-8 inline-flex items-center gap-2 rounded-full border border-black/20 bg-white px-5 py-2.5 text-black"
         >
           <ArrowLeft className="h-4 w-4" />
           Zpět na nabídku
         </Link>
 
         <div className="grid gap-8 lg:grid-cols-3">
-          {/* Galerie - Levá strana */}
           <div className="lg:col-span-2">
-            {/* Hlavní obrázek */}
             <div
               onClick={() => setIsLightboxOpen(true)}
-              className="relative h-96 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-black/5 to-black/10 mb-4 cursor-pointer group"
+              className="group relative mb-4 h-96 w-full cursor-pointer overflow-hidden rounded-2xl bg-gradient-to-br from-black/5 to-black/10"
             >
               {hasImages ? (
                 <>
@@ -145,12 +141,11 @@ export default function DetailPage({
                     alt={listing.nazev}
                     fill
                     unoptimized
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                     priority
                   />
-                  {/* Zoom hint */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                    <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-semibold">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/10">
+                    <div className="text-sm font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
                       Klikni pro zvětšení
                     </div>
                   </div>
@@ -161,7 +156,6 @@ export default function DetailPage({
                 </div>
               )}
 
-              {/* Šipky pro přepínání */}
               {hasImages && listing.obrazky.length > 1 && (
                 <>
                   <button
@@ -173,7 +167,7 @@ export default function DetailPage({
                           listing.obrazky.length,
                       );
                     }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 backdrop-blur-sm transition hover:bg-white"
+                    className="btn-main absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2.5 backdrop-blur-sm"
                   >
                     <ChevronLeft className="h-6 w-6 text-black" />
                   </button>
@@ -184,20 +178,18 @@ export default function DetailPage({
                         (prev) => (prev + 1) % listing.obrazky.length,
                       );
                     }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 backdrop-blur-sm transition hover:bg-white"
+                    className="btn-main absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2.5 backdrop-blur-sm"
                   >
                     <ChevronRight className="h-6 w-6 text-black" />
                   </button>
 
-                  {/* Počitadlo */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
                     {selectedImage + 1} / {listing.obrazky.length}
                   </div>
                 </>
               )}
 
-              {/* Badge */}
-              <div className="absolute top-4 right-4 flex gap-2">
+              <div className="absolute right-4 top-4 flex gap-2">
                 {listing.typPonuky && (
                   <span className="rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-bold text-black">
                     {listing.typPonuky === "prodej"
@@ -210,9 +202,8 @@ export default function DetailPage({
               </div>
             </div>
 
-            {/* Thumbnaily */}
             {hasImages && listing.obrazky.length > 1 && (
-              <div className="grid gap-3 grid-cols-4">
+              <div className="grid grid-cols-4 gap-3">
                 {listing.obrazky.map((img, idx) => (
                   <button
                     key={idx}
@@ -235,9 +226,8 @@ export default function DetailPage({
               </div>
             )}
 
-            {/* Info - Specifikace */}
             <div className="mt-8 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur-sm">
-              <h2 className="text-lg font-semibold mb-4 text-black">
+              <h2 className="mb-4 text-lg font-semibold text-black">
                 Parametry nemovitosti
               </h2>
               <div className="grid gap-4 md:grid-cols-3">
@@ -246,7 +236,7 @@ export default function DetailPage({
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Cena
                     </p>
-                    <p className="text-xl font-bold text-black mt-1">
+                    <p className="mt-1 text-xl font-bold text-black">
                       {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
                       <span className="text-sm text-black/60">
                         {listing.mena || "Kč"}
@@ -259,7 +249,7 @@ export default function DetailPage({
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Plocha
                     </p>
-                    <p className="text-xl font-bold text-black mt-1">
+                    <p className="mt-1 text-xl font-bold text-black">
                       {listing.plocha} m²
                     </p>
                   </div>
@@ -269,7 +259,7 @@ export default function DetailPage({
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Pokoje
                     </p>
-                    <p className="text-xl font-bold text-black mt-1">
+                    <p className="mt-1 text-xl font-bold text-black">
                       {listing.pokoje}
                     </p>
                   </div>
@@ -277,39 +267,35 @@ export default function DetailPage({
               </div>
             </div>
 
-            {/* Popis */}
             {listing.popis && (
               <div className="mt-8 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur-sm">
-                <h2 className="text-lg font-semibold mb-4 text-black">Popis</h2>
-                <div className="text-black/80 leading-relaxed whitespace-pre-line">
+                <h2 className="mb-4 text-lg font-semibold text-black">Popis</h2>
+                <div className="whitespace-pre-line leading-relaxed text-black/80">
                   {listing.popis}
                 </div>
               </div>
             )}
           </div>
 
-          {/* SIDEBAR - Pravá strana */}
           <div className="lg:col-span-1">
-            {/* Základní info */}
-            <div className="rounded-2xl border border-black/10 bg-white/80 p-6 backdrop-blur-sm sticky top-24">
-              <h1 className="text-2xl font-bold text-black mb-3">
+            <div className="sticky top-24 rounded-2xl border border-black/10 bg-white/80 p-6 backdrop-blur-sm">
+              <h1 className="mb-3 text-2xl font-bold text-black">
                 {listing.nazev}
               </h1>
 
-              <div className="flex items-start gap-2 mb-6 pb-6 border-b border-black/10">
-                <MapPin className="h-5 w-5 text-[color:var(--gold1)] flex-shrink-0 mt-0.5" />
+              <div className="mb-6 flex items-start gap-2 border-b border-black/10 pb-6">
+                <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-[color:var(--gold1)]" />
                 <div>
-                  <p className="text-black/60 text-sm">Lokalita</p>
+                  <p className="text-sm text-black/60">Lokalita</p>
                   <p className="font-semibold text-black">
                     {listing.mesto?.nazev || "Neuvedeno"}
                   </p>
                 </div>
               </div>
 
-              {/* Typ */}
               {listing.typ && (
-                <div className="mb-6 pb-6 border-b border-black/10">
-                  <p className="text-xs uppercase tracking-wide text-black/50 mb-2">
+                <div className="mb-6 border-b border-black/10 pb-6">
+                  <p className="mb-2 text-xs uppercase tracking-wide text-black/50">
                     Typ nemovitosti
                   </p>
                   <span className="inline-block rounded-lg bg-black/5 px-3 py-1.5 font-semibold text-black">
@@ -324,20 +310,19 @@ export default function DetailPage({
                 </div>
               )}
 
-              {/* Makléř */}
               {listing.makler && (
-                <div className="mb-6 rounded-xl bg-gradient-to-br from-[color:var(--gold1)]/10 to-black/5 p-4 border border-[color:var(--gold1)]/20">
-                  <p className="text-xs uppercase tracking-wide text-black/50 mb-3">
+                <div className="mb-6 rounded-xl border border-[color:var(--gold1)]/20 bg-gradient-to-br from-[color:var(--gold1)]/10 to-black/5 p-4">
+                  <p className="mb-3 text-xs uppercase tracking-wide text-black/50">
                     Váš makléř
                   </p>
-                  <p className="font-semibold text-black mb-3">
+                  <p className="mb-3 font-semibold text-black">
                     {listing.makler.jmeno}
                   </p>
 
                   {listing.makler.telefon && (
                     <a
                       href={`tel:${listing.makler.telefon}`}
-                      className="flex items-center gap-2 text-black/70 hover:text-black transition mb-2"
+                      className="mb-2 flex items-center gap-2 text-black/70 transition hover:text-black"
                     >
                       <Phone className="h-4 w-4" />
                       <span className="text-sm">{listing.makler.telefon}</span>
@@ -347,7 +332,7 @@ export default function DetailPage({
                   {listing.makler.email && (
                     <a
                       href={`mailto:${listing.makler.email}`}
-                      className="flex items-center gap-2 text-black/70 hover:text-black transition"
+                      className="flex items-center gap-2 text-black/70 transition hover:text-black"
                     >
                       <Mail className="h-4 w-4" />
                       <span className="text-sm">{listing.makler.email}</span>
@@ -356,32 +341,28 @@ export default function DetailPage({
                 </div>
               )}
 
-              {/* CTA Tlačítka */}
               <div className="mt-6 space-y-3">
                 <a
                   href={
-                    listing.makler?.telefon
-                      ? `tel:${listing.makler.telefon}`
-                      : "#"
+                    listing.makler?.telefon ? `tel:${listing.makler.telefon}` : "#"
                   }
-                  className="block w-full rounded-xl bg-[color:var(--gold1)] py-3 text-center font-semibold text-black transition hover:bg-[color:var(--gold2)]"
+                  className="btn-main inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--gold1)] py-3 font-semibold text-black"
                 >
+                  <Phone className="h-4 w-4" />
                   Zavolat
                 </a>
                 <a
                   href={
-                    listing.makler?.email
-                      ? `mailto:${listing.makler.email}`
-                      : "#"
+                    listing.makler?.email ? `mailto:${listing.makler.email}` : "#"
                   }
-                  className="block w-full rounded-xl border border-black/20 py-3 text-center font-semibold text-black transition hover:bg-white/40"
+                  className="btn-main inline-flex w-full items-center justify-center gap-2 rounded-xl border border-black/20 bg-white py-3 font-semibold text-black"
                 >
+                  <Mail className="h-4 w-4" />
                   Napsat zprávu
                 </a>
               </div>
 
-              {/* Metadata */}
-              <div className="mt-6 pt-6 border-t border-black/10 text-xs text-black/50">
+              <div className="mt-6 border-t border-black/10 pt-6 text-xs text-black/50">
                 <p>ID inzerátu: {listing.id}</p>
                 <p>
                   Publikováno:{" "}
@@ -393,20 +374,17 @@ export default function DetailPage({
         </div>
       </div>
 
-      {/* LIGHTBOX MODAL */}
       {isLightboxOpen && hasImages && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
-          <div className="relative w-full h-full max-w-5xl max-h-[90vh] flex items-center justify-center">
-            {/* Zavřít */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
+          <div className="relative flex h-full max-h-[90vh] w-full max-w-5xl items-center justify-center">
             <button
               onClick={() => setIsLightboxOpen(false)}
-              className="absolute top-4 right-4 z-50 rounded-full bg-white/20 p-2 backdrop-blur-sm transition hover:bg-white/30 text-white"
+              className="btn-main absolute right-4 top-4 z-50 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm"
             >
               <X className="h-6 w-6" />
             </button>
 
-            {/* Hlavní obrázek */}
-            <div className="relative w-full h-full">
+            <div className="relative h-full w-full">
               <Image
                 src={listing.obrazky[selectedImage].url}
                 alt={listing.nazev}
@@ -417,7 +395,6 @@ export default function DetailPage({
               />
             </div>
 
-            {/* Šipky */}
             {listing.obrazky.length > 1 && (
               <>
                 <button
@@ -428,7 +405,7 @@ export default function DetailPage({
                         listing.obrazky.length,
                     )
                   }
-                  className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 backdrop-blur-sm transition hover:bg-white/30 text-white"
+                  className="btn-main absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm"
                 >
                   <ChevronLeft className="h-8 w-8" />
                 </button>
@@ -438,14 +415,13 @@ export default function DetailPage({
                       (prev) => (prev + 1) % listing.obrazky.length,
                     )
                   }
-                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 backdrop-blur-sm transition hover:bg-white/30 text-white"
+                  className="btn-main absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm"
                 >
                   <ChevronRight className="h-8 w-8" />
                 </button>
               </>
             )}
 
-            {/* Počitadlo */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
               {selectedImage + 1} / {listing.obrazky.length}
             </div>

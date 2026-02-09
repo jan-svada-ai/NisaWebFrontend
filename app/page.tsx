@@ -719,8 +719,26 @@ export default function Home() {
         title="Časté dotazy"
         subtitle="Nejčastější otázky k prodeji, pronájmu, provizím, smlouvám a bezpečnosti převodu."
       >
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)] lg:items-start">
-          <div className="grid gap-3">
+        <div className="grid gap-6 lg:grid-cols-[minmax(320px,0.8fr)_minmax(0,1.2fr)] lg:items-start">
+          <aside className="order-2 overflow-hidden rounded-3xl border border-black/10 bg-white/75 shadow-sm lg:order-1 lg:sticky lg:top-28">
+            <div className="relative aspect-[4/5] w-full">
+              <Image
+                src="/Mirek.png"
+                alt="Člen týmu Nisa Centrum Reality"
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            <div className="border-t border-black/10 p-5">
+              <p className="text-lg font-semibold text-black">Máte další otázky?</p>
+              <p className="mt-2 text-sm leading-relaxed text-black/70">
+                Ozvěte se nám a projdeme vaši situaci krok za krokem. Rychle,
+                srozumitelně a bez závazků.
+              </p>
+            </div>
+          </aside>
+
+          <div className="order-1 grid gap-3 lg:order-2">
             {[
             {
               q: "Jaké služby nabízíte a co vše je jejich součástí?",
@@ -771,24 +789,6 @@ export default function Home() {
               </details>
             ))}
           </div>
-
-          <aside className="overflow-hidden rounded-3xl border border-black/10 bg-white/75 shadow-sm lg:sticky lg:top-28">
-            <div className="relative aspect-[4/5] w-full">
-              <Image
-                src="/Mirek.png"
-                alt="Člen týmu Nisa Centrum Reality"
-                fill
-                className="object-cover object-top"
-              />
-            </div>
-            <div className="border-t border-black/10 p-5">
-              <p className="text-lg font-semibold text-black">Máte další otázky?</p>
-              <p className="mt-2 text-sm leading-relaxed text-black/70">
-                Ozvěte se nám a projdeme vaši situaci krok za krokem. Rychle,
-                srozumitelně a bez závazků.
-              </p>
-            </div>
-          </aside>
         </div>
 
         <div className="mt-8 flex justify-center">
