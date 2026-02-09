@@ -1,14 +1,12 @@
-
-import Link from "next/link";
+﻿import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ocenění nemovitosti zdarma | Nisa Centrum Reality",
+  title: "Oceneni nemovitosti zdarma | Nisa Centrum Reality",
   description:
-    "Nezávazné a profesionální ocenění vaší nemovitosti zdarma. Získáte reálnou tržní hodnotu založenou na prohlídce a analýze trhu.",
+    "Nezavazne a profesionalni oceneni vasi nemovitosti zdarma. Ziskejte realnou trzni hodnotu na zaklade prohlidky a analyzy trhu.",
 };
 
-// Ikona komponenta
 function Icon({ name, className = "" }: { name: string; className?: string }) {
   const icons: Record<string, string> = {
     shield:
@@ -39,40 +37,44 @@ function Icon({ name, className = "" }: { name: string; className?: string }) {
 export default function OceneniZdarmaPage() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero sekce */}
       <section className="relative overflow-hidden border-b border-black/10 bg-gradient-to-br from-[#F6E3B1]/20 via-white to-white pt-24 pb-16">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-black sm:text-5xl lg:text-6xl">
-              Ocenění nemovitosti zdarma
+            <h1 className="text-5xl font-bold tracking-tight text-black sm:text-6xl lg:text-7xl">
+              Oceneni nemovitosti zdarma
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-black/70">
-              Zjistěte reálnou tržní hodnotu vaší nemovitosti. Nezávazně,
-              profesionálně a zcela zdarma.
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-black/70">
+              Zjistete realnou trzni hodnotu vasi nemovitosti. Nezavazne,
+              profesionalne a bez skrytych podminek.
+            </p>
+            <p className="mx-auto mt-3 max-w-3xl text-lg leading-relaxed text-black/70">
+              Oceneni vychazi z osobni prohlidky, aktualnich dat z trhu a
+              dlouhodobe znalosti regionu. Dostanete jasny zaklad pro dalsi
+              rozhodnuti.
             </p>
             <div className="mt-8">
               <a
                 href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                className="btn-main inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
               >
-                Získat ocenění zdarma
+                Ziskat oceneni zdarma
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Jak funguje ocenění */}
       <section className="border-b border-black/10 py-20">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Jak probíhá ocenění
+            <h2 className="text-4xl font-bold text-black sm:text-5xl">
+              Jak probiha oceneni
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Jednoduše a rychle - do 24 hodin máte orientační cenu
+            <p className="mx-auto mt-4 max-w-3xl text-lg text-black/70">
+              Jednoduchy a srozumitelny postup od prvniho kontaktu po
+              orientacni cenove rozpeti.
             </p>
           </div>
 
@@ -80,18 +82,18 @@ export default function OceneniZdarmaPage() {
             {[
               {
                 step: "1",
-                title: "Vyplňte formulář",
-                desc: "Zadejte základní údaje o vaší nemovitosti - adresu, typ, velikost a stav.",
+                title: "Vyplnite zakladni udaje",
+                desc: "Zadate informace o nemovitosti: lokalitu, typ, velikost, stav a casovou predstavu.",
               },
               {
                 step: "2",
-                title: "Osobní prohlídka",
-                desc: "Domluví se osobní prohlídka, při které si nemovitost pečlivě prohlédneme.",
+                title: "Probehne prohlidka",
+                desc: "Podivame se na nemovitost osobne a zhodnotime jeji skutecny stav i prezentacni potencial.",
               },
               {
                 step: "3",
-                title: "Získáte ocenění",
-                desc: "Do 24 hodin obdržíte reálnou tržní cenu založenou na analýze trhu a srovnání.",
+                title: "Dostanete odhad",
+                desc: "Obdrzite orientacni trzni cenu s vysvetlenim, z ceho vychazi a jak ji dal vyuzit.",
               },
             ].map((item, i) => (
               <div key={i} className="text-center">
@@ -108,12 +110,11 @@ export default function OceneniZdarmaPage() {
         </div>
       </section>
 
-      {/* Co zahrnuje ocenění */}
       <section className="border-b border-black/10 bg-[#F6E3B1]/10 py-20">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Co zahrnuje naše ocenění
+            <h2 className="text-4xl font-bold text-black sm:text-5xl">
+              Co zahrnuje nase oceneni
             </h2>
           </div>
 
@@ -121,33 +122,33 @@ export default function OceneniZdarmaPage() {
             {[
               {
                 icon: "eye",
-                title: "Osobní prohlídka",
-                desc: "Navštívíme vaši nemovitost, prohlédneme si její stav, vybavení a dispozice.",
+                title: "Osobni prohlidka",
+                desc: "Navstivime vasi nemovitost, zhodnotime dispozici, stav i detaily, ktere maji vliv na cenu.",
               },
               {
                 icon: "chart",
-                title: "Analýza trhu",
-                desc: "Porovnáme ceny srovnatelných nemovitostí v okolí a aktuální situaci na trhu.",
+                title: "Analyza trhu",
+                desc: "Porovname ceny srovnatelnych nemovitosti v okoli a aktualni trzni situaci.",
               },
               {
                 icon: "document",
-                title: "Detailní zpráva",
-                desc: "Obdržíte písemné ocenění s orientačním rozpětím prodejní ceny.",
+                title: "Jasny vystup",
+                desc: "Dostanete srozumitelny odhad ceny a doporuceni, jak postupovat dal pri prodeji nebo pronajmu.",
               },
               {
                 icon: "check",
-                title: "Nezávazné",
-                desc: "Ocenění je zcela nezávazné - nemusíte s námi uzavřít smlouvu.",
+                title: "Nezavazny proces",
+                desc: "Oceneni je nezavazne. Mate prostor se rozhodnout, jestli chcete v dalsim kroku spolupracovat.",
               },
               {
                 icon: "shield",
-                title: "Bez skrytých poplatků",
-                desc: "Opravdu zdarma, bez jakýchkoliv skrytých nákladů nebo závazků.",
+                title: "Bez skrytych poplatku",
+                desc: "Opravdu zdarma, bez skrytych nakladu a bez neprijemnych prekvapeni.",
               },
               {
                 icon: "home",
-                title: "Doporučení postupu",
-                desc: "Poradíme vám, jak připravit nemovitost na prodej a dosáhnout nejlepší ceny.",
+                title: "Doporuceni strategie",
+                desc: "Navrhneme dalsi postup, jak nemovitost pripravit na trh a jak zvysit sanci na lepsi vysledek.",
               },
             ].map((item, i) => (
               <div
@@ -169,32 +170,31 @@ export default function OceneniZdarmaPage() {
         </div>
       </section>
 
-      {/* Proč si nechat ocenit */}
       <section className="py-20">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Proč si nechat nemovitost ocenit
+            <h2 className="text-4xl font-bold text-black sm:text-5xl">
+              Proc si nechat nemovitost ocenit
             </h2>
           </div>
 
           <div className="mt-12 space-y-6">
             {[
               {
-                title: "Reálná tržní cena",
-                desc: "Zjistíte skutečnou hodnotu vaší nemovitosti na aktuálním trhu, ne jen odhad podle internetových kalkulaček.",
+                title: "Realna trzni cena",
+                desc: "Ziskate skutecnou predstavu o hodnote nemovitosti, ne jen orientacni cislo z online kalkulace.",
               },
               {
-                title: "Maximalizace zisku",
-                desc: "Správné ocenění je klíčem k dosažení nejvyšší možné prodejní ceny. Příliš vysoká cena odradí kupce, příliš nízká vás připraví o peníze.",
+                title: "Lepci vyjednavaci pozice",
+                desc: "Spravne naceneni je zaklad pro vyssi finalni cenu i pro rychlejsi rozhodovani zajemcu.",
               },
               {
-                title: "Rychlejší prodej",
-                desc: "Realisticky oceněná nemovitost se prodá rychleji a s menším počtem vyjednávání.",
+                title: "Rychlejsi obchod",
+                desc: "Realisticky nastavena cena zkracuje dobu inzerce a omezuje zbytecna kola vyjednavani.",
               },
               {
-                title: "Profesionální poradenství",
-                desc: "Dozvíte se, jak připravit nemovitost na prodej a co můžete zlepšit pro dosažení vyšší ceny.",
+                title: "Strategie dalsich kroku",
+                desc: "Dozvite se, co pred prodejem upravit, na co dat duraz v prezentaci a jak nastavit idealni postup.",
               },
             ].map((item, i) => (
               <div
@@ -213,31 +213,30 @@ export default function OceneniZdarmaPage() {
         </div>
       </section>
 
-      {/* CTA sekce */}
       <section className="border-t border-black/10 bg-gradient-to-br from-[#F6E3B1]/20 to-white py-20">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Získejte ocenění ještě dnes
+            <h2 className="text-4xl font-bold text-black sm:text-5xl">
+              Ziskejte oceneni jeste dnes
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Vyplňte jednoduchý formulář a do 24 hodin se vám ozveme s
-              orientačním oceněním.
+              Vyplnte jednoduchy formular a ozveme se vam s navrhem dalsiho
+              postupu.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <a
                 href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                className="btn-main inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
               >
-                Vyplnit formulář
+                Vyplnit formular
               </a>
               <Link
                 href="/kontakt"
-                className="inline-flex items-center justify-center rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black transition hover:border-[color:var(--gold1)]"
+                className="btn-main inline-flex items-center justify-center rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
               >
-                Kontaktovat přímo
+                Kontaktovat primo
               </Link>
             </div>
           </div>

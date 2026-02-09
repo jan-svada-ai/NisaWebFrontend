@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import type { Metadata } from "next";
 import {
   ArrowRight,
@@ -13,9 +13,9 @@ import {
 import StepCarousel from "./StepCarousel";
 
 export const metadata: Metadata = {
-  title: "Prodej a pronájem nemovitostí | Nisa Centrum Reality",
+  title: "Prodej a pronajem nemovitosti | Nisa Centrum Reality",
   description:
-    "Postup prodeje a pronájmu krok za krokem: od konzultace přes prezentaci, inzerci a prohlídky až po smlouvy a bezpečné předání.",
+    "Postup prodeje a pronajmu krok za krokem: od konzultace pres prezentaci, inzerci a prohlidky az po smlouvy a bezpecne predani.",
 };
 
 type StepCard = {
@@ -40,56 +40,63 @@ const saleSteps: StepCard[] = [
     id: "prodej-konzultace",
     number: 1,
     title: "Konzultace",
-    description: "Probereme cíle, stav nemovitosti a navrhneme realistický plán.",
-    duration: "1-2 týdny",
+    description:
+      "Probereme cil prodeje, stav nemovitosti i casovy plan. Hned na zacatku nastavime realistickou strategii.",
+    duration: "1-2 tydny",
     icon: "users",
   },
   {
     id: "prodej-naceneni",
     number: 2,
-    title: "Nacenění",
-    description: "Na základě dat z trhu nastavíme cenu s potenciálem rychlého prodeje.",
-    duration: "3-7 dní",
+    title: "Naceneni",
+    description:
+      "Na zaklade dat z trhu a lokalni poptavky nastavime cenu, ktera podpori rychly a zaroven vyhodny prodej.",
+    duration: "3-7 dni",
     icon: "handCoins",
   },
   {
     id: "prodej-prezentace",
     number: 3,
     title: "Foto a homestaging",
-    description: "Připravíme prostor, foto i video tak, aby nabídka zaujala na první pohled.",
-    duration: "4-10 dní",
+    description:
+      "Pripravime prostor, foto i video tak, aby nabidka pusobila profesionalne a zaujala hned pri prvnim kontaktu.",
+    duration: "4-10 dni",
     icon: "camera",
   },
   {
     id: "prodej-inzerce",
     number: 4,
     title: "Inzerce",
-    description: "Spouštíme inzerci na klíčových portálech a cílenou propagaci.",
-    duration: "2-5 dní",
+    description:
+      "Spustime inzerci na klicovych portalech a doplnime ji cilene propagaci na relevantni publikum.",
+    duration: "2-5 dni",
     icon: "megaphone",
   },
   {
     id: "prodej-prohlidky",
     number: 5,
-    title: "Prohlídky",
-    description: "Organizujeme prohlídky, řešíme dotazy a vedeme vyjednávání.",
-    duration: "1-6 týdnů",
+    title: "Prohlidky",
+    description:
+      "Organizujeme prohlidky, vedeme komunikaci se zajemci a profesionalne ridime vyjednavani podminek.",
+    duration: "1-6 tydnu",
     icon: "home",
   },
   {
     id: "prodej-smlouvy",
     number: 6,
-    title: "Vytvoření a podepsání smluv",
-    description: "Zajistíme smlouvy a bezpečný průběh transakce s právním servisem.",
-    duration: "2-3 týdny",
+    title: "Vytvoreni a podepsani smluv",
+    description:
+      "Zajistime smlouvy, pravni dohled i bezpecny platebni proces. Hlidame terminy a navaznost jednotlivych kroku.",
+    duration: "2-3 tydny",
     icon: "fileSignature",
   },
   {
     id: "prodej-hotovo",
     number: 7,
-    title: "Máme hotovo",
-    description: "Dokončíme převod a předání. Kontrolujeme, aby vše sedělo do detailu.",
-    duration: "2-5 dní",
+    title: "Mame hotovo",
+    description:
+      "Dokoncime prevod a predani nemovitosti. Kontrolujeme, aby byla transakce uzavrena bez otevrenych bodu.",
+    duration: "2-5 dni",
     icon: "checkCircle",
   },
 ];
@@ -99,63 +106,71 @@ const rentSteps: StepCard[] = [
     id: "pronajem-konzultace",
     number: 1,
     title: "Konzultace",
-    description: "Nastavíme strategii pronájmu a optimální cenovou hladinu.",
-    duration: "3-7 dní",
+    description:
+      "Nastavime strategii pronajmu, cilovou skupinu a idealni nacasovani uvedeni nemovitosti na trh.",
+    duration: "3-7 dni",
     icon: "users",
   },
   {
     id: "pronajem-naceneni",
     number: 2,
-    title: "Nacenění",
-    description: "Spočítáme tržní nájemné podle lokality, dispozice a stavu.",
-    duration: "2-5 dní",
+    title: "Naceneni",
+    description:
+      "Spocitame trzni najemne podle lokality, dispozice a stavu, aby byl pronajem konkurenceschopny i vyhodny.",
+    duration: "2-5 dni",
     icon: "handCoins",
   },
   {
     id: "pronajem-prezentace",
     number: 3,
-    title: "Foto a příprava inzerátu",
-    description: "Vytvoříme prezentaci, která přitáhne kvalitní zájemce.",
-    duration: "3-7 dní",
+    title: "Foto a priprava inzeratu",
+    description:
+      "Vytvorime prezentaci, ktera pritahne kvalitni zajemce a predem odpovi na nejcastejsi dotazy.",
+    duration: "3-7 dni",
     icon: "camera",
   },
   {
     id: "pronajem-inzerce",
     number: 4,
     title: "Inzerce",
-    description: "Zveřejníme nabídku a aktivně komunikujeme se zájemci.",
-    duration: "2-5 dní",
+    description:
+      "Zverejnime nabidku, filtrujeme poptavky a aktivne komunikujeme jen s relevantnimi zajemci.",
+    duration: "2-5 dni",
     icon: "megaphone",
   },
   {
     id: "pronajem-zajemci",
     number: 5,
-    title: "Prověření zájemců",
-    description: "Prověříme bonitu a spolehlivost zájemců, aby pronájem byl bezpečný.",
-    duration: "3-7 dní",
+    title: "Provereni zajemcu",
+    description:
+      "Proverime bonitu a spolehlivost zajemcu, aby byl pronajem dlouhodobe stabilni a bezpecny.",
+    duration: "3-7 dni",
     icon: "searchCheck",
   },
   {
     id: "pronajem-prohlidky",
     number: 6,
-    title: "Prohlídky",
-    description: "Vedeme prohlídky a vybereme nejvhodnějšího nájemníka.",
-    duration: "1-3 týdny",
+    title: "Prohlidky",
+    description:
+      "Vedeme prohlidky a pomuzeme vybrat nejvhodnejsiho najemnika podle vasich priorit.",
+    duration: "1-3 tydny",
     icon: "home",
   },
   {
     id: "pronajem-smlouvy",
     number: 7,
-    title: "Vytvoření a podepsání smluv",
-    description: "Připravíme nájemní dokumentaci a dohlédneme na její podpis.",
-    duration: "3-7 dní",
+    title: "Vytvoreni a podepsani smluv",
+    description:
+      "Pripravime najemni dokumentaci, predavaci protokoly i pravidla spoluprace mezi pronajimatelem a najemcem.",
+    duration: "3-7 dni",
     icon: "fileSignature",
   },
   {
     id: "pronajem-hotovo",
     number: 8,
-    title: "Máme hotovo",
-    description: "Proběhne předání bytu/domu a kompletní administrativa.",
+    title: "Mame hotovo",
+    description:
+      "Probehne predani bytu nebo domu a finalni administrativni uzavreni celeho procesu.",
     duration: "1-3 dny",
     icon: "checkCircle",
   },
@@ -164,31 +179,31 @@ const rentSteps: StepCard[] = [
 const benefits = [
   {
     icon: ShieldCheck,
-    title: "Právní jistota",
-    text: "Smlouvy i financování držíme pod kontrolou ve spolupráci s právními specialisty.",
+    title: "Pravni jistota",
+    text: "Smlouvy i financovani drzime pod kontrolou ve spolupraci s pravnimi specialisty.",
     detail:
-      "Každý krok má jasná pravidla. Řešíme rizika předem, hlídáme termíny a bezpečnost plateb.",
+      "Kazdy krok ma jasna pravidla. Resime rizika predem, hlidame terminy a bezpecnost plateb tak, aby byl obchod transparentni pro vsechny strany.",
   },
   {
     icon: Sparkles,
-    title: "Lepší cena a podmínky",
-    text: "Nastavíme strategii tak, aby vaše nemovitost na trhu neztratila hodnotu.",
+    title: "Lepci cena a podminky",
+    text: "Nastavime strategii tak, aby vase nemovitost na trhu neztratila hodnotu.",
     detail:
-      "Pracujeme s daty z regionu, vyjednáváme profesionálně a cíleně. Výsledkem je vyšší výnos i jistota.",
+      "Pracujeme s daty z regionu, profesionalne vyjednavame a drzime jednotnou komunikaci. Vysledkem je vyssi vynos i mensi prostor pro zbytecne slevy.",
   },
   {
     icon: UserRound,
-    title: "Úspora času",
-    text: "Komunikaci se zájemci, prohlídky i papírování bereme na sebe.",
+    title: "Uspora casu",
+    text: "Komunikaci se zajemci, prohlidky i administrativu bereme na sebe.",
     detail:
-      "Máte průběžné informace, ale nemusíte řešit operativu. Soustředíte se na své priority, my na obchod.",
+      "Mate prubezne informace, ale nemusite resit operativu. Soustredite se na sve priority, zatimco my ridime tempo, poradi kroku a navaznost celeho obchodu.",
   },
   {
     icon: SearchCheck,
-    title: "Výběr kvalitních zájemců",
-    text: "U pronájmu i prodeje pracujeme s prověřením poptávek, ne jen s počtem kontaktů.",
+    title: "Vyber kvalitnich zajemcu",
+    text: "U pronajmu i prodeje pracujeme s proverovanim poptavek, ne jen s poctem kontaktu.",
     detail:
-      "Lepší kvalita zájemců znamená méně komplikací, rychlejší uzavření a bezpečnější průběh obchodu.",
+      "Lepci kvalita zajemcu znamena mene komplikaci, rychlejsi uzavreni a bezpecnejsi prubeh obchodu. Zamereni je na vysledek, ne na pocet telefonatu.",
   },
 ];
 
@@ -201,8 +216,8 @@ function SectionHeading({
 }) {
   return (
     <div className="mx-auto max-w-4xl text-center">
-      <h2 className="text-3xl font-semibold text-black md:text-4xl">{title}</h2>
-      <div className="mx-auto mt-3 h-[6px] w-56 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+      <h2 className="text-4xl font-semibold text-black md:text-5xl">{title}</h2>
+      <div className="mx-auto mt-3 h-[6px] w-64 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
       <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">
         {subtitle}
       </p>
@@ -237,14 +252,14 @@ export default function ProdejPronajemPage() {
 
         <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
           <div className="mx-auto max-w-5xl">
-            <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
-              Prodej a pronájem nemovitostí
+            <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+              Prodej a pronajem nemovitosti
             </h1>
-            <div className="mx-auto mt-3 h-[6px] w-72 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+            <div className="mx-auto mt-3 h-[6px] w-80 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
 
             <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
-              Transparentní postup krok za krokem. Od první konzultace až po
-              bezpečné dokončení obchodu.
+              Transparentni postup krok za krokem. Od prvni konzultace pres
+              pripravu a marketing az po bezpecne dokonceni obchodu.
             </p>
 
             <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
@@ -253,21 +268,21 @@ export default function ProdejPronajemPage() {
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
                 <KeyRound className="h-5 w-5" />
-                Jak probíhá prodej?
+                Jak probiha prodej?
               </a>
               <Link
                 href="/kontakt"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
                 <Mail className="h-5 w-5" />
-                Kontaktujte nás
+                Kontaktujte nas
               </Link>
               <a
                 href="#jak-probiha-pronajem"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
                 <SearchCheck className="h-5 w-5" />
-                Jak probíhá pronájem?
+                Jak probiha pronajem?
               </a>
             </div>
           </div>
@@ -280,23 +295,30 @@ export default function ProdejPronajemPage() {
       >
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Jak probíhá prodej?"
-            subtitle="Každý krok má jasný cíl, termín i výstup. Díky tomu víte, co se děje, proč se to děje a jaký je další navazující krok."
+            title="Jak probiha prodej?"
+            subtitle="Kazdy krok ma jasny cil, termin i vystup. Vzdy vite, co se deje, proc se to deje a jaky je navazujici krok."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Prodej vedeme jako řízený proces. Nejde jen o inzerát, ale o správné
-            načasování, kvalitu prezentace, práci se zájemci a bezpečné
-            dotažení smluvní části. V každé fázi držíme přehled i tempo.
+            Prodej vedeme jako rizeny proces. Nejde jen o inzerat, ale o
+            nacasovani, kvalitu prezentace, praci se zajemci a bezpecne
+            dotazeni smluvni casti. V kazde fazi hlidame tempo, komunikaci i
+            konkretni obchodni cil.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            U kazde nemovitosti nastavime strategii podle lokality, typu klienta
+            a aktualni poptavky. Diky tomu nevznikaji zbytecne prodlevy a
+            majitel dostava prubezne informace, ktere pomahaji delat dobra
+            rozhodnuti.
           </p>
           <StepCarousel steps={saleSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
-            Celkový odhad: přibližně 1-3 měsíce podle trhu a typu nemovitosti.
+            Celkovy odhad: priblizne 1-3 mesice podle trhu a typu nemovitosti.
           </p>
           <p className="mx-auto mt-3 max-w-3xl text-center text-sm leading-relaxed text-black/60">
-            U dobře naceněných nemovitostí v silné lokalitě se proces typicky
-            zkracuje. U specifických nemovitostí může být naopak potřeba delší
-            vyjednávání a více kol prohlídek.
+            U dobre nacenenych nemovitosti v silne lokalite se proces typicky
+            zkracuje. U specifickych nemovitosti muze byt naopak potreba delsiho
+            vyjednavani a vice kol prohlidek.
           </p>
         </div>
       </section>
@@ -307,23 +329,28 @@ export default function ProdejPronajemPage() {
       >
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Jak probíhá pronájem?"
-            subtitle="Pronájem bývá rychlejší než prodej, ale klíčový je pečlivý výběr nájemce a kvalitně připravená smluvní dokumentace."
+            title="Jak probiha pronajem?"
+            subtitle="Pronajem byva rychlejsi nez prodej, ale klicovy je peclivy vyber najemce a kvalitne pripravena smluvni dokumentace."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            U pronájmu je cílem nejen rychlost obsazení, ale hlavně stabilita.
-            Proto věnujeme větší důraz prověření zájemců, jasným pravidlům
-            nájemního vztahu a kvalitnímu předání nemovitosti.
+            U pronajmu je cilem nejen rychlost obsazeni, ale hlavne stabilita.
+            Proto klademe duraz na provereni zajemcu, jasna pravidla najemniho
+            vztahu a kvalitni predani nemovitosti.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Dobry pronajem znamena mene starosti pro majitele i najemce.
+            Resime komunikaci, dokumentaci, predavaci protokoly i navazujici
+            kroky tak, aby byl proces prehledny a pravne bezpecny.
           </p>
           <StepCarousel steps={rentSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
-            Celkový odhad: přibližně 1-2 měsíce podle lokality a poptávky.
+            Celkovy odhad: priblizne 1-2 mesice podle lokality a poptavky.
           </p>
           <p className="mx-auto mt-3 max-w-3xl text-center text-sm leading-relaxed text-black/60">
-            Při silné poptávce se pronájem často uzavře výrazně rychleji.
-            Naopak u náročnějších dispozic nebo specifických podmínek počítejte
-            s delším filtrováním zájemců.
+            Pri silne poptavce se pronajem casto uzavre vyrazne rychleji.
+            U narocnejsich dispozic nebo specifickych podminek pocitejte s
+            delsim filtrovani zajemcu.
           </p>
         </div>
       </section>
@@ -331,13 +358,17 @@ export default function ProdejPronajemPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Proč prodat nebo pronajmout s námi"
-            subtitle="Kombinujeme obchodní zkušenost, marketing, procesní řízení a právní jistotu v jednom celku."
+            title="Proc prodat nebo pronajmout s nami"
+            subtitle="Kombinujeme obchodni zkusenost, marketing, procesni rizeni a pravni jistotu v jednom celku."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Každý obchod stavíme na datech, komunikaci a důvěře. Díky tomu
-            nevznikají zbytečné prodlevy, klient má přehled a výsledek drží
-            kvalitu, kterou od profesionální realitní služby očekáváte.
+            Kazdy obchod stavime na datech, komunikaci a duvere. Klient ma
+            prubezny prehled, jasne terminy a partnera, ktery hlida kvalitu
+            vysledku od prvniho kroku az po podpis smluv.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            V praxi to znamena mene nejistoty, rychlejsi rozhodovani a lepsi
+            cenu nebo podminky. Presne to je role profesionalniho maklere.
           </p>
           <div className="mx-auto mt-10 grid max-w-5xl gap-3">
             {benefits.map((item) => {
@@ -376,12 +407,13 @@ export default function ProdejPronajemPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
           <SectionHeading
-            title="Začněte ještě dnes"
-            subtitle="Stačí jeden kontakt. Navrhneme nejlepší postup přesně pro vaši situaci a vezmeme za něj odpovědnost."
+            title="Zacnete jeste dnes"
+            subtitle="Staci jeden kontakt. Navrhneme nejlepsi postup presne pro vasi situaci a vezmeme za nej odpovednost."
           />
           <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70">
-            Ať řešíte prodej, pronájem nebo jen potřebujete srovnat možnosti,
-            připravíme vám jasné kroky bez zbytečných komplikací.
+            At resite prodej, pronajem nebo jen potrebujete srovnat moznosti,
+            pripravime jasne kroky bez zbytecnych komplikaci. Na zacatku
+            nastavime realny plan a pak ho krok po kroku naplnime.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
@@ -389,14 +421,14 @@ export default function ProdejPronajemPage() {
               className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
             >
               <Mail className="h-4 w-4" />
-              Kontaktujte nás
+              Kontaktujte nas
             </Link>
             <Link
               href="/co-vse-pro-vas-udelame"
               className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
             >
               <ArrowRight className="h-4 w-4" />
-              Podrobný popis služeb
+              Podrobny popis sluzeb
             </Link>
           </div>
         </div>

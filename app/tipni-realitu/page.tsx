@@ -86,7 +86,7 @@ const benefits = [
     title: "Jasna pravidla odmeny",
     text: "Predem vite, kdy a za jakych podminek odmenu ziskate.",
     detail:
-      "Vysvetlime vam postup i podminky vyplaceni. Zadna nejasna pravidla, zadne prekvapeni na konci procesu.",
+      "Vysvetlime vam postup i podminky vyplaceni. Zadna nejasna pravidla a zadna prekvapeni na konci procesu.",
   },
   {
     icon: Sparkles,
@@ -106,8 +106,8 @@ function SectionHeading({
 }) {
   return (
     <div className="mx-auto max-w-4xl text-center">
-      <h2 className="text-3xl font-semibold text-black md:text-4xl">{title}</h2>
-      <div className="mx-auto mt-3 h-[6px] w-56 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+      <h2 className="text-4xl font-semibold text-black md:text-5xl">{title}</h2>
+      <div className="mx-auto mt-3 h-[6px] w-64 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
       <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">{subtitle}</p>
     </div>
   );
@@ -140,10 +140,10 @@ export default function TipniRealituPage() {
 
         <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
           <div className="mx-auto max-w-5xl">
-            <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+            <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               Posli tip na reality
             </h1>
-            <div className="mx-auto mt-3 h-[6px] w-72 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+            <div className="mx-auto mt-3 h-[6px] w-80 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
 
             <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
               Mate kontakt na majitele, ktery uvazuje o prodeji nebo pronajmu?
@@ -191,6 +191,11 @@ export default function TipniRealituPage() {
             prevezmeme kompletni realizaci obchodu a vy se nemusite starat o
             marketing, prohlidky ani smlouvy.
           </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            V praxi je dulezite hlavne to, aby byl tip aktualni, kontakt overitelny
+            a majitel byl otevreny dalsimu jednani. S tim vam pomuzeme uz pri
+            prvnim hovoru.
+          </p>
           <StepCarousel steps={rewardSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
@@ -208,6 +213,11 @@ export default function TipniRealituPage() {
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
             Kombinujeme lokalni znalost, marketing a pravni jistotu. Vase role
             je jednoducha: poslat tip. O zbytek se postara nas tym.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Kazdy relevantni tip ma realnou hodnotu. Proto nastavujeme jasna
+            pravidla a srozumitelny postup, aby byla spoluprace dlouhodobe
+            duveryhodna pro vsechny strany.
           </p>
 
           <div className="mx-auto mt-10 grid max-w-5xl gap-3">

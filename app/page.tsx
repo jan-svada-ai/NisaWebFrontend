@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import StatsSection from "@/components/StatsSection";
 
@@ -215,8 +215,8 @@ function Section({
           className={[
             "mt-3 font-semibold text-black",
             isCenter
-              ? "text-balance text-4xl md:text-5xl tracking-tight text-center"
-              : "text-3xl md:text-4xl",
+              ? "text-balance text-5xl md:text-6xl tracking-tight text-center"
+              : "text-4xl md:text-5xl",
           ].join(" ")}
         >
           <span
@@ -273,23 +273,23 @@ export default function Home() {
         <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center pt-28">
           <div className="w-full max-w-6xl px-6 text-center md:px-12 lg:px-16">
             <p className="mb-4 text-base uppercase tracking-[0.2em] text-white/85">
-              Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a
-              okolí
+              Liberecky, Ustecky, Kralovehradecky, Stredocesky kraj, Praha a
+              okoli
             </p>
 
-            <h1 className="mx-auto max-w-5xl text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+            <h1 className="mx-auto max-w-5xl text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               <span className="inline-flex flex-col items-center">
-                <span>Prodej a pronájem bez stresu.</span>
+                <span>Prodej a pronajem bez stresu.</span>
                 <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
               </span>
               <span className="mt-4 block text-[0.7em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
-                S důrazem na cenu, rychlost a jistotu.
+                S durazem na cenu, rychlost a jistotu.
               </span>
             </h1>
 
             <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
-              Ocenění, profesionální prezentace a cílená propagace. Bezpečný
-              průběh zajišťujeme ve spolupráci s advokátní kanceláří.
+              Oceneni, profesionalni prezentace a cilena propagace. Bezpecny
+              prubeh zajistujeme ve spolupraci s advokatni kancelari.
             </p>
 
             <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
@@ -916,3 +916,6 @@ export default function Home() {
     </div>
   );
 }
+
+
+

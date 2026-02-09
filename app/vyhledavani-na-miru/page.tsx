@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import type { Metadata } from "next";
 import {
   ArrowRight,
@@ -12,9 +12,9 @@ import {
 import StepCarousel from "./StepCarousel";
 
 export const metadata: Metadata = {
-  title: "Vyhledávání nemovitosti na míru | Nisa Centrum Reality",
+  title: "Vyhledavani nemovitosti na miru | Nisa Centrum Reality",
   description:
-    "Najdeme nemovitost podle vašich požadavků. Jasný postup, prověření nabídek a bezpečné dotažení celého procesu.",
+    "Najdeme nemovitost podle vasich pozadavku. Jasny postup, provereni nabidek a bezpecne dotazeni celeho procesu.",
 };
 
 type StepCard = {
@@ -30,55 +30,55 @@ const searchSteps: StepCard[] = [
   {
     id: "vyhledavani-zadani",
     number: 1,
-    title: "Zadání požadavků",
+    title: "Zadani pozadavku",
     description:
-      "Společně nastavíme parametry: lokalita, dispozice, rozpočet, termín a priority.",
+      "Spolecne nastavime parametry: lokalita, dispozice, rozpocet, termin i priority. Ujasnime, co je nutnost a co vyhoda.",
     duration: "1-3 dny",
     icon: "search",
   },
   {
     id: "vyhledavani-monitoring",
     number: 2,
-    title: "Aktivní monitoring",
+    title: "Aktivni monitoring",
     description:
-      "Průběžně sledujeme trh, reagujeme na nové nabídky a oslovujeme i neveřejné zdroje.",
-    duration: "2-4 týdny",
+      "Prubezne sledujeme trh, reagujeme na nove nabidky a oslovujeme i nevelejne zdroje, kdyz to dava smysl.",
+    duration: "2-4 tydny",
     icon: "users",
   },
   {
     id: "vyhledavani-predvyber",
     number: 3,
-    title: "Předvýběr nabídek",
+    title: "Predvyber nabidek",
     description:
-      "Vyfiltrujeme relevantní možnosti, aby šel váš čas jen do nemovitostí, které dávají smysl.",
-    duration: "3-10 dní",
+      "Vyfiltrujeme relevantni moznosti, aby sel vas cas jen do nemovitosti, ktere realne odpovidaji zadani.",
+    duration: "3-10 dni",
     icon: "home",
   },
   {
     id: "vyhledavani-prohlidky",
     number: 4,
-    title: "Prohlídky a porovnání",
+    title: "Prohlidky a porovnani",
     description:
-      "Organizujeme prohlídky, porovnáváme plusy/mínusy a doporučíme nejlepší variantu.",
-    duration: "1-3 týdny",
+      "Organizujeme prohlidky, porovnavame plusy a minusy a doporucime varianty s nejlepsim pomerem ceny a potencialu.",
+    duration: "1-3 tydny",
     icon: "key",
   },
   {
     id: "vyhledavani-overeni",
     number: 5,
-    title: "Prověření nemovitosti",
+    title: "Provereni nemovitosti",
     description:
-      "Kontrolujeme právní a technická rizika ještě před finálním rozhodnutím.",
-    duration: "3-10 dní",
+      "Kontrolujeme pravni a technicka rizika jeste pred finalnim rozhodnutim, aby nevznikly drahe komplikace.",
+    duration: "3-10 dni",
     icon: "fileCheck",
   },
   {
     id: "vyhledavani-dokonceni",
     number: 6,
-    title: "Vyjednání a dokončení",
+    title: "Vyjednani a dokonceni",
     description:
-      "Pomůžeme s vyjednáním podmínek a dotažením smluvního procesu do bezpečného konce.",
-    duration: "2-4 týdny",
+      "Pomuzeme s vyjednanim podminek a dotazenim smluvniho procesu do bezpecneho konce.",
+    duration: "2-4 tydny",
     icon: "fileCheck",
   },
 ];
@@ -86,31 +86,31 @@ const searchSteps: StepCard[] = [
 const benefits = [
   {
     icon: Compass,
-    title: "Jasná orientace na trhu",
-    text: "Nemusíte procházet stovky nabídek. Dostanete jen relevantní výběr.",
+    title: "Jasna orientace na trhu",
+    text: "Nemusite prochazet stovky nabidek. Dostanete jen relevantni vyber.",
     detail:
-      "Vybíráme podle priorit, ne podle množství. Šetříme čas a zvyšujeme šanci na kvalitní rozhodnutí.",
+      "Vybirame podle priorit, ne podle mnozstvi. Setrime cas a zvysujeme sanci na kvalitni rozhodnuti bez zbytecneho stresu.",
   },
   {
     icon: Search,
-    title: "Rychlejší reakce",
-    text: "Sledujeme trh průběžně a umíme reagovat hned po zveřejnění nové nabídky.",
+    title: "Rychlejsi reakce",
+    text: "Sledujeme trh prubezne a umime reagovat hned po zverejneni nove nabidky.",
     detail:
-      "U atraktivních nemovitostí rozhodují hodiny. Díky aktivnímu monitoringu máte náskok.",
+      "U atraktivnich nemovitosti rozhoduji hodiny. Diky aktivnimu monitoringu mate naskok pred beznou poptavkou.",
   },
   {
     icon: ShieldCheck,
-    title: "Nižší riziko chyb",
-    text: "Prověřujeme klíčové body, které často způsobují problémy až po podpisu.",
+    title: "Nizsi riziko chyb",
+    text: "Proverujeme klicove body, ktere casto zpusobuji problemy az po podpisu.",
     detail:
-      "Právní, technické i procesní detaily řešíme předem, aby nevznikaly drahé komplikace.",
+      "Pravni, technicke i procesni detaily resime predem, aby nevznikaly drahe komplikace a zdrzeni.",
   },
   {
     icon: Sparkles,
-    title: "Lepší vyjednávací pozice",
-    text: "Pomáháme s cenou i podmínkami tak, aby výsledek odpovídal vašim cílům.",
+    title: "Lepci vyjednavaci pozice",
+    text: "Pomahame s cenou i podminkami tak, aby vysledek odpovidal vasim cilum.",
     detail:
-      "Díky datům, zkušenosti a správné přípravě je jednání věcné, rychlé a srozumitelné.",
+      "Diky datum, zkusenosti a priprave je jednani vecne, rychle a srozumitelne. Cilem je dobra nemovitost za dobre podminky.",
   },
 ];
 
@@ -123,8 +123,8 @@ function SectionHeading({
 }) {
   return (
     <div className="mx-auto max-w-4xl text-center">
-      <h2 className="text-3xl font-semibold text-black md:text-4xl">{title}</h2>
-      <div className="mx-auto mt-3 h-[6px] w-56 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+      <h2 className="text-4xl font-semibold text-black md:text-5xl">{title}</h2>
+      <div className="mx-auto mt-3 h-[6px] w-64 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
       <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">
         {subtitle}
       </p>
@@ -159,14 +159,14 @@ export default function VyhledavaniNaMiruPage() {
 
         <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
           <div className="mx-auto max-w-5xl">
-            <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
-              Vyhledávání nemovitosti na míru
+            <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+              Vyhledavani nemovitosti na miru
             </h1>
-            <div className="mx-auto mt-3 h-[6px] w-72 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+            <div className="mx-auto mt-3 h-[6px] w-80 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
 
             <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
-              Najdeme nabídky, které odpovídají vašim prioritám. Od zadání
-              požadavků až po bezpečné dotažení obchodu.
+              Najdeme nabidky, ktere odpovidaji vasim prioritam. Od zadani
+              pozadavku az po bezpecne dotazeni obchodu.
             </p>
 
             <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
@@ -175,21 +175,21 @@ export default function VyhledavaniNaMiruPage() {
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
                 <Search className="h-5 w-5" />
-                Jak funguje vyhledávání?
+                Jak funguje vyhledavani?
               </a>
               <Link
                 href="/kontakt"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
                 <Mail className="h-5 w-5" />
-                Kontaktujte nás
+                Kontaktujte nas
               </Link>
               <Link
                 href="/co-vse-pro-vas-udelame"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
                 <ArrowRight className="h-5 w-5" />
-                Co vše pro vás uděláme
+                Co vse pro vas udelame
               </Link>
             </div>
           </div>
@@ -202,18 +202,23 @@ export default function VyhledavaniNaMiruPage() {
       >
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Jak funguje vyhledávání na míru"
-            subtitle="Jasný proces, který šetří čas a drží kvalitu výběru i bezpečnost celého obchodu."
+            title="Jak funguje vyhledavani na miru"
+            subtitle="Jasny proces, ktery setri cas a drzi kvalitu vyberu i bezpecnost celeho obchodu."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Nepracujeme stylem „pošleme vše, co se objeví“. Nejprve nastavíme
-            kritéria, potom filtrujeme trh a až následně jdeme do prohlídek a
-            ověřování. Díky tomu máte přehled i jistotu.
+            Nepracujeme stylem &quot;posleme vse, co se objevi&quot;. Nejprve nastavime
+            kriteria, potom filtrujeme trh a az nasledne jdeme do prohlidek a
+            overovani. Diky tomu mate prehled i jistotu.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Nasim cilem je najit nemovitost, ktera dava smysl dlouhodobe,
+            nejen na prvni pohled. Proto kazdou variantu hodnotime i z pohledu
+            rizik, potencialu a skutecnych nakladu.
           </p>
           <StepCarousel steps={searchSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
-            Celkový odhad: přibližně 1-3 měsíce podle trhu a vašich priorit.
+            Celkovy odhad: priblizne 1-3 mesice podle trhu a vasich priorit.
           </p>
         </div>
       </section>
@@ -221,12 +226,16 @@ export default function VyhledavaniNaMiruPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Proč hledat nemovitost s námi"
-            subtitle="Vyhledávání vedeme datově a procesně. Cílem je lepší výsledek, ne více chaosu."
+            title="Proc hledat nemovitost s nami"
+            subtitle="Vyhledavani vedeme datove a procesne. Cilem je lepsi vysledek, ne vice chaosu."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Dobrá koupě není náhoda. Je to kombinace rychlé reakce, kvalitního
-            výběru, prověření rizik a vyjednání podmínek, které dávají smysl.
+            Dobra koupe neni nahoda. Je to kombinace rychle reakce, kvalitniho
+            vyberu, provereni rizik a vyjednani podminek, ktere davaji smysl.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            U kazdeho klienta nastavujeme individualni postup podle toho, zda
+            kupuje prvni bydleni, investicni byt nebo vetsi rodinny dum.
           </p>
           <div className="mx-auto mt-10 grid max-w-5xl gap-3">
             {benefits.map((item) => {
@@ -265,12 +274,13 @@ export default function VyhledavaniNaMiruPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
           <SectionHeading
-            title="Začněte ještě dnes"
-            subtitle="Stačí jeden kontakt a připravíme konkrétní plán vyhledávání pro vaše zadání."
+            title="Zacnete jeste dnes"
+            subtitle="Staci jeden kontakt a pripravime konkretni plan vyhledavani pro vase zadani."
           />
           <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70">
-            Ať hledáte byt, dům nebo investiční nemovitost, nastavíme proces tak,
-            aby byl přehledný, rychlý a bezpečný.
+            At hledate byt, dum nebo investicni nemovitost, nastavime proces tak,
+            aby byl prehledny, rychly a bezpecny. Krok po kroku budete vedet,
+            co nasleduje a proc.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
@@ -278,14 +288,14 @@ export default function VyhledavaniNaMiruPage() {
               className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
             >
               <Mail className="h-4 w-4" />
-              Domluvit schůzku
+              Domluvit schuzku
             </Link>
             <Link
               href="/co-vse-pro-vas-udelame"
               className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
             >
               <ArrowRight className="h-4 w-4" />
-              Podrobný popis služeb
+              Podrobny popis sluzeb
             </Link>
           </div>
         </div>
@@ -293,3 +303,4 @@ export default function VyhledavaniNaMiruPage() {
     </main>
   );
 }
+

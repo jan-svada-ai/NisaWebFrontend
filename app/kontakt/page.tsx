@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { Phone, Mail, MapPin, CheckCircle } from "lucide-react";
+import { CheckCircle, Mail, MapPin, Phone } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
 export default function Page() {
@@ -13,7 +13,6 @@ export default function Page() {
     subject: "",
     message: "",
   });
-
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -49,39 +48,34 @@ export default function Page() {
         formRef.current?.reset();
       }
     } catch (error) {
-      console.error("Chyba při odesílání formuláře:", error);
+      console.error("Chyba pri odeslani formulare:", error);
     }
   };
 
- 
-
-
   return (
     <div className="mx-auto max-w-6xl px-4 py-24">
-      {/* Nadpis */}
       <div className="mb-12">
         <p className="text-sm uppercase tracking-[0.2em] text-black/60">
           Nisa Centrum Reality
         </p>
-        <h1 className="mt-2 text-4xl font-semibold">Kontaktujte nás</h1>
-        <p className="mt-4 max-w-2xl text-black/70">
-          Máte otázky? Chcete si domluvit konzultaci nebo zhlédnout nemovitost?
-          Napište nám nebo zavolejte. Odpovíme rychle a vždy s respektem k vašim
-          požadavkům.
+        <h1 className="mt-2 text-5xl font-semibold">Kontaktujte nas</h1>
+        <p className="mt-4 max-w-3xl text-black/70">
+          Mate otazky? Chcete domluvit konzultaci nebo zjistit realny postup pro
+          prodej, pronajem nebo vyhledavani nemovitosti? Napiste nam nebo
+          zavolejte. Odpovime rychle, vecne a s respektem k vasim prioritam.
         </p>
       </div>
 
       <div className="grid gap-12 lg:grid-cols-3">
-        {/* Formulář - 2 sloupce */}
         <div id="formular" className="lg:col-span-2">
           <div className="rounded-3xl border border-black/10 bg-white/70 p-8 shadow-sm">
-            <h2 className="mb-6 text-2xl font-semibold">Napište nám</h2>
+            <h2 className="mb-6 text-2xl font-semibold">Napiste nam</h2>
 
             {submitted && (
               <div className="mb-6 flex items-center gap-3 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800">
                 <CheckCircle className="h-5 w-5" />
                 <span>
-                  Děkujeme! Vaše zpráva byla odeslána. Ozveme se vám brzy.
+                  Dekujeme. Vase zprava byla odeslana a brzy se vam ozveme.
                 </span>
               </div>
             )}
@@ -93,7 +87,7 @@ export default function Page() {
                     htmlFor="name"
                     className="block text-sm font-medium text-black"
                   >
-                    Vaše jméno *
+                    Vase jmeno *
                   </label>
                   <input
                     type="text"
@@ -103,7 +97,7 @@ export default function Page() {
                     onChange={handleChange}
                     required
                     className="mt-1 w-full rounded-lg border border-black bg-white px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black/30"
-                    placeholder="Jan Novák"
+                    placeholder="Jan Novak"
                   />
                 </div>
                 <div>
@@ -149,7 +143,7 @@ export default function Page() {
                   htmlFor="subject"
                   className="block text-sm font-medium text-black"
                 >
-                  Předmět *
+                  Predmet *
                 </label>
                 <select
                   id="subject"
@@ -159,15 +153,13 @@ export default function Page() {
                   required
                   className="mt-1 w-full rounded-lg border border-black bg-white px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black/30"
                 >
-                  <option value="">Vyberte předmět...</option>
+                  <option value="">Vyberte predmet...</option>
                   <option value="prodej">Chci prodat nemovitost</option>
                   <option value="pronajem">Chci pronajmout nemovitost</option>
-                  <option value="koupez">Hledám nemovitost ke koupi</option>
-                  <option value="vyhledavani">
-                    Hledám nemovitost na pronájem
-                  </option>
+                  <option value="koupe">Hledam nemovitost ke koupi</option>
+                  <option value="vyhledavani">Hledam nemovitost k pronajmu</option>
                   <option value="oceneni">Chci ocenit nemovitost</option>
-                  <option value="jine">Jiný dotaz</option>
+                  <option value="jine">Jiny dotaz</option>
                 </select>
               </div>
 
@@ -176,7 +168,7 @@ export default function Page() {
                   htmlFor="message"
                   className="block text-sm font-medium text-black"
                 >
-                  Zpráva *
+                  Zprava *
                 </label>
                 <textarea
                   id="message"
@@ -186,39 +178,37 @@ export default function Page() {
                   required
                   rows={6}
                   className="mt-1 w-full rounded-lg border border-black bg-white px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black/30"
-                  placeholder="Vaša zpráva..."
+                  placeholder="Napisete nam, co resite, jakou mate lokalitu a casovou predstavu..."
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                className="btn-main w-full rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
               >
-                Odeslat zprávu
+                Odeslat zpravu
               </button>
             </form>
 
             <div className="mt-8 border-t border-black/10 pt-6">
               <p className="text-sm font-medium text-black">
-                Kontaktujte konkrétního makléře
+                Kontaktujte konkretniho maklere
               </p>
-              <p className="mt-3 text-sm text-black/70 mb-4">
-                Chcete se poradit přímo s námi? Vyberte si makléře, který vám
-                bude blízký.
+              <p className="mt-3 mb-4 text-sm text-black/70">
+                Chcete se poradit primo s clenem naseho tymu? Vyberte si maklere,
+                ktery je vam nejblize.
               </p>
               <Link
                 href="/nas-tym"
-                className="inline-flex items-center justify-center rounded-full bg-black px-6 py-2 text-sm font-semibold text-white transition hover:bg-black/80"
+                className="btn-main inline-flex items-center justify-center rounded-full bg-black px-6 py-2 text-sm font-semibold text-white"
               >
-                Kontaktuj konkrétního makléře
+                Kontaktuj konkretniho maklere
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Kontaktní informace a podnik - 1 sloupec */}
         <div className="space-y-6">
-          {/* Kontaktní údaje */}
           <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm">
             <h3 className="mb-4 text-lg font-semibold">Kontakt</h3>
 
@@ -254,9 +244,9 @@ export default function Page() {
                 <div className="text-sm">
                   <p className="font-medium text-black">Adresa</p>
                   <p className="text-black/70">
-                    Zámečnická 563/8
+                    Zamecnicka 563/8
                     <br />
-                    Liberec IV – Perštýn
+                    Liberec IV - Perstyn
                     <br />
                     46001 Liberec
                   </p>
@@ -265,19 +255,18 @@ export default function Page() {
             </div>
 
             <a
-              href="https://www.google.com/maps/search/Zámečnická 563/8, Liberec IV – Perštýn, 46001 Liberec"
+              href="https://www.google.com/maps/search/Z%C3%A1me%C4%8Dnick%C3%A1%20563%2F8%2C%20Liberec"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+              className="btn-main mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-semibold text-black"
             >
               <MapPin className="h-4 w-4" />
-              Jak se k nám dostanete
+              Jak se k nam dostanete
             </a>
           </div>
 
-          {/* Informace o firmě */}
           <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm">
-            <h3 className="mb-4 text-lg font-semibold">O nás</h3>
+            <h3 className="mb-4 text-lg font-semibold">O firme</h3>
 
             <div className="space-y-3 text-sm text-black/70">
               <div>
@@ -285,39 +274,38 @@ export default function Page() {
               </div>
 
               <div>
-                <p className="font-medium text-black/60">IČO</p>
+                <p className="font-medium text-black/60">ICO</p>
                 <p className="text-black">27273385</p>
               </div>
 
               <div>
-                <p className="font-medium text-black/60">DIČ</p>
+                <p className="font-medium text-black/60">DIC</p>
                 <p className="text-black">CZ27273385</p>
               </div>
 
               <div>
-                <p className="font-medium text-black/60">Datová schránka</p>
+                <p className="font-medium text-black/60">Datova schranka</p>
                 <p className="text-black">yqkqb7n</p>
               </div>
 
               <div className="border-t border-black/10 pt-3">
                 <p className="text-xs text-black/60">
-                  Firma je zapsána v obchodním rejstříku.
+                  Firma je zapsana v obchodnim rejstriku.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Ocenění zdarma */}
           <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm">
-            <h3 className="mb-3 text-lg font-semibold">Ocenění zdarma</h3>
+            <h3 className="mb-3 text-lg font-semibold">Oceneni zdarma</h3>
             <p className="mb-4 text-sm text-black/70">
-              Chcete vědět, kolik stojí vaše nemovitost?
+              Chcete vedet, kolik muze mit vase nemovitost realnou trzni hodnotu?
             </p>
             <a
               href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+              className="btn-main flex w-full items-center justify-center rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-semibold text-black"
             >
               Ocenit nemovitost
             </a>
@@ -325,12 +313,11 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Mapa */}
       <div className="mt-16">
-        <h2 className="mb-6 text-2xl font-semibold">Kde nás najdete</h2>
+        <h2 className="mb-6 text-2xl font-semibold">Kde nas najdete</h2>
         <div className="overflow-hidden rounded-3xl border border-black/10 shadow-sm">
           <iframe
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2545.5566850897673!2d15.037066!3d50.763476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471095c7d8f5f5f5%3A0x1234567890abcdef!2sZ%C3%A1me%C4%8Dn%C3%ADcka%20563%2F8%2C%20Liberec!5e0!3m2!1scs!2scz!4v1234567890`}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2545.5566850897673!2d15.037066!3d50.763476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471095c7d8f5f5f5%3A0x1234567890abcdef!2sZ%C3%A1me%C4%8Dn%C3%ADcka%20563%2F8%2C%20Liberec!5e0!3m2!1scs!2scz!4v1234567890"
             width="100%"
             height="400"
             style={{ border: 0 }}
@@ -340,8 +327,8 @@ export default function Page() {
           />
         </div>
         <p className="mt-4 text-sm text-black/70">
-          Jsme otevřeni v pracovních dnech. Konzultaci si objednejte telefonem
-          nebo e-mailem. Případně nás navštivte osobně.
+          Konzultaci je idealni domluvit predem telefonicky nebo e-mailem.
+          Pripravime si podklady a schuzka bude rychla a vecna.
         </p>
       </div>
     </div>
