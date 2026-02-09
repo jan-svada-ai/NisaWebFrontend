@@ -15,7 +15,7 @@ import StepCarousel from "./StepCarousel";
 export const metadata: Metadata = {
   title: "Pošli tip na reality | Nisa Centrum Reality",
   description:
-    "Mate tip na nemovitost k prodeji nebo pronajmu? Poslete kontakt, my vse proverime a po uspesnem obchodu vyplatime odmenu.",
+    "Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete kontakt, my vše prověříme a po úspěšném obchodu vyplatíme odměnu.",
 };
 
 type StepCard = {
@@ -31,19 +31,19 @@ const rewardSteps: StepCard[] = [
   {
     id: "tip-zadani",
     number: 1,
-    title: "Poslete kontakt",
+    title: "Pošlete kontakt",
     description:
-      "Vyplnite zakladni informace o majiteli a nemovitosti. Cim presnejsi kontakt, tim rychleji muzeme jednat.",
+      "Vyplníte základní informace o majiteli a nemovitosti. Čím přesnější kontakt, tím rychleji můžeme jednat.",
     duration: "5-15 minut",
     icon: "mail",
   },
   {
     id: "tip-overeni",
     number: 2,
-    title: "Overeni a prvni jednani",
+    title: "Ověření a první jednání",
     description:
-      "Kontakt proverime, overime zajem majitele a navrhneme vhodny postup prodeje nebo pronajmu.",
-    duration: "2-7 dni",
+      "Kontakt prověříme, ověříme zájem majitele a navrhneme vhodný postup prodeje nebo pronájmu.",
+    duration: "2-7 dní",
     icon: "handshake",
   },
   {
@@ -51,17 +51,17 @@ const rewardSteps: StepCard[] = [
     number: 3,
     title: "Realizace obchodu",
     description:
-      "Nemovitost profesionalne pripravime, spustime propagaci, vedeme prohlidky a dotahneme smluvni cast.",
-    duration: "1-3 mesice",
+      "Nemovitost profesionálně připravíme, spustíme propagaci, vedeme prohlídky a dotáhneme smluvní část.",
+    duration: "1-3 měsíce",
     icon: "gift",
   },
   {
     id: "tip-odmena",
     number: 4,
-    title: "Vyplaceni odmeny",
+    title: "Vyplacení odměny",
     description:
-      "Po uspesnem dokonceni transakce vam vyplatime odmenu podle typu obchodu a predem domluvenych podminek.",
-    duration: "do 14 dni po uzavreni",
+      "Po úspěšném dokončení transakce vám vyplatíme odměnu podle typu obchodu a předem domluvených podmínek.",
+    duration: "do 14 dní po uzavření",
     icon: "wallet",
   },
 ];
@@ -69,31 +69,31 @@ const rewardSteps: StepCard[] = [
 const benefits = [
   {
     icon: ShieldCheck,
-    title: "Diskretnost a bezpeci",
-    text: "Vase jmeno ani kontakt nikde nezverejnujeme bez souhlasu.",
+    title: "Diskrétnost a bezpečí",
+    text: "Vaše jméno ani kontakt nikde nezveřejňujeme bez souhlasu.",
     detail:
-      "S tipy pracujeme interne. Komunikace je vedena profesionalne a citlive, aby byl chranen vas vztah s majitelem i prubeh celeho obchodu.",
+      "S tipy pracujeme interně. Komunikace je vedena profesionálně a citlivě, aby byl chráněn váš vztah s majitelem i průběh celého obchodu.",
   },
   {
     icon: Megaphone,
-    title: "Silny marketing v regionu",
-    text: "Nabidky aktivne propagujeme v Liberci, Usteckem, Kralovehradeckem kraji, Stredoceskem a Praze.",
+    title: "Silný marketing v regionu",
+    text: "Nabídky aktivně propagujeme v Liberci, Ústeckém, Královéhradeckém kraji, Středočeském a v Praze.",
     detail:
-      "Diky zkusenosti v lokalnim trhu umime rychle rozhodnout, kde a jak nemovitost komunikovat, aby se ozvali relevantni zajemci.",
+      "Díky zkušenosti v lokálním trhu umíme rychle rozhodnout, kde a jak nemovitost komunikovat, aby se ozvali relevantní zájemci.",
   },
   {
     icon: Handshake,
-    title: "Jasna pravidla odmeny",
-    text: "Predem vite, kdy a za jakych podminek odmenu ziskate.",
+    title: "Jasná pravidla odměny",
+    text: "Předem víte, kdy a za jakých podmínek odměnu získáte.",
     detail:
-      "Vysvetlime vam postup i podminky vyplaceni. Zadna nejasna pravidla a zadna prekvapeni na konci procesu.",
+      "Vysvětlíme vám postup i podmínky vyplacení. Žádná nejasná pravidla a žádná překvapení na konci procesu.",
   },
   {
     icon: Sparkles,
-    title: "Kompletni servis",
-    text: "Tip nekonci jen inzerci. Resime cely obchod od naceneni po predani.",
+    title: "Kompletní servis",
+    text: "Tip nekončí jen inzercí. Řešíme celý obchod od nacenění po předání.",
     detail:
-      "V praxi to znamena mene rizik, vyssi sanci na uspesny vysledek a rychlejsi cestu k uzavreni obchodu.",
+      "V praxi to znamená méně rizik, vyšší šanci na úspěšný výsledek a rychlejší cestu k uzavření obchodu.",
   },
 ];
 
@@ -152,8 +152,8 @@ export default function TipniRealituPage() {
             </h1>
 
             <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
-              Mate kontakt na majitele, ktery uvazuje o prodeji nebo pronajmu?
-              Poslete nam tip a po uspesnem obchodu ziskate odmenu.
+              Máte kontakt na majitele, který uvažuje o prodeji nebo pronájmu?
+              Pošlete nám tip a po úspěšném obchodu získáte odměnu.
             </p>
 
             <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
@@ -162,21 +162,21 @@ export default function TipniRealituPage() {
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
                 <Gift className="h-5 w-5" />
-                Jak ziskat odmenu?
+                Jak získat odměnu?
               </a>
               <Link
                 href="/kontakt"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
                 <Mail className="h-5 w-5" />
-                Kontaktujte nas
+                Kontaktujte nás
               </Link>
               <Link
                 href="/co-vse-pro-vas-udelame"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
                 <ArrowRight className="h-5 w-5" />
-                Co vse pro vas udelame
+                Co vše pro vás uděláme
               </Link>
             </div>
           </div>
@@ -189,23 +189,23 @@ export default function TipniRealituPage() {
       >
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Jak ziskat odmenu"
-            subtitle="Jednoduchy proces od prvniho kontaktu az po vyplaceni odmeny. V kazde fazi vite, co se bude dit a co je dalsi krok."
+            title="Jak získat odměnu"
+            subtitle="Jednoduchý proces od prvního kontaktu až po vyplacení odměny. V každé fázi víte, co se bude dít a co je další krok."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Tip posuzujeme individualne. Kdyz ma kontakt realny potencial,
-            prevezmeme kompletni realizaci obchodu a vy se nemusite starat o
-            marketing, prohlidky ani smlouvy.
+            Tip posuzujeme individuálně. Když má kontakt reálný potenciál,
+            převezmeme kompletní realizaci obchodu a vy se nemusíte starat o
+            marketing, prohlídky ani smlouvy.
           </p>
           <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            V praxi je dulezite hlavne to, aby byl tip aktualni, kontakt overitelny
-            a majitel byl otevreny dalsimu jednani. S tim vam pomuzeme uz pri
-            prvnim hovoru.
+            V praxi je důležité hlavně to, aby byl tip aktuální, kontakt ověřitelný
+            a majitel byl otevřený dalšímu jednání. S tím vám pomůžeme už při
+            prvním hovoru.
           </p>
           <StepCarousel steps={rewardSteps} />
           <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
             <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
-            Celkovy odhad: nejcasteji 1-3 mesice podle typu nemovitosti a trhu.
+            Celkový odhad: nejčastěji 1-3 měsíce podle typu nemovitosti a trhu.
           </p>
         </div>
       </section>
@@ -213,17 +213,17 @@ export default function TipniRealituPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4">
           <SectionHeading
-            title="Proc poslat tip prave nam"
-            subtitle="Nejde jen o predani kontaktu. Dulezite je, aby byl obchod profesionalne vedeny a bezpecne dotazeny do konce."
+            title="Proč poslat tip právě nám"
+            subtitle="Nejde jen o předání kontaktu. Důležité je, aby byl obchod profesionálně vedený a bezpečně dotažený do konce."
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Kombinujeme lokalni znalost, marketing a pravni jistotu. Vase role
-            je jednoducha: poslat tip. O zbytek se postara nas tym.
+            Kombinujeme lokální znalost, marketing a právní jistotu. Vaše role
+            je jednoduchá: poslat tip. O zbytek se postará náš tým.
           </p>
           <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
-            Kazdy relevantni tip ma realnou hodnotu. Proto nastavujeme jasna
-            pravidla a srozumitelny postup, aby byla spoluprace dlouhodobe
-            duveryhodna pro vsechny strany.
+            Každý relevantní tip má reálnou hodnotu. Proto nastavujeme jasná
+            pravidla a srozumitelný postup, aby byla spolupráce dlouhodobě
+            důvěryhodná pro všechny strany.
           </p>
 
           <div className="mx-auto mt-10 grid max-w-5xl gap-3">
@@ -261,12 +261,12 @@ export default function TipniRealituPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
           <SectionHeading
-            title="Zacnete jeste dnes"
-            subtitle="Poslete nam tip a behem kratke doby vam rekneme, jaky ma potencial a jaky bude dalsi postup."
+            title="Začněte ještě dnes"
+            subtitle="Pošlete nám tip a během krátké doby vám řekneme, jaký má potenciál a jaký bude další postup."
           />
           <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70">
-            Kazdy relevantni kontakt proverujeme rychle. Pokud se obchod
-            realizuje, odmenu vyplatime podle predem potvrzenych pravidel.
+            Každý relevantní kontakt prověřujeme rychle. Pokud se obchod
+            realizuje, odměnu vyplatíme podle předem potvrzených pravidel.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
@@ -281,7 +281,7 @@ export default function TipniRealituPage() {
               className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
             >
               <ArrowRight className="h-4 w-4" />
-              Podrobny popis sluzeb
+              Podrobný popis služeb
             </Link>
           </div>
         </div>
