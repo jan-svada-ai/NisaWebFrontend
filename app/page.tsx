@@ -719,26 +719,18 @@ export default function Home() {
         title="Časté dotazy"
         subtitle="Nejčastější otázky k prodeji, pronájmu, provizím, smlouvám a bezpečnosti převodu."
       >
-        <div className="grid gap-6 lg:grid-cols-[minmax(320px,0.8fr)_minmax(0,1.2fr)] lg:items-start">
-          <aside className="order-2 overflow-hidden rounded-3xl border border-black/10 bg-white/75 shadow-sm lg:order-1 lg:sticky lg:top-28">
-            <div className="relative aspect-[4/5] w-full">
-              <Image
-                src="/Mirek.png"
-                alt="Člen týmu Nisa Centrum Reality"
-                fill
-                className="object-cover object-top"
-              />
-            </div>
-            <div className="border-t border-black/10 p-5">
-              <p className="text-lg font-semibold text-black">Máte další otázky?</p>
-              <p className="mt-2 text-sm leading-relaxed text-black/70">
-                Ozvěte se nám a projdeme vaši situaci krok za krokem. Rychle,
-                srozumitelně a bez závazků.
-              </p>
-            </div>
-          </aside>
+        <div className="relative">
+          <div className="pointer-events-none absolute left-0 -top-8 z-0 hidden -translate-x-[88%] lg:block">
+            <Image
+              src="/Mirek.png"
+              alt="Člen týmu Nisa Centrum Reality"
+              width={520}
+              height={740}
+              className="h-auto w-[420px] rounded-2xl object-cover"
+            />
+          </div>
 
-          <div className="order-1 grid gap-3 lg:order-2">
+          <div className="relative z-10 mx-auto grid max-w-4xl gap-3">
             {[
             {
               q: "Jaké služby nabízíte a co vše je jejich součástí?",
