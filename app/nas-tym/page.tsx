@@ -1,0 +1,123 @@
+"use client";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Phone, Mail, Users } from "lucide-react";
+import { apiUrl } from "@/lib/api";
+
+interface MaklerCard {
+  id: number;
+  jmeno: string;
+  slug: string;
+  email: string | null;
+  telefon: string | null;
+  pozice: string;
+  fotoUrl: string | null;
+  aktivniInzeraty: number;
+}
+
+export default function NasTymPage() {
+  const [makleri, setMakleri] = useState<MaklerCard[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMakleri = async () => {
+      try {
+        const response = await fetch(apiUrl("/api/makleri"));
+        if (!response.ok) throw new Error("Nepodařilo se načíst makléře");
+        const result = await response.json();
+        setMakleri(result.data || []);
+      } catch (error) {
+        console.error("Failed to fetch makleri:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMakleri();
+  }, []);
+
+  return (
+    <main
+      className="min-h-screen pt-20"
+      style={{
+        background:
+          "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
+      }}
+    >
+      <div className="mx-auto max-w-screen-2xl px-4 py-12">
+        <div className="mb-10">
+          <p className="text-sm uppercase tracking-[0.2em] text-black/50">
+            NisaCentrum Reality
+          </p>
+          <h1 className="mt-3 text-4xl font-semibold md:text-5xl text-black">
+            Náš tým
+          </h1>
+          <div className="mt-4 h-[3px] w-16 rounded-full bg-[color:var(--gold1)]/70" />
+        </div>
+
+        {loading ? (
+          <div className="py-12 text-center text-black/60">Načítání...</div>
+        ) : makleri.length > 0 ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {makleri.map((m) => (
+              <Link
+                key={m.id}
+                href={`/nas-tym/${m.slug}`}
+                className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 p-5 text-center shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-black/5">
+                  {m.fotoUrl ? (
+                    <Image
+                      src={m.fotoUrl}
+                      alt={m.jmeno}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-black/40">
+                      <Users className="h-10 w-10" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-black/50">
+                    Aktivní inzeráty: {m.aktivniInzeraty}
+                  </p>
+                  <h2 className="mt-2 text-xl font-semibold text-black">
+                    {m.jmeno}
+                  </h2>
+                  <p className="text-sm text-black/70">{m.pozice}</p>
+
+                  <div className="mt-3 space-y-1 text-sm text-black/70">
+                    {m.telefon && (
+                      <div className="flex items-center justify-center gap-2">
+                        <Phone className="h-4 w-4 text-[color:var(--gold2)]" />
+                        <span>{m.telefon}</span>
+                      </div>
+                    )}
+                    {m.email && (
+                      <div className="flex items-center justify-center gap-2">
+                        <Mail className="h-4 w-4 text-[color:var(--gold2)]" />
+                        <span>{m.email}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-6 py-3 text-base font-semibold text-black transition group-hover:bg-[color:var(--gold2)]">
+                    DETAIL
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="py-12 text-center text-black/60">
+            Maklery nejsou k dispozici. Zkontrolujte, že je API server spuštěný.
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}

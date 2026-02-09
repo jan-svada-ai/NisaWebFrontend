@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String?   @unique
+  phone     String?
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model City {
+  id       Int       @id @default(autoincrement())
+  name     String
+  slug     String    @unique
+  listings Listing[]
+}
+
+model Listing {
+  id         Int      @id @default(autoincrement())
+  title      String
+  slug       String   @unique
+  description String?
+  price      Int?
+  currency   String?  @default("CZK")
+  area       Int?
+  rooms      Int?
+  type       String?  // e.g., flat, house, land
+  offerType  String?  // sale, rent, auction
+  status     String   @default("active")
+  city       City?    @relation(fields: [cityId], references: [id])
+  cityId     Int?
+  agent      Agent?   @relation(fields: [agentId], references: [id])
+  agentId    Int?
+  images     Image[]
+  attributes Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([price])
+  @@index([area])
+  @@index([offerType])
+  @@index([agentId])
+  @@index([cityId])
+}
+
+model Image {
+  id        Int     @id @default(autoincrement())
+  url       String
+  alt       String?
+  listing   Listing @relation(fields: [listingId], references: [id])
+  listingId Int
+}
