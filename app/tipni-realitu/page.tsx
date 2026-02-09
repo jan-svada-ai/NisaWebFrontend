@@ -1,212 +1,272 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import type { Metadata } from "next";
-import ServiceIntro from "@/components/ServiceIntro";
+import {
+  ArrowRight,
+  Gift,
+  Handshake,
+  Hourglass,
+  Mail,
+  Megaphone,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+import StepCarousel from "./StepCarousel";
 
 export const metadata: Metadata = {
-  title: "Pošli tip na reality | Nisa Centrum Reality",
+  title: "Posli tip na reality | Nisa Centrum Reality",
   description:
-    "Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete nám kontakt a získejte odměnu, pokud se obchod uskuteční.",
+    "Mate tip na nemovitost k prodeji nebo pronajmu? Poslete kontakt, my vse proverime a po uspesnem obchodu vyplatime odmenu.",
 };
 
-// Ikona komponenta
-function Icon({ name, className = "" }: { name: string; className?: string }) {
-  const icons: Record<string, string> = {
-    gift: "M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z",
-    check: "m4.5 12.75 6 6 9-13.5",
-    hand: "M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002",
-    coin: "M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
-    users:
-      "M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z",
-  };
+type StepCard = {
+  id: string;
+  number: number;
+  title: string;
+  description: string;
+  duration: string;
+  icon: "gift" | "mail" | "handshake" | "wallet";
+};
 
+const rewardSteps: StepCard[] = [
+  {
+    id: "tip-zadani",
+    number: 1,
+    title: "Poslete kontakt",
+    description:
+      "Vyplnite zakladni informace o majiteli a nemovitosti. Cim presnejsi kontakt, tim rychleji muzeme jednat.",
+    duration: "5-15 minut",
+    icon: "mail",
+  },
+  {
+    id: "tip-overeni",
+    number: 2,
+    title: "Overeni a prvni jednani",
+    description:
+      "Kontakt proverime, overime zajem majitele a navrhneme vhodny postup prodeje nebo pronajmu.",
+    duration: "2-7 dni",
+    icon: "handshake",
+  },
+  {
+    id: "tip-realizace",
+    number: 3,
+    title: "Realizace obchodu",
+    description:
+      "Nemovitost profesionalne pripravime, spustime propagaci, vedeme prohlidky a dotahneme smluvni cast.",
+    duration: "1-3 mesice",
+    icon: "gift",
+  },
+  {
+    id: "tip-odmena",
+    number: 4,
+    title: "Vyplaceni odmeny",
+    description:
+      "Po uspesnem dokonceni transakce vam vyplatime odmenu podle typu obchodu a predem domluvenych podminek.",
+    duration: "do 14 dni po uzavreni",
+    icon: "wallet",
+  },
+];
+
+const benefits = [
+  {
+    icon: ShieldCheck,
+    title: "Diskretnost a bezpeci",
+    text: "Vase jmeno ani kontakt nikde nezverejnujeme bez souhlasu.",
+    detail:
+      "S tipy pracujeme interne. Komunikace je vedena profesionalne a citlive, aby byl chranen vas vztah s majitelem i prubeh celeho obchodu.",
+  },
+  {
+    icon: Megaphone,
+    title: "Silny marketing v regionu",
+    text: "Nabidky aktivne propagujeme v Liberci, Usteckem, Kralovehradeckem kraji, Stredoceskem a Praze.",
+    detail:
+      "Diky zkusenosti v lokalnim trhu umime rychle rozhodnout, kde a jak nemovitost komunikovat, aby se ozvali relevantni zajemci.",
+  },
+  {
+    icon: Handshake,
+    title: "Jasna pravidla odmeny",
+    text: "Predem vite, kdy a za jakych podminek odmenu ziskate.",
+    detail:
+      "Vysvetlime vam postup i podminky vyplaceni. Zadna nejasna pravidla, zadne prekvapeni na konci procesu.",
+  },
+  {
+    icon: Sparkles,
+    title: "Kompletni servis",
+    text: "Tip nekonci jen inzerci. Resime cely obchod od naceneni po predani.",
+    detail:
+      "V praxi to znamena mene rizik, vyssi sanci na uspesny vysledek a rychlejsi cestu k uzavreni obchodu.",
+  },
+];
+
+function SectionHeading({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className={className || "h-6 w-6"}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d={icons[name]} />
-    </svg>
+    <div className="mx-auto max-w-4xl text-center">
+      <h2 className="text-3xl font-semibold text-black md:text-4xl">{title}</h2>
+      <div className="mx-auto mt-3 h-[6px] w-56 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+      <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">{subtitle}</p>
+    </div>
   );
 }
 
 export default function TipniRealituPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <ServiceIntro
-        title="Pošli tip na reality"
-        subtitle="Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete nám kontakt a získejte odměnu, pokud se obchod uskuteční."
-        primary={{ label: "Poslat tip", href: "/kontakt" }}
-        variant="light"
-      />
+    <main
+      className="min-h-screen"
+      style={{
+        background:
+          "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
+      }}
+    >
+      <section className="relative isolate min-h-dvh overflow-hidden">
+        <video
+          className="absolute inset-0 h-full w-full object-cover brightness-[1.2] contrast-[1.05] saturate-[1.05]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/hero-poster.jpg"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
 
-      {/* Jak to funguje */}
-      <section className="border-b border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Jak získat odměnu
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Jednoduchý proces ve třech krocích
+        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
+
+        <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
+          <div className="mx-auto max-w-5xl">
+            <h1 className="text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+              Posli tip na reality
+            </h1>
+            <div className="mx-auto mt-3 h-[6px] w-72 [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+
+            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
+              Mate kontakt na majitele, ktery uvazuje o prodeji nebo pronajmu?
+              Poslete nam tip a po uspesnem obchodu ziskate odmenu.
             </p>
-          </div>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
-            {[
-              {
-                step: "1",
-                title: "Pošlete kontakt",
-                desc: "Pošlete nám kontakt na majitele nemovitosti, kterou by chtěl prodat nebo pronajmout.",
-              },
-              {
-                step: "2",
-                title: "Uskutečníme obchod",
-                desc: "Pokud se s majitelem domluvíme a obchod úspěšně realizujeme, máte nárok na odměnu.",
-              },
-              {
-                step: "3",
-                title: "Získáte odměnu",
-                desc: "Po úspěšném dokončení obchodu vám vyplatíme odměnu podle pravidel programu.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--gold1)]/35 text-2xl font-bold text-black">
-                  {item.step}
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-black/70">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Co doporučit */}
-      <section className="border-b border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Jaké nemovitosti hledáme
-            </h2>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            {[
-              {
-                icon: "hand",
-                title: "Nemovitosti k prodeji",
-                desc: "Byty, domy, pozemky, komerční objekty - zajímá nás všechno, co majitel chce prodat.",
-              },
-              {
-                icon: "users",
-                title: "Nemovitosti k pronájmu",
-                desc: "Byty a domy k dlouhodobému pronájmu v Liberci, Ústí nad Labem, Hradci Králové a okolí.",
-              },
-              {
-                icon: "check",
-                title: "Osvědčené kontakty",
-                desc: "Nejvíce nás zajímají kontakty na majitele, kteří již uvažují o prodeji nebo pronájmu.",
-              },
-              {
-                icon: "coin",
-                title: "Férová odměna",
-                desc: "Pokud se obchod uskuteční, vyplatíme vám odměnu dle aktuálních pravidel odměňovacího programu.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm"
+            <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
+              <a
+                href="#jak-ziskat-odmenu"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--gold1)]/35 text-black">
-                  <Icon name={item.icon} />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/70">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pravidla */}
-      <section className="py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Pravidla programu
-            </h2>
-          </div>
-
-          <div className="mt-12 space-y-6">
-            {[
-              {
-                title: "Musí se jednat o váš vlastní kontakt",
-                desc: "Nemovitost nesmí být již aktivně inzerovaná nebo v jednání s jinou realitní kanceláří.",
-              },
-              {
-                title: "Obchod musí být úspěšně dokončen",
-                desc: "Odměna je vyplacena až po úspěšném uzavření kupní nebo nájemní smlouvy a předání nemovitosti.",
-              },
-              {
-                title: "Výše odměny závisí na typu obchodu",
-                desc: "Konkrétní výši odměny si rádi upřesníme při osobní schůzce nebo telefonátu.",
-              },
-              {
-                title: "Diskrétnost zaručena",
-                desc: "S vašimi kontakty zacházíme diskrétně a profesionálně. Vaše jméno nezmíníme bez vašeho souhlasu.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm"
-              >
-                <h3 className="text-xl font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 leading-relaxed text-black/70">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA sekce */}
-      <section className="border-t border-black/10 bg-white py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-black sm:text-4xl">
-              Máte tip na reality?
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Ozvěte se nám a pošlete kontakt. Rádi se na to podíváme a případně
-              vás odmění za úspěšný obchod.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <Gift className="h-5 w-5" />
+                Jak ziskat odmenu?
+              </a>
               <Link
                 href="/kontakt"
-                className="inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
-                Kontaktovat nás
+                <Mail className="h-5 w-5" />
+                Kontaktujte nas
               </Link>
               <Link
-                href="/#faq"
-                className="inline-flex items-center justify-center rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black transition hover:border-[color:var(--gold1)]"
+                href="/co-vse-pro-vas-udelame"
+                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
               >
-                Časté dotazy
+                <ArrowRight className="h-5 w-5" />
+                Co vse pro vas udelame
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="jak-ziskat-odmenu"
+        className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center"
+      >
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Jak ziskat odmenu"
+            subtitle="Jednoduchy proces od prvniho kontaktu az po vyplaceni odmeny. V kazde fazi vite, co se bude dit a co je dalsi krok."
+          />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Tip posuzujeme individualne. Kdyz ma kontakt realny potencial,
+            prevezmeme kompletni realizaci obchodu a vy se nemusite starat o
+            marketing, prohlidky ani smlouvy.
+          </p>
+          <StepCarousel steps={rewardSteps} />
+          <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
+            <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
+            Celkovy odhad: nejcasteji 1-3 mesice podle typu nemovitosti a trhu.
+          </p>
+        </div>
+      </section>
+
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Proc poslat tip prave nam"
+            subtitle="Nejde jen o predani kontaktu. Dulezite je, aby byl obchod profesionalne vedeny a bezpecne dotazeny do konce."
+          />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Kombinujeme lokalni znalost, marketing a pravni jistotu. Vase role
+            je jednoducha: poslat tip. O zbytek se postara nas tym.
+          </p>
+
+          <div className="mx-auto mt-10 grid max-w-5xl gap-3">
+            {benefits.map((item) => {
+              const Icon = item.icon;
+              return (
+                <details
+                  key={item.title}
+                  className="group rounded-2xl border border-black/10 bg-white/80 p-5 shadow-sm open:bg-white"
+                >
+                  <summary className="flex cursor-pointer list-none items-center gap-4">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F6E3B1] ring-1 ring-black/10">
+                      <Icon className="h-5 w-5 text-black" />
+                    </span>
+                    <span className="flex-1 text-left">
+                      <span className="block text-lg font-semibold text-black">
+                        {item.title}
+                      </span>
+                      <span className="mt-1 block text-sm text-black/70">{item.text}</span>
+                    </span>
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-black/70 transition group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-4 border-l-2 border-[color:var(--gold1)]/35 pl-4 text-sm leading-relaxed text-black/65">
+                    {item.detail}
+                  </p>
+                </details>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
+          <SectionHeading
+            title="Zacnete jeste dnes"
+            subtitle="Poslete nam tip a behem kratke doby vam rekneme, jaky ma potencial a jaky bude dalsi postup."
+          />
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70">
+            Kazdy relevantni kontakt proverujeme rychle. Pokud se obchod
+            realizuje, odmenu vyplatime podle predem potvrzenych pravidel.
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/kontakt"
+              className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
+            >
+              <Mail className="h-4 w-4" />
+              Poslat tip
+            </Link>
+            <Link
+              href="/co-vse-pro-vas-udelame"
+              className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
+            >
+              <ArrowRight className="h-4 w-4" />
+              Podrobny popis sluzeb
+            </Link>
           </div>
         </div>
       </section>
