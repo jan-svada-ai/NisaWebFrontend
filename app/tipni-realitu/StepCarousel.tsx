@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -47,9 +47,9 @@ export default function StepCarousel({ steps }: { steps: StepCard[] }) {
         type="button"
         onClick={() => setIndex((prev) => (prev - 1 + steps.length) % steps.length)}
         aria-label="Předchozí krok"
-        className="btn-main absolute -left-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-black/10 bg-white/90 p-3 text-black shadow-sm md:-left-6"
+        className="absolute -left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-black/15 bg-white/95 text-black shadow-sm transition-colors hover:bg-white md:-left-8 md:h-14 md:w-14"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
 
       <div className="overflow-hidden rounded-3xl">
@@ -94,9 +94,9 @@ export default function StepCarousel({ steps }: { steps: StepCard[] }) {
         type="button"
         onClick={() => setIndex((prev) => (prev + 1) % steps.length)}
         aria-label="Další krok"
-        className="btn-main absolute -right-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-black/10 bg-white/90 p-3 text-black shadow-sm md:-right-6"
+        className="absolute -right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-black/15 bg-white/95 text-black shadow-sm transition-colors hover:bg-white md:-right-8 md:h-14 md:w-14"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-6 w-6" />
       </button>
     </div>
   );

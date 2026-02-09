@@ -85,14 +85,19 @@ export default function SiteHeader() {
                 <span className="block">nemovitosti</span>
               </span>
             </Link>
-            <Link href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9" className={`${itemBase} ${withDivider}`}>
+            <a
+              href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${itemBase} ${withDivider}`}
+            >
               <HandCoins className={`${icon} row-span-2`} />
               <span className={centerLabel}>
                 <span className="block">Ocenění</span>
                 <span className="block">nemovitosti</span>
                 <span className="block">zdarma</span>
               </span>
-            </Link>
+            </a>
 
             <Link
               href="/vyhledavani-na-miru"
@@ -236,6 +241,7 @@ export default function SiteHeader() {
                 href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
                 icon={<HandCoins className="h-5 w-5 text-black/70" />}
                 title="Ocenění nemovitosti zdarma"
+                external
                 onClick={() => setMobileOpen(false)}
               />
               <MobileItem
@@ -344,17 +350,21 @@ function MobileItem({
   icon,
   title,
   subtitle,
+  external = false,
   onClick,
 }: {
   href: string;
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
+  external?: boolean;
   onClick: () => void;
 }) {
   return (
     <Link
       href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       onClick={onClick}
       className="mb-2 flex items-center gap-3 rounded-2xl border border-black/10 bg-white/70 px-4 py-3 text-black/80 transition hover:bg-white/85"
     >
