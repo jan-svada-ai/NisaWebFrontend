@@ -53,7 +53,7 @@ function Footer() {
   return (
     <footer className="border-t border-black/10 bg-white/45">
       <div className="mx-auto max-w-7xl px-4 py-10 text-sm text-black/65">
-        <div className="grid gap-8 md:grid-cols-4 md:items-start">
+        <div className="grid gap-8 md:grid-cols-3 md:items-start">
           {/* Nisa Centrum Reality */}
           <div>
             <p className="font-semibold text-black">Nisa Centrum Reality</p>
@@ -95,19 +95,6 @@ function Footer() {
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* Jak se k nám dostanete */}
-          <div>
-            <p className="font-semibold text-black">Navštivte nás</p>
-            <a
-              href="https://www.google.com/maps/search/Zámečnická 563/8, Liberec IV – Perštýn, 46001 Liberec"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-xs font-semibold text-white transition hover:bg-black/80"
-            >
-              Jak se k nám dostanete
-            </a>
           </div>
 
           {/* O nás */}
