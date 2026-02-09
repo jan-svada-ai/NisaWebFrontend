@@ -4,98 +4,98 @@ import { Clock3, FileText, ShieldCheck } from "lucide-react";
 export const metadata: Metadata = {
   title: "Co vše pro vás uděláme | Nisa Centrum Reality",
   description:
-    "Detailni prehled sluzeb pri prodeji a pronajmu nemovitosti krok za krokem.",
+    "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
 };
 
 const details = [
   {
     id: "prodej-konzultace",
     title: "Prodej: Konzultace",
-    text: "Zjistime vase cile, casove moznosti a stav nemovitosti. Nastavime realistickou strategii prodeje i plan dalsich kroku.",
+    text: "Zjistíme vaše cíle, časové možnosti a stav nemovitosti. Nastavíme realistickou strategii prodeje i plán dalších kroků.",
     time: "1-2 dny",
   },
   {
     id: "prodej-naceneni",
-    title: "Prodej: Naceneni",
-    text: "Porovname trzni data, konkurencni nabidky a potencial lokality. Vysledkem je cena, ktera je atraktivni pro trh a zaroven chrani hodnotu nemovitosti.",
+    title: "Prodej: Nacenění",
+    text: "Porovnáme tržní data, konkurenční nabídky a potenciál lokality. Výsledkem je cena, která je atraktivní pro trh a zároveň chrání hodnotu nemovitosti.",
     time: "1-3 dny",
   },
   {
     id: "prodej-prezentace",
     title: "Prodej: Foto a homestaging",
-    text: "Pripravime nemovitost k prezentaci, zajistime foto i video a vytvorime text nabidky tak, aby inzerat pusobil profesionalne a duveryhodne.",
-    time: "2-5 dni",
+    text: "Připravíme nemovitost k prezentaci, zajistíme foto i video a vytvoříme text nabídky tak, aby inzerát působil profesionálně a důvěryhodně.",
+    time: "2-5 dní",
   },
   {
     id: "prodej-inzerce",
     title: "Prodej: Inzerce",
-    text: "Nabidku publikujeme na dulezitych realitnich kanalech a doplnime ji cilenou propagaci, ktera oslovi spravne publikum v danem regionu.",
+    text: "Nabídku publikujeme na důležitých realitních kanálech a doplníme ji cílenou propagací, která osloví správné publikum v daném regionu.",
     time: "1 den",
   },
   {
     id: "prodej-prohlidky",
-    title: "Prodej: Prohlidky",
-    text: "Organizujeme prohlidky, komunikujeme se zajemci a sbirame relevantni zpetnou vazbu. Vedeni jednani drzime pevne v rukou.",
-    time: "1-6 tydnu",
+    title: "Prodej: Prohlídky",
+    text: "Organizujeme prohlídky, komunikujeme se zájemci a sbíráme relevantní zpětnou vazbu. Vedení jednání držíme pevně v rukou.",
+    time: "1-6 týdnů",
   },
   {
     id: "prodej-smlouvy",
     title: "Prodej: Smlouvy a podpisy",
-    text: "Pripravime rezervacni i kupni dokumentaci a zajistime bezpecny prubeh podpisu i plateb s pravnim dohledem.",
-    time: "1-3 tydny",
+    text: "Připravíme rezervační i kupní dokumentaci a zajistíme bezpečný průběh podpisů i plateb s právním dohledem.",
+    time: "1-3 týdny",
   },
   {
     id: "prodej-hotovo",
-    title: "Prodej: Mame hotovo",
-    text: "Predani, prevody a finalni administrativu dotahneme do detailu. Mate jistotu, ze nic nezustalo otevrene.",
+    title: "Prodej: Máme hotovo",
+    text: "Předání, převody a finální administrativu dotáhneme do detailu. Máte jistotu, že nic nezůstalo otevřené.",
     time: "1-2 dny",
   },
   {
     id: "pronajem-konzultace",
-    title: "Pronajem: Konzultace",
-    text: "Nastavime cile pronajmu, rozpocet i harmonogram. Domluvime rozsah sluzeb a odpovednost jednotlivych kroku.",
+    title: "Pronájem: Konzultace",
+    text: "Nastavíme cíle pronájmu, rozpočet i harmonogram. Domluvíme rozsah služeb a odpovědnost jednotlivých kroků.",
     time: "1-2 dny",
   },
   {
     id: "pronajem-naceneni",
-    title: "Pronajem: Naceneni",
-    text: "Stanovime trzni najemne tak, aby byt nebo dum nebyl pod cenou a soucasne se zbytecne neprodluzovala doba obsazeni.",
+    title: "Pronájem: Nacenění",
+    text: "Stanovíme tržní nájemné tak, aby byt nebo dům nebyl pod cenou a současně se zbytečně neprodlužovala doba obsazení.",
     time: "1 den",
   },
   {
     id: "pronajem-prezentace",
-    title: "Pronajem: Foto a priprava inzeratu",
-    text: "Pripravime kvalitni prezentaci a nabidku, ktera pritahne relevantni zajemce s vyssi sanci na dlouhodobe stabilni pronajem.",
+    title: "Pronájem: Foto a příprava inzerátu",
+    text: "Připravíme kvalitní prezentaci a nabídku, která přitáhne relevantní zájemce s vyšší šancí na dlouhodobě stabilní pronájem.",
     time: "1-3 dny",
   },
   {
     id: "pronajem-inzerce",
-    title: "Pronajem: Inzerce",
-    text: "Publikujeme nabidku, filtrujeme dotazy a prubezne vyhodnocujeme kvalitu poptavek podle vasich priorit.",
+    title: "Pronájem: Inzerce",
+    text: "Publikujeme nabídku, filtrujeme dotazy a průběžně vyhodnocujeme kvalitu poptávek podle vašich priorit.",
     time: "1 den",
   },
   {
     id: "pronajem-zajemci",
-    title: "Pronajem: Provereni zajemcu",
-    text: "Proverujeme bonitu, spolehlivost i motivaci zajemcu. Cilem je snizit rizika a vybrat najemnika, ktery bude fungovat dlouhodobe.",
-    time: "2-5 dni",
+    title: "Pronájem: Prověření zájemců",
+    text: "Prověřujeme bonitu, spolehlivost i motivaci zájemců. Cílem je snížit rizika a vybrat nájemníka, který bude fungovat dlouhodobě.",
+    time: "2-5 dní",
   },
   {
     id: "pronajem-prohlidky",
-    title: "Pronajem: Prohlidky",
-    text: "Vedeme prohlidky profesionalne, srozumitelne a efektivne. Vy dostavate jasne doporuceni pro finalni vyber najemnika.",
-    time: "1-3 tydny",
+    title: "Pronájem: Prohlídky",
+    text: "Vedeme prohlídky profesionálně, srozumitelně a efektivně. Vy dostáváte jasné doporučení pro finální výběr nájemníka.",
+    time: "1-3 týdny",
   },
   {
     id: "pronajem-smlouvy",
-    title: "Pronajem: Smlouvy a podpisy",
-    text: "Zajistime kvalitni najemni dokumentaci, podpisy i predavaci protokoly. Vse ma jasna pravidla a kontrolni body.",
-    time: "2-5 dni",
+    title: "Pronájem: Smlouvy a podpisy",
+    text: "Zajistíme kvalitní nájemní dokumentaci, podpisy i předávací protokoly. Vše má jasná pravidla a kontrolní body.",
+    time: "2-5 dní",
   },
   {
     id: "pronajem-hotovo",
-    title: "Pronajem: Mame hotovo",
-    text: "Finalni predani probehne bezpecne a transparentne. Mate kompletnI dokumentaci a jistotu navazujicich kroku.",
+    title: "Pronájem: Máme hotovo",
+    text: "Finální předání proběhne bezpečně a transparentně. Máte kompletní dokumentaci a jistotu navazujících kroků.",
     time: "1 den",
   },
 ];
@@ -121,8 +121,8 @@ export default function CoVseProVasUdelamePage() {
             </span>
           </h1>
           <p className="mt-4 text-base text-black/70 md:text-lg">
-            Detailni popis kroku prodeje a pronajmu, vcetne casovych odhadu,
-            odpovednosti a navaznosti jednotlivych fazi.
+            Detailní popis kroků prodeje a pronájmu, včetně časových odhadů,
+            odpovědnosti a návaznosti jednotlivých fází.
           </p>
         </div>
 
@@ -146,20 +146,20 @@ export default function CoVseProVasUdelamePage() {
         </div>
 
         <div className="mx-auto mt-12 max-w-5xl rounded-3xl border border-black/10 bg-white/85 p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-black">Pravni a procesni jistota</h2>
+          <h2 className="text-xl font-semibold text-black">Právní a procesní jistota</h2>
           <p className="mt-2 text-base leading-relaxed text-black/75">
-            Kazdy obchod vedeme tak, aby byl bezpecny pro vsechny strany. Hlidame
-            navaznost kroku, dokumentaci i terminy prevodu. Diky tomu je cely
-            proces citelny, predvidatelny a bez zbytecnych prodlev.
+            Každý obchod vedeme tak, aby byl bezpečný pro všechny strany. Hlídáme
+            návaznost kroků, dokumentaci i termíny převodu. Díky tomu je celý
+            proces čitelný, předvídatelný a bez zbytečných prodlev.
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-sm font-semibold text-black/70">
             <span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1.5">
               <ShieldCheck className="h-4 w-4 text-[color:var(--gold2)]" />
-              Pravni dohled
+              Právní dohled
             </span>
             <span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1.5">
               <FileText className="h-4 w-4 text-[color:var(--gold2)]" />
-              Kompletni dokumentace
+              Kompletní dokumentace
             </span>
           </div>
         </div>

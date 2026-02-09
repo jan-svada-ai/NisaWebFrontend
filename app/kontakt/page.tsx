@@ -48,7 +48,7 @@ export default function Page() {
         formRef.current?.reset();
       }
     } catch (error) {
-      console.error("Chyba pri odeslani formulare:", error);
+      console.error("Chyba při odeslání formuláře:", error);
     }
   };
 
@@ -60,22 +60,22 @@ export default function Page() {
         </p>
         <h1 className="mt-2 text-5xl font-semibold">Kontaktujte nás</h1>
         <p className="mt-4 max-w-3xl text-black/70">
-          Mate otazky? Chcete domluvit konzultaci nebo zjistit realny postup pro
-          prodej, pronajem nebo vyhledavani nemovitosti? Napiste nam nebo
-          zavolejte. Odpovime rychle, vecne a s respektem k vasim prioritam.
+          Máte otázky? Chcete domluvit konzultaci nebo zjistit reálný postup pro
+          prodej, pronájem nebo vyhledávání nemovitosti? Napište nám nebo
+          zavolejte. Odpovíme rychle, věcně a s respektem k vašim prioritám.
         </p>
       </div>
 
       <div className="grid gap-12 lg:grid-cols-3">
         <div id="formular" className="lg:col-span-2">
           <div className="rounded-3xl border border-black/10 bg-white/70 p-8 shadow-sm">
-            <h2 className="mb-6 text-2xl font-semibold">Napiste nam</h2>
+            <h2 className="mb-6 text-2xl font-semibold">Napište nám</h2>
 
             {submitted && (
               <div className="mb-6 flex items-center gap-3 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800">
                 <CheckCircle className="h-5 w-5" />
                 <span>
-                  Dekujeme. Vase zprava byla odeslana a brzy se vam ozveme.
+                  Děkujeme. Vaše zpráva byla odeslána a brzy se vám ozveme.
                 </span>
               </div>
             )}
@@ -87,7 +87,7 @@ export default function Page() {
                     htmlFor="name"
                     className="block text-sm font-medium text-black"
                   >
-                    Vase jmeno *
+                    Vaše jméno *
                   </label>
                   <input
                     type="text"
@@ -97,7 +97,7 @@ export default function Page() {
                     onChange={handleChange}
                     required
                     className="mt-1 w-full rounded-lg border border-black bg-white px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black/30"
-                    placeholder="Jan Novak"
+                    placeholder="Jan Novák"
                   />
                 </div>
                 <div>
@@ -143,7 +143,7 @@ export default function Page() {
                   htmlFor="subject"
                   className="block text-sm font-medium text-black"
                 >
-                  Predmet *
+                  Předmět *
                 </label>
                 <select
                   id="subject"
@@ -153,13 +153,13 @@ export default function Page() {
                   required
                   className="mt-1 w-full rounded-lg border border-black bg-white px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black/30"
                 >
-                  <option value="">Vyberte predmet...</option>
+                  <option value="">Vyberte předmět...</option>
                   <option value="prodej">Chci prodat nemovitost</option>
                   <option value="pronajem">Chci pronajmout nemovitost</option>
-                  <option value="koupe">Hledam nemovitost ke koupi</option>
-                  <option value="vyhledavani">Hledam nemovitost k pronajmu</option>
+                  <option value="koupe">Hledám nemovitost ke koupi</option>
+                  <option value="vyhledavani">Hledám nemovitost k pronájmu</option>
                   <option value="oceneni">Chci ocenit nemovitost</option>
-                  <option value="jine">Jiny dotaz</option>
+                  <option value="jine">Jiný dotaz</option>
                 </select>
               </div>
 
@@ -168,7 +168,7 @@ export default function Page() {
                   htmlFor="message"
                   className="block text-sm font-medium text-black"
                 >
-                  Zprava *
+                  Zpráva *
                 </label>
                 <textarea
                   id="message"
@@ -178,7 +178,7 @@ export default function Page() {
                   required
                   rows={6}
                   className="mt-1 w-full rounded-lg border border-black bg-white px-4 py-2 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black/30"
-                  placeholder="Napisete nam, co resite, jakou mate lokalitu a casovou predstavu..."
+                  placeholder="Napište nám, co řešíte, jakou máte lokalitu a časovou představu..."
                 />
               </div>
 
@@ -186,23 +186,23 @@ export default function Page() {
                 type="submit"
                 className="btn-main w-full rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
               >
-                Odeslat zpravu
+                Odeslat zprávu
               </button>
             </form>
 
             <div className="mt-8 border-t border-black/10 pt-6">
               <p className="text-sm font-medium text-black">
-                Kontaktujte konkretniho maklere
+                Kontaktujte konkrétního makléře
               </p>
               <p className="mt-3 mb-4 text-sm text-black/70">
-                Chcete se poradit primo s clenem naseho tymu? Vyberte si maklere,
-                ktery je vam nejblize.
+                Chcete se poradit přímo s členem našeho týmu? Vyberte si makléře,
+                který je vám nejblíže.
               </p>
               <Link
                 href="/nas-tym"
                 className="btn-main inline-flex items-center justify-center rounded-full bg-black px-6 py-2 text-sm font-semibold text-white"
               >
-                Kontaktuj konkretniho maklere
+                Kontaktuj konkrétního makléře
               </Link>
             </div>
           </div>
@@ -244,9 +244,9 @@ export default function Page() {
                 <div className="text-sm">
                   <p className="font-medium text-black">Adresa</p>
                   <p className="text-black/70">
-                    Zamecnicka 563/8
+                    Zámečnická 563/8
                     <br />
-                    Liberec IV - Perstyn
+                    Liberec IV - Perštýn
                     <br />
                     46001 Liberec
                   </p>
@@ -261,12 +261,12 @@ export default function Page() {
               className="btn-main mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-semibold text-black"
             >
               <MapPin className="h-4 w-4" />
-              Jak se k nam dostanete
+              Jak se k nám dostanete
             </a>
           </div>
 
           <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm">
-            <h3 className="mb-4 text-lg font-semibold">O firme</h3>
+            <h3 className="mb-4 text-lg font-semibold">O firmě</h3>
 
             <div className="space-y-3 text-sm text-black/70">
               <div>
@@ -274,32 +274,32 @@ export default function Page() {
               </div>
 
               <div>
-                <p className="font-medium text-black/60">ICO</p>
+                <p className="font-medium text-black/60">IČO</p>
                 <p className="text-black">27273385</p>
               </div>
 
               <div>
-                <p className="font-medium text-black/60">DIC</p>
+                <p className="font-medium text-black/60">DIČ</p>
                 <p className="text-black">CZ27273385</p>
               </div>
 
               <div>
-                <p className="font-medium text-black/60">Datova schranka</p>
+                <p className="font-medium text-black/60">Datová schránka</p>
                 <p className="text-black">yqkqb7n</p>
               </div>
 
               <div className="border-t border-black/10 pt-3">
                 <p className="text-xs text-black/60">
-                  Firma je zapsana v obchodnim rejstriku.
+                  Firma je zapsaná v obchodním rejstříku.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm">
-            <h3 className="mb-3 text-lg font-semibold">Oceneni zdarma</h3>
+            <h3 className="mb-3 text-lg font-semibold">Ocenění zdarma</h3>
             <p className="mb-4 text-sm text-black/70">
-              Chcete vedet, kolik muze mit vase nemovitost realnou trzni hodnotu?
+              Chcete vědět, kolik může mít vaše nemovitost reálnou tržní hodnotu?
             </p>
             <a
               href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
@@ -314,7 +314,7 @@ export default function Page() {
       </div>
 
       <div className="mt-16">
-        <h2 className="mb-6 text-2xl font-semibold">Kde nas najdete</h2>
+        <h2 className="mb-6 text-2xl font-semibold">Kde nás najdete</h2>
         <div className="overflow-hidden rounded-3xl border border-black/10 shadow-sm">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2545.5566850897673!2d15.037066!3d50.763476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471095c7d8f5f5f5%3A0x1234567890abcdef!2sZ%C3%A1me%C4%8Dn%C3%ADcka%20563%2F8%2C%20Liberec!5e0!3m2!1scs!2scz!4v1234567890"
@@ -327,8 +327,8 @@ export default function Page() {
           />
         </div>
         <p className="mt-4 text-sm text-black/70">
-          Konzultaci je idealni domluvit predem telefonicky nebo e-mailem.
-          Pripravime si podklady a schuzka bude rychla a vecna.
+          Konzultaci je ideální domluvit předem telefonicky nebo e-mailem.
+          Připravíme si podklady a schůzka bude rychlá a věcná.
         </p>
       </div>
     </div>

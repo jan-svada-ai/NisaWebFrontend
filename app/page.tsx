@@ -273,8 +273,8 @@ export default function Home() {
         <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center pt-28">
           <div className="w-full max-w-6xl px-6 text-center md:px-12 lg:px-16">
             <p className="mb-4 text-base uppercase tracking-[0.2em] text-white/85">
-              Liberecky, Ustecky, Kralovehradecky, Stredocesky kraj, Praha a
-              okoli
+              Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a
+              okolí
             </p>
 
             <h1 className="mx-auto max-w-5xl text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
@@ -288,8 +288,8 @@ export default function Home() {
             </h1>
 
             <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
-              Oceneni, profesionalni prezentace a cilena propagace. Bezpecny
-              prubeh zajistujeme ve spolupraci s advokatni kancelari.
+              Ocenění, profesionální prezentace a cílená propagace. Bezpečný
+              průběh zajišťujeme ve spolupráci s advokátní kanceláří.
             </p>
 
             <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
