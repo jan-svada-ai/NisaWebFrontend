@@ -74,7 +74,7 @@ export default function StepCarousel({ steps }: { steps: StepCard[] }) {
                   <p className="mt-3 max-w-2xl text-base leading-relaxed text-black/70">
                     {step.description}
                   </p>
-                  <p className="mt-5 inline-flex items-center gap-2 text-base font-semibold text-black/70">
+                  <p className="mt-5 mb-6 inline-flex items-center gap-2 text-base font-semibold text-black/70">
                     <Clock3 className="h-4 w-4 text-[color:var(--gold2)]" />
                     Odhad: {step.duration}
                   </p>

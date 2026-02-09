@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Mail, Phone, Users } from "lucide-react";
+import { ArrowRight, Mail, Phone, Users } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
 interface MaklerCard {
@@ -108,8 +108,9 @@ export default function NasTymPage() {
                     )}
                   </div>
 
-                  <div className="btn-main mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-[color:var(--gold1)] px-6 py-3 text-base font-semibold text-black">
+                  <div className="btn-main mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[color:var(--gold1)] px-6 py-3 text-base font-semibold text-black">
                     Detail
+                    <ArrowRight className="h-4 w-4" />
                   </div>
                 </div>
               </Link>
