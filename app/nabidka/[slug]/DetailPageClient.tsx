@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import {
   Phone,
   X,
 } from "lucide-react";
-import { apiUrl } from "@/lib/api";
+import { fetchJsonWithRetry } from "@/lib/api";
 
 interface DetailListing {
   id: number;
@@ -24,6 +24,7 @@ interface DetailListing {
   mena: string | null;
   plocha: number | null;
   pokoje: number | null;
+  dispozice: string | null;
   typ: string | null;
   typPonuky: string | null;
   stav: string;
@@ -35,24 +36,94 @@ interface DetailListing {
     telefon: string | null;
   } | null;
   obrazky: Array<{ id: number; url: string; popis: string | null }>;
+  atributy?: {
+    estate?: Record<string, unknown>;
+    estate_readable?: Record<string, unknown>;
+  } | null;
   vytvoren: string;
   zmenen: string;
+}
+
+function readStringFromObject(
+  source: Record<string, unknown> | null | undefined,
+  keys: string[],
+): string | null {
+  if (!source) return null;
+
+  for (const key of keys) {
+    const value = source[key];
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+
+  return null;
+}
+
+function resolveDisposition(listing: DetailListing): string | null {
+  if (listing.dispozice?.trim()) return listing.dispozice.trim();
+
+  const readable = listing.atributy?.estate_readable;
+  const estate = listing.atributy?.estate;
+
+  return (
+    readStringFromObject(readable, [
+      "dispozice",
+      "disposition",
+      "layout",
+      "flat_layout",
+      "object_disposition",
+    ]) ??
+    readStringFromObject(estate, [
+      "dispozice",
+      "disposition",
+      "layout",
+      "flat_layout",
+      "object_disposition",
+    ])
+  );
+}
+
+function resolveCurrencyLabel(value: string | null): string {
+  const normalized = (value ?? "").trim().toUpperCase();
+  if (!normalized || normalized === "CZK" || normalized === "KC" || normalized === "KČ") {
+    return "Kč";
+  }
+  return normalized;
 }
 
 export default function DetailPageClient({ slug }: { slug: string }) {
   const [listing, setListing] = useState<DetailListing | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const [sendSuccess, setSendSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const response = await fetch(apiUrl(`/api/inzeraty/slug/${slug}`));
-        const result = await response.json();
-        setListing(result.data ?? result);
+        setError(null);
+        const result = await fetchJsonWithRetry<DetailListing | { data?: DetailListing }>(
+          `/api/inzeraty/slug/${slug}`,
+          { timeoutMs: 25000, retries: 3, retryDelayMs: 900 },
+        );
+        const item =
+          typeof result === "object" && result !== null && "data" in result
+            ? result.data ?? null
+            : (result as DetailListing);
+        setListing(item);
       } catch (error) {
         console.error("Nepodařilo se načíst detail inzerátu:", error);
+        setError("Nacitani detailu nabidky trva prilis dlouho. Zkuste to prosim znovu.");
       } finally {
         setLoading(false);
       }
@@ -97,7 +168,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
             Zpět na nabídku
           </Link>
           <div className="py-12 text-center text-black/50">
-            Inzerát nebyl nalezen.
+            {error ?? "Inzerat nebyl nalezen."}
           </div>
         </div>
       </main>
@@ -105,6 +176,52 @@ export default function DetailPageClient({ slug }: { slug: string }) {
   }
 
   const hasImages = listing.obrazky && listing.obrazky.length > 0;
+  const disposition = resolveDisposition(listing);
+  const contactRecipient = listing.makler?.email ?? undefined;
+  const contactName = listing.makler?.jmeno?.trim() || "Nisa Centrum Reality";
+  const isCompanyContact = listing.makler?.id === 0;
+
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSending(true);
+    setSendError(null);
+    setSendSuccess(null);
+
+    try {
+      const response = await fetchJsonWithRetry<{ ok?: boolean; error?: string }>(
+        "/api/contact",
+        {
+          timeoutMs: 25000,
+          retries: 1,
+          retryDelayMs: 800,
+          init: {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: contactForm.name,
+              email: contactForm.email,
+              phone: contactForm.phone,
+              message: contactForm.message,
+              subject: `Dotaz k inzerátu: ${listing.nazev}`,
+              recipientEmail: contactRecipient,
+            }),
+          },
+        },
+      );
+
+      if (response.ok) {
+        setSendSuccess("Zpráva byla odeslána. Makléř se vám brzy ozve.");
+        setContactForm({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setSendError(response.error ?? "Odeslání se nepodařilo. Zkuste to znovu.");
+      }
+    } catch (err) {
+      console.error("Failed to submit listing contact form:", err);
+      setSendError("Odeslání se nepodařilo. Zkuste to znovu.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <main
@@ -226,19 +343,23 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                 Parametry nemovitosti
               </h2>
               <div className="grid gap-4 md:grid-cols-3">
-                {listing.cena && (
-                  <div className="rounded-xl bg-black/5 p-4">
-                    <p className="text-xs uppercase tracking-wide text-black/50">
-                      Cena
-                    </p>
-                    <p className="mt-1 text-xl font-bold text-black">
-                      {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
-                      <span className="text-sm text-black/60">
-                        {listing.mena || "Kč"}
-                      </span>
-                    </p>
-                  </div>
-                )}
+                <div className="rounded-xl bg-black/5 p-4">
+                  <p className="text-xs uppercase tracking-wide text-black/50">
+                    Cena
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-black">
+                    {listing.cena && listing.cena > 0 ? (
+                      <>
+                        {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
+                        <span className="text-sm text-black/60">
+                          {resolveCurrencyLabel(listing.mena)}
+                        </span>
+                      </>
+                    ) : (
+                      "Cena na dotaz"
+                    )}
+                  </p>
+                </div>
                 {listing.plocha && (
                   <div className="rounded-xl bg-black/5 p-4">
                     <p className="text-xs uppercase tracking-wide text-black/50">
@@ -249,7 +370,17 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                     </p>
                   </div>
                 )}
-                {listing.pokoje && (
+                {disposition && (
+                  <div className="rounded-xl bg-black/5 p-4">
+                    <p className="text-xs uppercase tracking-wide text-black/50">
+                      Dispozice
+                    </p>
+                    <p className="mt-1 text-xl font-bold text-black">
+                      {disposition}
+                    </p>
+                  </div>
+                )}
+                {listing.pokoje && !disposition && (
                   <div className="rounded-xl bg-black/5 p-4">
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Pokoje
@@ -308,10 +439,10 @@ export default function DetailPageClient({ slug }: { slug: string }) {
               {listing.makler && (
                 <div className="mb-6 rounded-xl border border-[color:var(--gold1)]/20 bg-gradient-to-br from-[color:var(--gold1)]/10 to-black/5 p-4">
                   <p className="mb-3 text-xs uppercase tracking-wide text-black/50">
-                    Váš makléř
+                    {isCompanyContact ? "Kontakt" : "Váš makléř"}
                   </p>
                   <p className="mb-3 font-semibold text-black">
-                    {listing.makler.jmeno}
+                    {contactName}
                   </p>
 
                   {listing.makler.telefon && (
@@ -337,24 +468,82 @@ export default function DetailPageClient({ slug }: { slug: string }) {
               )}
 
               <div className="mt-6 space-y-3">
-                <a
-                  href={
-                    listing.makler?.telefon ? `tel:${listing.makler.telefon}` : "#"
-                  }
-                  className="btn-main inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--gold1)] py-3 font-semibold text-black"
-                >
-                  <Phone className="h-4 w-4" />
-                  Zavolat
-                </a>
-                <a
-                  href={
-                    listing.makler?.email ? `mailto:${listing.makler.email}` : "#"
-                  }
-                  className="btn-main inline-flex w-full items-center justify-center gap-2 rounded-xl border border-black/20 bg-white py-3 font-semibold text-black"
-                >
-                  <Mail className="h-4 w-4" />
-                  Napsat zprávu
-                </a>
+                {listing.makler?.telefon ? (
+                  <a
+                    href={`tel:${listing.makler.telefon}`}
+                    className="btn-main inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--gold1)] py-3 font-semibold text-black"
+                  >
+                    <Phone className="h-4 w-4" />
+                    Zavolat
+                  </a>
+                ) : null}
+              </div>
+
+              <div className="mt-6 border-t border-black/10 pt-6">
+                <h2 className="mb-3 text-base font-semibold text-black">
+                  {isCompanyContact
+                    ? "Formulář pro Nisa Centrum Reality"
+                    : "Formulář pro tohoto makléře"}
+                </h2>
+                <form className="grid gap-3" onSubmit={handleContactSubmit}>
+                  {sendSuccess ? (
+                    <div className="rounded-xl bg-green-50 px-3 py-2 text-sm text-green-800">
+                      {sendSuccess}
+                    </div>
+                  ) : null}
+                  {sendError ? (
+                    <div className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-800">
+                      {sendError}
+                    </div>
+                  ) : null}
+                  <input
+                    type="text"
+                    value={contactForm.name}
+                    onChange={(e) =>
+                      setContactForm((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    placeholder="Jméno a příjmení"
+                    required
+                    className="w-full rounded-xl border-2 border-black/20 bg-white px-3 py-2 text-sm text-black shadow-sm focus:border-[color:var(--gold1)] focus:outline-none focus:ring-2 focus:ring-[color:var(--gold1)]/20"
+                  />
+                  <input
+                    type="email"
+                    value={contactForm.email}
+                    onChange={(e) =>
+                      setContactForm((prev) => ({ ...prev, email: e.target.value }))
+                    }
+                    placeholder="E-mail"
+                    required
+                    className="w-full rounded-xl border-2 border-black/20 bg-white px-3 py-2 text-sm text-black shadow-sm focus:border-[color:var(--gold1)] focus:outline-none focus:ring-2 focus:ring-[color:var(--gold1)]/20"
+                  />
+                  <input
+                    type="tel"
+                    value={contactForm.phone}
+                    onChange={(e) =>
+                      setContactForm((prev) => ({ ...prev, phone: e.target.value }))
+                    }
+                    placeholder="Telefon"
+                    className="w-full rounded-xl border-2 border-black/20 bg-white px-3 py-2 text-sm text-black shadow-sm focus:border-[color:var(--gold1)] focus:outline-none focus:ring-2 focus:ring-[color:var(--gold1)]/20"
+                  />
+                  <textarea
+                    value={contactForm.message}
+                    onChange={(e) =>
+                      setContactForm((prev) => ({ ...prev, message: e.target.value }))
+                    }
+                    placeholder="Vaše zpráva"
+                    rows={4}
+                    required
+                    className="w-full rounded-xl border-2 border-black/20 bg-white px-3 py-2 text-sm text-black shadow-sm focus:border-[color:var(--gold1)] focus:outline-none focus:ring-2 focus:ring-[color:var(--gold1)]/20"
+                  />
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="btn-main inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[color:var(--gold1)] py-2.5 font-semibold text-black disabled:opacity-60"
+                  >
+                    <Mail className="h-4 w-4" />
+                    {sending ? "Odesílám..." : "Odeslat zprávu"}
+                  </button>
+                </form>
               </div>
 
               <div className="mt-6 border-t border-black/10 pt-6 text-xs text-black/50">
@@ -426,3 +615,5 @@ export default function DetailPageClient({ slug }: { slug: string }) {
     </main>
   );
 }
+
+

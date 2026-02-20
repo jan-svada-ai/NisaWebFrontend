@@ -1,10 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { ChevronLeft, ChevronRight, Home, MapPin, RotateCcw, Search } from "lucide-react";
-import { apiUrl } from "@/lib/api";
+import { fetchJsonWithRetry } from "@/lib/api";
 
 interface Listing {
   id: number;
@@ -14,11 +13,16 @@ interface Listing {
   mena: string | null;
   plocha: number | null;
   pokoje: number | null;
+  dispozice: string | null;
   typ: string | null;
   typPonuky: string | null;
   mesto: { nazev: string } | null;
   makler: { jmeno: string } | null;
   obrazky: Array<{ url: string; alt?: string }>;
+  atributy?: {
+    estate?: Record<string, unknown>;
+    estate_readable?: Record<string, unknown>;
+  } | null;
 }
 
 interface PaginationInfo {
@@ -26,6 +30,79 @@ interface PaginationInfo {
   limit: number;
   total: number;
   totalPages: number;
+}
+
+interface ListingsResponse {
+  data?: Listing[];
+  pagination?: PaginationInfo;
+}
+
+interface ListingFilters {
+  type: string;
+  offerType: string;
+  priceMin: string;
+  priceMax: string;
+  areaMin: string;
+  areaMax: string;
+  sort: string;
+}
+
+const DEFAULT_FILTERS: ListingFilters = {
+  type: "",
+  offerType: "",
+  priceMin: "",
+  priceMax: "",
+  areaMin: "",
+  areaMax: "",
+  sort: "vytvoren-desc",
+};
+
+function readStringFromObject(
+  source: Record<string, unknown> | null | undefined,
+  keys: string[],
+): string | null {
+  if (!source) return null;
+
+  for (const key of keys) {
+    const value = source[key];
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+
+  return null;
+}
+
+function resolveDisposition(listing: Listing): string | null {
+  if (listing.dispozice?.trim()) return listing.dispozice.trim();
+
+  const readable = listing.atributy?.estate_readable;
+  const estate = listing.atributy?.estate;
+
+  return (
+    readStringFromObject(readable, [
+      "dispozice",
+      "disposition",
+      "layout",
+      "flat_layout",
+      "object_disposition",
+    ]) ??
+    readStringFromObject(estate, [
+      "dispozice",
+      "disposition",
+      "layout",
+      "flat_layout",
+      "object_disposition",
+    ])
+  );
+}
+
+function resolveCurrencyLabel(value: string | null): string {
+  const normalized = (value ?? "").trim().toUpperCase();
+  if (!normalized || normalized === "CZK" || normalized === "KC" || normalized === "KČ") {
+    return "Kč";
+  }
+  return normalized;
 }
 
 export default function NabidkaPage() {
@@ -37,6 +114,7 @@ export default function NabidkaPage() {
     totalPages: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [type, setType] = useState("");
   const [offerType, setOfferType] = useState("");
@@ -44,57 +122,71 @@ export default function NabidkaPage() {
   const [priceMax, setPriceMax] = useState("");
   const [areaMin, setAreaMin] = useState("");
   const [areaMax, setAreaMax] = useState("");
-  const [sort, setSort] = useState("vytvoren-desc");
+  const [sort, setSort] = useState(DEFAULT_FILTERS.sort);
+
+  const getCurrentFilters = (): ListingFilters => ({
+    type,
+    offerType,
+    priceMin,
+    priceMax,
+    areaMin,
+    areaMax,
+    sort,
+  });
 
   const fetchListings = useCallback(
-    async (page = 1) => {
+    async (page: number, filters: ListingFilters) => {
       setLoading(true);
       try {
         const params = new URLSearchParams({
           page: page.toString(),
           limit: "20",
-          ...(type && { typ: type }),
-          ...(offerType && { typPonuky: offerType }),
-          ...(priceMin && { cenaMin: priceMin }),
-          ...(priceMax && { cenaMax: priceMax }),
-          ...(areaMin && { plochaMin: areaMin }),
-          ...(areaMax && { plochaMax: areaMax }),
-          ...(sort && { razeni: sort }),
+          ...(filters.type && { typ: filters.type }),
+          ...(filters.offerType && { typPonuky: filters.offerType }),
+          ...(filters.priceMin && { cenaMin: filters.priceMin }),
+          ...(filters.priceMax && { cenaMax: filters.priceMax }),
+          ...(filters.areaMin && { plochaMin: filters.areaMin }),
+          ...(filters.areaMax && { plochaMax: filters.areaMax }),
+          ...(filters.sort && { razeni: filters.sort }),
         });
 
-        const response = await fetch(apiUrl(`/api/inzeraty?${params}`));
-        const result = await response.json();
+        setError(null);
+        const result = await fetchJsonWithRetry<ListingsResponse>(
+          `/api/inzeraty?${params}`,
+          { timeoutMs: 25000, retries: 3, retryDelayMs: 900 },
+        );
 
         if (result.data) {
           setListings(result.data);
-          setPagination(result.pagination);
+          if (result.pagination) setPagination(result.pagination);
         }
       } catch (error) {
         console.error("Nepodařilo se načíst nabídky:", error);
+        setError("Načítání nabídek trvá příliš dlouho. Zkuste to prosím znovu.");
       } finally {
         setLoading(false);
       }
     },
-    [type, offerType, priceMin, priceMax, areaMin, areaMax, sort],
+    [],
   );
 
-  const handleSearch = useCallback(() => {
-    fetchListings(1);
-  }, [fetchListings]);
+  const handleSearch = () => {
+    void fetchListings(1, getCurrentFilters());
+  };
 
-  const handleReset = useCallback(() => {
-    setType("");
-    setOfferType("");
-    setPriceMin("");
-    setPriceMax("");
-    setAreaMin("");
-    setAreaMax("");
-    setSort("vytvoren-desc");
-    setTimeout(() => fetchListings(1), 0);
-  }, [fetchListings]);
+  const handleReset = () => {
+    setType(DEFAULT_FILTERS.type);
+    setOfferType(DEFAULT_FILTERS.offerType);
+    setPriceMin(DEFAULT_FILTERS.priceMin);
+    setPriceMax(DEFAULT_FILTERS.priceMax);
+    setAreaMin(DEFAULT_FILTERS.areaMin);
+    setAreaMax(DEFAULT_FILTERS.areaMax);
+    setSort(DEFAULT_FILTERS.sort);
+    void fetchListings(1, { ...DEFAULT_FILTERS });
+  };
 
   useEffect(() => {
-    fetchListings(1);
+    void fetchListings(1, { ...DEFAULT_FILTERS });
   }, [fetchListings]);
 
   return (
@@ -251,6 +343,8 @@ export default function NabidkaPage() {
 
         {loading ? (
           <div className="py-12 text-center text-black/50">Načítání...</div>
+        ) : error ? (
+          <div className="py-12 text-center text-black/50">{error}</div>
         ) : listings.length === 0 ? (
           <div className="py-12 text-center text-black/50">
             Žádné nemovitosti nebyly nalezeny. Zkuste změnit filtry.
@@ -258,95 +352,110 @@ export default function NabidkaPage() {
         ) : (
           <>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {listings.map((listing) => (
-                <Link
-                  key={listing.id}
-                  href={`/nabidka/detail?slug=${encodeURIComponent(listing.slug)}`}
-                  className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-                >
-                  <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-black/5 to-black/10">
-                    {listing.obrazky[0] ? (
-                      <Image
-                        src={listing.obrazky[0].url}
-                        alt={listing.obrazky[0].alt || listing.nazev}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center">
-                        <Home className="h-12 w-12 text-black/20" />
-                      </div>
-                    )}
-                    {listing.typPonuky && (
-                      <div className="absolute top-3 right-3">
-                        <span className="rounded-full bg-[color:var(--gold1)] px-3 py-1 text-xs font-bold text-black">
-                          {listing.typPonuky === "prodej"
-                            ? "Prodej"
-                            : listing.typPonuky === "pronajeti"
-                              ? "Pronájem"
-                              : "Dražba"}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+              {listings.map((listing) => {
+                const disposition = resolveDisposition(listing);
 
-                  <div className="p-5">
-                    <h3 className="mb-3 line-clamp-2 text-lg font-semibold text-black">
-                      {listing.nazev}
-                    </h3>
-
-                    <div className="mb-4 flex items-center gap-2 text-sm text-black/70">
-                      <MapPin className="h-4 w-4 text-[color:var(--gold1)]" />
-                      {listing.mesto?.nazev || "N/A"}
+                return (
+                  <a
+                    key={listing.id}
+                    href={`/nabidka/detail/?slug=${encodeURIComponent(listing.slug)}`}
+                    className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    <div className="relative h-56 w-full overflow-hidden bg-gradient-to-br from-black/5 to-black/10">
+                      {listing.obrazky[0] ? (
+                        <Image
+                          src={listing.obrazky[0].url}
+                          alt={listing.obrazky[0].alt || listing.nazev}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center">
+                          <Home className="h-12 w-12 text-black/20" />
+                        </div>
+                      )}
+                      {listing.typPonuky && (
+                        <div className="absolute top-3 right-3">
+                          <span className="rounded-full bg-[color:var(--gold1)] px-3 py-1 text-xs font-bold text-black">
+                            {listing.typPonuky === "prodej"
+                              ? "Prodej"
+                              : listing.typPonuky === "pronajeti"
+                                ? "Pronájem"
+                                : "Dražba"}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
-                    <div className="mb-4 grid grid-cols-2 gap-3 border-y border-black/5 py-3 text-sm">
-                      {listing.cena && (
+                    <div className="p-5">
+                      <h3 className="mb-3 line-clamp-2 text-lg font-semibold text-black">
+                        {listing.nazev}
+                      </h3>
+
+                      <div className="mb-4 flex items-center gap-2 text-sm text-black/70">
+                        <MapPin className="h-4 w-4 text-[color:var(--gold1)]" />
+                        {listing.mesto?.nazev || "N/A"}
+                      </div>
+
+                      <div className="mb-4 grid grid-cols-2 gap-3 border-y border-black/5 py-3 text-sm">
                         <div>
                           <p className="text-xs uppercase tracking-wide text-black/50">
                             Cena
                           </p>
                           <p className="font-bold text-black">
-                            {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
-                            <span className="text-xs text-black/60">
-                              {listing.mena || "Kč"}
-                            </span>
+                            {listing.cena && listing.cena > 0 ? (
+                              <>
+                                {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
+                                <span className="text-xs text-black/60">
+                                  {resolveCurrencyLabel(listing.mena)}
+                                </span>
+                              </>
+                            ) : (
+                              "Cena na dotaz"
+                            )}
                           </p>
                         </div>
-                      )}
-                      {listing.plocha && (
-                        <div>
-                          <p className="text-xs uppercase tracking-wide text-black/50">
-                            Plocha
-                          </p>
-                          <p className="font-bold text-black">{listing.plocha} m²</p>
-                        </div>
-                      )}
-                    </div>
+                        {listing.plocha && (
+                          <div>
+                            <p className="text-xs uppercase tracking-wide text-black/50">
+                              Plocha
+                            </p>
+                            <p className="font-bold text-black">{listing.plocha} m²</p>
+                          </div>
+                        )}
+                      </div>
 
-                    <div className="flex flex-wrap gap-2">
-                      {listing.typ && (
-                        <span className="rounded-lg bg-black/5 px-2.5 py-1 text-xs font-semibold text-black/70">
-                          {listing.typ === "byt"
-                            ? "Byt"
-                            : listing.typ === "dum"
-                              ? "Dům"
-                              : listing.typ === "pozemek"
-                                ? "Pozemek"
-                                : "Komerční"}
-                        </span>
-                      )}
+                      <div className="flex flex-wrap gap-2">
+                        {listing.typ && (
+                          <span className="rounded-lg bg-black/5 px-2.5 py-1 text-xs font-semibold text-black/70">
+                            {listing.typ === "byt"
+                              ? "Byt"
+                              : listing.typ === "dum"
+                                ? "Dům"
+                                : listing.typ === "pozemek"
+                                  ? "Pozemek"
+                                  : "Komerční"}
+                          </span>
+                        )}
+                        {disposition && (
+                          <span className="rounded-lg bg-black/5 px-2.5 py-1 text-xs font-semibold text-black/70">
+                            {disposition}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </a>
+                );
+              })}
             </div>
 
             {pagination.totalPages > 1 && (
               <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
                 {pagination.page > 1 && (
                   <button
-                    onClick={() => fetchListings(pagination.page - 1)}
+                    onClick={() =>
+                      void fetchListings(pagination.page - 1, getCurrentFilters())
+                    }
                     className="btn-main inline-flex items-center gap-2 rounded-xl border border-black/20 bg-white px-4 py-2.5 text-sm font-semibold text-black"
                   >
                     <ChevronLeft className="h-4 w-4" />
@@ -359,7 +468,7 @@ export default function NabidkaPage() {
                     (pageNum) => (
                       <button
                         key={pageNum}
-                        onClick={() => fetchListings(pageNum)}
+                        onClick={() => void fetchListings(pageNum, getCurrentFilters())}
                         className={`btn-main rounded-xl px-3 py-2 text-sm font-semibold ${
                           pageNum === pagination.page
                             ? "bg-[color:var(--gold1)] text-black"
@@ -374,7 +483,9 @@ export default function NabidkaPage() {
 
                 {pagination.page < pagination.totalPages && (
                   <button
-                    onClick={() => fetchListings(pagination.page + 1)}
+                    onClick={() =>
+                      void fetchListings(pagination.page + 1, getCurrentFilters())
+                    }
                     className="btn-main inline-flex items-center gap-2 rounded-xl border border-black/20 bg-white px-4 py-2.5 text-sm font-semibold text-black"
                   >
                     Další
@@ -389,3 +500,6 @@ export default function NabidkaPage() {
     </main>
   );
 }
+
+
+
