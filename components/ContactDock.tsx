@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -66,7 +66,7 @@ export default function ContactDock() {
     },
     {
       kind: "a",
-      href: "tel:+420702064442",
+      href: "tel:+420721292462",
       label: "Zavolejte nám",
       icon: <Phone className="h-5 w-5" />,
     },
@@ -89,12 +89,12 @@ export default function ContactDock() {
   return (
     <div ref={ref} className="fixed bottom-5 right-5 z-40">
       {/* =======================
-          DESKTOP (>= sm): fixní lišta + tooltip do leva
+          DESKTOP (>= xl): fixní lišta + tooltip doleva
           ======================= */}
-      <div className="hidden sm:block">
+      <div className="hidden xl:block">
         <div className="rounded-2xl border border-black/10 bg-white/85 shadow-2xl backdrop-blur-xl ring-1 ring-[color:var(--gold1)]/20">
           {/* items-end + overflow-visible -> tooltip se nepřekresluje */}
-          <div className="flex w-16 flex-col items-end justify-center gap-2 p-2 overflow-visible">
+          <div className="flex w-16 flex-col items-end justify-center gap-2 overflow-visible p-2">
             {desktopItems.map((item) => {
               const strong = !!item.strong;
 
@@ -170,17 +170,17 @@ export default function ContactDock() {
       </div>
 
       {/* =======================
-          MOBILE (< sm): jen + + panel
+          MOBILE (< xl): jen + + panel
           ======================= */}
-      <div className="sm:hidden relative">
+      <div className="xl:hidden relative">
         {/* panel */}
         <div
           className={[
             "absolute right-0 bottom-16 w-[240px] overflow-hidden rounded-2xl border border-black/10 bg-white/90 p-2 shadow-2xl backdrop-blur-xl ring-1 ring-[color:var(--gold1)]/20",
-            "transition-all duration-200 origin-bottom-right",
+            "origin-bottom-right transition-all duration-200",
             open
-              ? "opacity-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 translate-y-2 pointer-events-none",
+              ? "pointer-events-auto translate-y-0 opacity-100"
+              : "pointer-events-none translate-y-2 opacity-0",
           ].join(" ")}
         >
           <Link
@@ -193,7 +193,7 @@ export default function ContactDock() {
           </Link>
 
           <a
-            href="tel:+420702064442"
+            href="tel:+420721292462"
             className={mobileItem}
             onClick={() => setOpen(false)}
           >
@@ -237,3 +237,6 @@ export default function ContactDock() {
     </div>
   );
 }
+
+
+

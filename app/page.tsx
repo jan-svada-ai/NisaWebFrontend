@@ -183,7 +183,6 @@ function Icon({
   }
 }
 
-
 function Section({
   id,
   title,
@@ -250,113 +249,173 @@ function Section({
   );
 }
 
+function HeroSection({
+  showDescription = true,
+  lowButtons = false,
+  compactText = false,
+  emphasizeVideo = false,
+  mildCompact = false,
+  lowButtonsBottomClass = "pb-6",
+  ctaSizeClass = "min-h-14 px-7 py-4 text-base",
+}: {
+  showDescription?: boolean;
+  lowButtons?: boolean;
+  compactText?: boolean;
+  emphasizeVideo?: boolean;
+  mildCompact?: boolean;
+  lowButtonsBottomClass?: string;
+  ctaSizeClass?: string;
+}) {
+  const regionClass = compactText
+    ? "mb-3 text-sm uppercase tracking-[0.2em] text-white/85"
+    : mildCompact
+      ? "mb-4 text-[0.9rem] uppercase tracking-[0.2em] text-white/85"
+      : "mb-4 text-base uppercase tracking-[0.2em] text-white/85";
+  const titleClass = compactText
+    ? "mx-auto max-w-5xl text-4xl font-semibold leading-tight text-white md:text-6xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]"
+    : mildCompact
+      ? "mx-auto max-w-5xl text-[2.8rem] font-semibold leading-tight text-white md:text-[4rem] [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]"
+      : "mx-auto max-w-5xl text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]";
+  const subtitleClass = compactText
+    ? "mt-3 block text-[0.64em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]"
+    : mildCompact
+      ? "mt-3 block text-[0.63em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]"
+      : "mt-4 block text-[0.7em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]";
+  const descClass = compactText
+    ? "mx-auto mt-6 max-w-3xl text-base font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]"
+    : mildCompact
+      ? "mx-auto mt-7 max-w-3xl text-base font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]"
+      : "mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]";
+  const ctaGridClass = compactText
+    ? "mx-auto mt-8 grid max-w-5xl gap-3 px-1 sm:grid-cols-2 sm:px-0 lg:grid-cols-6"
+    : mildCompact
+      ? "mx-auto mt-9 grid max-w-5xl gap-3 px-1 sm:grid-cols-2 sm:px-0 lg:grid-cols-6"
+      : "mx-auto mt-10 grid max-w-5xl gap-3 px-1 sm:grid-cols-2 sm:px-0 lg:grid-cols-6";
+
+  return (
+    <section className="relative min-h-dvh">
+      <video
+        className={[
+          "absolute inset-0 h-full w-full object-cover",
+          emphasizeVideo
+            ? "brightness-[1.12]"
+            : "brightness-[1.08]",
+        ].join(" ")}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/hero-poster.avif"
+      >
+        <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
+        <source src="/hero.mp4" type="video/mp4" media="(min-width: 768px)" />
+      </video>
+
+      <div
+        className={[
+          "absolute inset-0 bg-gradient-to-b",
+          emphasizeVideo
+            ? "from-black/8 via-black/8 to-black/20"
+            : "from-black/18 via-black/12 to-black/35",
+        ].join(" ")}
+      />
+      <div
+        className={[
+          "absolute inset-0",
+          emphasizeVideo
+            ? "bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.56)_0%,rgba(0,0,0,0.38)_45%,rgba(0,0,0,0.16)_72%,rgba(0,0,0,0.05)_100%)]"
+            : "bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]",
+        ].join(" ")}
+      />
+
+      <div
+        className={[
+          "relative z-10 flex min-h-dvh flex-col items-center",
+          lowButtons ? "justify-start pt-20 pb-6" : "justify-center pt-28 pb-8",
+        ].join(" ")}
+      >
+        <div className="w-full max-w-6xl px-5 text-center sm:px-8 md:px-12 lg:px-16">
+          <p className={regionClass}>
+            Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a okolí
+          </p>
+
+          <h1 className={titleClass}>
+            <span className="inline-flex flex-col items-center">
+              <span>Prodej a pronájem bez stresu.</span>
+              <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+            </span>
+            <span className={subtitleClass}>
+              S důrazem na cenu, rychlost a jistotu.
+            </span>
+          </h1>
+
+          {showDescription ? (
+            <p className={descClass}>
+              Ocenění, profesionální prezentace a cílená propagace. Bezpečný
+              průběh zajišťujeme ve spolupráci s advokátní kanceláří.
+            </p>
+          ) : null}
+        </div>
+
+        <div
+          className={
+            lowButtons ? `mt-auto w-full ${lowButtonsBottomClass}` : "w-full"
+          }
+        >
+          <div className={ctaGridClass}>
+            <Link
+              href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] font-semibold text-black lg:col-span-2 ${ctaSizeClass}`}
+            >
+              <Icon name="handCoins" className="h-5 w-5" />
+              Ocenění nemovitosti
+            </Link>
+            <Link
+              href="/#proc-maklere"
+              className={`btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 font-semibold text-white backdrop-blur-sm lg:col-span-2 ${ctaSizeClass}`}
+            >
+              <Icon name="user" className="h-5 w-5" />
+              Proč mít svého makléře
+            </Link>
+            <Link
+              href="/#o-nas"
+              className={`btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] font-semibold text-black lg:col-span-2 ${ctaSizeClass}`}
+            >
+              <Icon name="user" className="h-5 w-5" />O nás
+            </Link>
+            <Link
+              href="/#sluzby"
+              className={`btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 font-semibold text-white backdrop-blur-sm lg:col-span-3 ${ctaSizeClass}`}
+            >
+              <Icon name="briefcase" className="h-5 w-5" />
+              Služby
+            </Link>
+            <Link
+              href="/#faq"
+              className={`btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] font-semibold text-black lg:col-span-3 ${ctaSizeClass}`}
+            >
+              <Icon name="question" className="h-5 w-5" />
+              Časté dotazy
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative min-h-dvh">
-        <video
-          className="absolute inset-0 h-full w-full object-cover brightness-[1.25] contrast-[1.05] saturate-[1.1]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/hero-poster.jpg"
-        >
-          <source src="/hero.mp4" type="video/mp4" />
-        </video>
-
-        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
-
-        <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center pt-28">
-          <div className="w-full max-w-6xl px-6 text-center md:px-12 lg:px-16">
-            <p className="mb-4 text-base uppercase tracking-[0.2em] text-white/85">
-              Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a
-              okolí
-            </p>
-
-            <h1 className="mx-auto max-w-5xl text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
-              <span className="inline-flex flex-col items-center">
-                <span>Prodej a pronájem bez stresu.</span>
-                <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
-              </span>
-              <span className="mt-4 block text-[0.7em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
-                S důrazem na cenu, rychlost a jistotu.
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
-              Ocenění, profesionální prezentace a cílená propagace. Bezpečný
-              průběh zajišťujeme ve spolupráci s advokátní kanceláří.
-            </p>
-
-            <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
-              <Link
-                href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
-              >
-                <Icon name="handCoins" className="h-5 w-5" />
-                Ocenění nemovitosti
-              </Link>
-              <Link
-                href="/#proc-maklere"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
-              >
-                <Icon name="user" className="h-5 w-5" />
-                Proč mít svého makléře
-              </Link>
-              <Link
-                href="/#o-nas"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
-              >
-                <Icon name="user" className="h-5 w-5" />O nás
-              </Link>
-              <Link
-                href="/#sluzby"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-3"
-              >
-                <Icon name="briefcase" className="h-5 w-5" />
-                Služby
-              </Link>
-              <Link
-                href="/#faq"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-3"
-              >
-                <Icon name="question" className="h-5 w-5" />
-                Časté dotazy
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STATISTIKY */}
-      <StatsSection
-        stats={[
-          {
-            value: 200,
-            label: "Prodaných nemovitostí",
-            suffix: "+",
-            icon: "home",
-          },
-          {
-            value: 400,
-            label: "Pronajatých nemovitostí",
-            suffix: "+",
-            icon: "building",
-          },
-          { value: 15, label: "Let v oboru", suffix: "+", icon: "clock" },
-          {
-            value: 300,
-            label: "Uskutečněných obchodů",
-            suffix: "+",
-            icon: "star",
-          },
-        ]}
+      <HeroSection
+        lowButtons
+        mildCompact
+        lowButtonsBottomClass="pb-10"
+        ctaSizeClass="min-h-11 px-5 py-2.5 text-base"
       />
 
       {/* O NÁS */}
@@ -441,7 +500,7 @@ export default function Home() {
           {/* Fotka */}
           <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-black/10 shadow-xl">
             <Image
-              src="/Onas.jpeg"
+              src="/Onas.avif"
               alt="O nás"
               fill
               className="object-cover"
@@ -454,6 +513,31 @@ export default function Home() {
         <div className="h-px w-full bg-[color:var(--gold1)]/45" />
       </div>
 
+      {/* STATISTIKY */}
+      <StatsSection
+        stats={[
+          {
+            value: 1000,
+            label: "Prodaných nemovitostí",
+            suffix: "+",
+            icon: "home",
+          },
+          {
+            value: 600,
+            label: "Pronajatých nemovitostí",
+            suffix: "+",
+            icon: "building",
+          },
+          { value: 15, label: "Let v oboru", suffix: "+", icon: "clock" },
+          {
+            value: 99,
+            label: "Spokojených klientů",
+            suffix: "%",
+            icon: "star",
+          },
+        ]}
+      />
+
       {/* PROČ MÍT SVÉHO REALITNÍHO MAKLÉŘE */}
       <div className="border-t border-black/10" />
       <Section
@@ -462,134 +546,139 @@ export default function Home() {
         title="Proč mít svého realitního makléře"
         subtitle="Nejde jen o inzerát. Jde o správnou cenu, strategii, vyjednávání a bezpečný proces – s minimem starostí pro vás."
       >
-        {/* Wrapper - fotka jako "pozadí" vlevo, obsah uprostřed */}
-        <div className="relative">
-          {/* FOTKA VENDY - mimo hlavní obsah, vlevo */}
-          <div className="pointer-events-none absolute left-0 top-10 hidden -translate-x-[85%] lg:block z-0">
-            <Image
-              src="/fotoVendy.png"
-              alt="Tým NISA CENTRUM REALITY"
-              width={420}
-              height={630}
-              className="h-auto w-[300px] rounded-2xl object-cover scale-x-[-1]"
-              priority
-            />
-          </div>
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-6 lg:grid-cols-10 lg:items-start">
+            <div className="order-2 hidden lg:order-1 lg:col-span-3 lg:block">
+              <div className="relative aspect-[2/3] w-full">
+                <Image
+                  src="/fotoVendy.avif"
+                  alt="Tým NISA CENTRUM REALITY"
+                  fill
+                  className="scale-x-[-1] object-contain object-center"
+                  sizes="(min-width: 1024px) 30vw, 0px"
+                  priority
+                />
+              </div>
+            </div>
 
-          {/* CONTENT - KARTIČKY - uprostřed */}
-          <div className="relative z-10 mx-auto flex max-w-[90%] flex-col items-start gap-6 px-4">
-            {(() => {
-              const items = [
-                {
-                  icon: "handCoins" as const,
-                  title: "Správné nacenění a strategie",
-                  text: 'Cenu nenastavujeme "od stolu". Vycházíme z prohlídky, dat a reálné poptávky v lokalitě.',
-                  detail:
-                    "Analyzujeme trh, konkurenci a specifika nemovitosti. Nastavíme cenu, která přitáhne zájemce a přitom maximalizuje výnos. Žádné odhady od stolu – jen reálná data.",
-                },
-                {
-                  icon: "camera" as const,
-                  title: "Prezentace, která prodává",
-                  text: "Home staging, fotografie, video, texty a cílení – aby se nemovitost ukázala ve správném světle.",
-                  detail:
-                    "Profesionální úprava prostoru, kvalitní vizuály a texty, které upoutají. Vytvoříme prezentaci, která zazaujme a zvýší šanci na rychlý prodej za nejvyšší cenu.",
-                },
-                {
-                  icon: "map" as const,
-                  title: "Lokální znalost a síť kontaktů",
-                  text: "Liberec a okolí dobře známe. Víme, co se prodává, za kolik a komu.",
-                  detail:
-                    "Dlouholeté zkušenosti v regionu nám dávají přehled o poptávce, cenách i specifických požadavcích kupců. Naše síť kontaktů urychlí prodej.",
-                },
-                {
-                  icon: "shield" as const,
-                  title: "Bezpečné smlouvy a úschova",
-                  text: "Smlouvy řeší advokáti/kanceláři. Hlídáme termíny, návaznosti i administrativu.",
-                  detail:
-                    "Spolupracujeme s ověřenými advokáty a notáři. Zálohy jdou do úschovy, smlouvy kontrolujeme právně. Celý proces je bezpečný a transparentní.",
-                },
-                {
-                  icon: "eye" as const,
-                  title: "Prohlídky a komunikace bez chaosu",
-                  text: "Organizuji prohlídky, odpovídám zájemcům a vyjednávám — vy máte klid.",
-                  detail:
-                    "Plánujeme prohlídky, prověřujeme zájemce, odpovídáme na dotazy a vyjednáváme podmínky. Vy se můžete věnovat svému životu – o vše se postaráme.",
-                },
-                {
-                  icon: "search" as const,
-                  title: "Umím i najít nemovitost na míru",
-                  text: "Hledám podle vašich požadavků a pomáhám prověřit vhodnost nabídky.",
-                  detail:
-                    "Aktivně vyhledáváme nemovitosti odpovídající vašim kritériím. Využíváme naši databázi i neveřejné nabídky. Šetříme váš čas a pomáháme najít ten pravý domov.",
-                },
-              ];
+            <div className="order-1 flex flex-col items-start gap-6 lg:order-2 lg:col-span-7">
+              {(() => {
+                const items = [
+                  {
+                    icon: "handCoins" as const,
+                    title: "Správné nacenění a strategie",
+                    text: 'Cenu nenastavujeme "od stolu". Vycházíme z prohlídky, dat a reálné poptávky v lokalitě.',
+                    detail:
+                      "Analyzujeme trh, konkurenci a specifika nemovitosti. Nastavíme cenu, která přitáhne zájemce a přitom maximalizuje výnos. Žádné odhady od stolu – jen reálná data.",
+                  },
+                  {
+                    icon: "camera" as const,
+                    title: "Prezentace, která prodává",
+                    text: "Home staging, fotografie, video, texty a cílení – aby se nemovitost ukázala ve správném světle.",
+                    detail:
+                      "Profesionální úprava prostoru, kvalitní vizuály a texty, které upoutají. Vytvoříme prezentaci, která zaujme a zvýší šanci na rychlý prodej za nejvyšší cenu.",
+                  },
+                  {
+                    icon: "map" as const,
+                    title: "Lokální znalost a síť kontaktů",
+                    text: "Své regiony a jejich okolí dobře známe. Víme, co se prodává, za kolik a komu.",
+                    detail:
+                      "Dlouholeté zkušenosti v regionu nám dávají přehled o poptávce, cenách i specifických požadavcích zájemců. Naše síť kontaktů urychlí prodej.",
+                  },
+                  {
+                    icon: "shield" as const,
+                    title: "Bezpečné smlouvy a úschova",
+                    text: "Smlouvy řeší advokátní kancelář, která zajistí podpisy, úschovu, doručení smluv na katastr a pohlídá veškeré termíny.",
+                    detail:
+                      "Spolupracujeme s ověřenými advokáty a notáři. Zálohy jdou do úschovy, smlouvy kontrolujeme právně. Celý proces je bezpečný a transparentní.",
+                  },
+                  {
+                    icon: "eye" as const,
+                    title: "Prohlídky a komunikace bez chaosu",
+                    text: "Organizujeme prohlídky, odpovídáme zájemcům a vyjednáváme — vy máte klid.",
+                    detail:
+                      "Plánujeme prohlídky, prověřujeme zájemce, odpovídáme na dotazy a vyjednáváme podmínky. Vy se můžete věnovat svému životu – o vše se postaráme.",
+                  },
+                  {
+                    icon: "search" as const,
+                    title: "Umíme najít i nemovitost na míru",
+                    text: "Hledáme podle vašich požadavků a pomáháme prověřit vhodnost nabídky.",
+                    detail:
+                      "Aktivně vyhledáváme nemovitosti odpovídající vašim kritériím. Využíváme naši databázi i neveřejné nabídky. Šetříme váš čas a pomáháme najít ten pravý domov.",
+                  },
+                ];
 
-              const leftCol = items.filter((_, idx) => idx % 2 === 0);
-              const rightCol = items.filter((_, idx) => idx % 2 === 1);
+                const leftCol = items.filter((_, idx) => idx % 2 === 0);
+                const rightCol = items.filter((_, idx) => idx % 2 === 1);
 
-              const renderItem = (item: (typeof items)[number]) => (
-                <details
-                  key={item.title}
-                  className="group rounded-2xl border border-black/10 bg-white/90 shadow-sm transition-all hover:shadow-md open:bg-white"
-                >
-                  <summary className="flex cursor-pointer items-center gap-3 p-4 list-none">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
-                      <Icon name={item.icon} className="h-5 w-5 text-black" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-base font-semibold text-black">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-black/70">
-                        {item.text}
+                const renderItem = (item: (typeof items)[number]) => (
+                  <details
+                    key={item.title}
+                    className="group h-full rounded-2xl border border-black/10 bg-white/90 shadow-sm transition-all hover:shadow-md open:bg-white"
+                  >
+                    <summary className="flex cursor-pointer list-none items-start gap-3 p-4 text-left [&::-webkit-details-marker]:hidden [&::marker]:content-['']">
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
+                        <Icon name={item.icon} className="h-5 w-5 text-black" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-base font-semibold text-black">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1 text-sm leading-relaxed text-black/70">
+                          {item.text}
+                        </p>
+                      </div>
+                      <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-300 text-black/70 transition-transform group-open:rotate-45">
+                        +
+                      </div>
+                    </summary>
+                    <div className="px-4 pb-4 pl-[4.5rem]">
+                      <p className="border-l-2 border-[color:var(--gold1)]/30 pl-4 text-sm leading-relaxed text-black/60">
+                        {item.detail}
                       </p>
                     </div>
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-300 text-black/70 transition-transform group-open:rotate-45">
-                      +
+                  </details>
+                );
+
+                return (
+                  <div className="grid gap-3 sm:grid-cols-2 sm:items-stretch">
+                    <div className="flex flex-col gap-3">
+                      {leftCol.map(renderItem)}
                     </div>
-                  </summary>
-                  <div className="px-4 pb-4 pl-[4.5rem]">
-                    <p className="border-l-2 border-[color:var(--gold1)]/30 pl-4 text-sm leading-relaxed text-black/60">
-                      {item.detail}
-                    </p>
+                    <div className="flex flex-col gap-3">
+                      {rightCol.map(renderItem)}
+                    </div>
                   </div>
-                </details>
-              );
+                );
+              })()}
+            </div>
+          </div>
 
-              return (
-                <div className="grid gap-3 sm:grid-cols-2 sm:items-start">
-                  <div className="flex flex-col gap-3">{leftCol.map(renderItem)}</div>
-                  <div className="flex flex-col gap-3">{rightCol.map(renderItem)}</div>
-                </div>
-              );
-            })()}
-
-            {/* CALLOUT CTA */}
-            <div className="mt-6 w-full">
-              <div className="mx-auto w-full max-w-4xl rounded-3xl border border-black/10 bg-white/90 p-5 text-center shadow-sm">
-                <p className="text-base font-semibold text-black">
-                  Neváhejte nás ještě dnes kontaktovat
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-black/70">
-                  Rádi s Vámi proberueme Vaši situaci, doporučíme nejlepší
-                  postup a vše srozumitelně dovysvětlíme.
-                </p>
-                <div className="mt-4 grid gap-2 sm:grid-cols-2 sm:justify-items-center">
-                  <a
-                    href="tel:+420702064442"
-                    className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
-                  >
-                    <Icon name="phone" className="h-4 w-4" />
-                    Zavolejte nám
-                  </a>
-                  <a
-                    href="mailto:info@nisacentrum.cz"
-                    className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
-                  >
-                    <Icon name="mail" className="h-4 w-4" />
-                    Napište nám e-mail
-                  </a>
-                </div>
+          {/* CALLOUT CTA */}
+          <div className="mt-8 flex justify-center">
+            <div className="w-full max-w-4xl rounded-3xl border border-black/10 bg-white/90 p-5 text-center shadow-sm">
+              <p className="text-base font-semibold text-black">
+                Neváhejte nás ještě dnes kontaktovat
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-black/70">
+                Rádi s Vámi probereme Vaši situaci, doporučíme nejlepší postup a
+                vše srozumitelně dovysvětlíme.
+              </p>
+              <div className="mt-4 grid gap-2 sm:grid-cols-2 sm:justify-items-center">
+                <a
+                  href="tel:+420721292462"
+                  className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
+                >
+                  <Icon name="phone" className="h-4 w-4" />
+                  Zavolejte nám
+                </a>
+                <a
+                  href="mailto:info@nisacentrum.cz"
+                  className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
+                >
+                  <Icon name="mail" className="h-4 w-4" />
+                  Napište nám e-mail
+                </a>
               </div>
             </div>
           </div>
@@ -604,109 +693,111 @@ export default function Home() {
         title="Služby"
         subtitle="Vyberte, co aktuálně řešíte. Rádi vám doporučíme nejrychlejší a nejbezpečnější postup."
       >
-        <div className="relative">
-          <div className="pointer-events-none absolute right-0 -top-10 z-0 hidden translate-x-[88%] lg:block">
-            <Image
-              src="/Terka.png"
-              alt="Tým NISA CENTRUM REALITY"
-              width={540}
-              height={760}
-              className="h-auto w-[440px] rounded-2xl object-cover"
-            />
-          </div>
-
-          <div className="relative z-10 mx-auto grid max-w-4xl gap-4 md:grid-cols-2">
-          {[
-            {
-              icon: "keyRound" as const,
-              t: "Prodej a pronájem nemovitosti",
-              d: "Kompletní servis od ocenění až po předání klíčů: home staging, foto/video, inzerce, propagace, prohlídky, vyjednávání a právní dohled.",
-              cta: ["Domluvit schůzku", "/kontakt"],
-              detail: "/prodej-pronajem",
-            },
-            {
-              icon: "handCoins" as const,
-              t: "Ocenění nemovitosti zdarma",
-              d: "Bezplatné a nezávazné ocenění založené na prohlídce, znalosti trhu a srovnatelných prodejích v okolí.",
-              cta: [
-                "Získat ocenění",
-                "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
-              ],
-              detail:
-                "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
-            },
-            {
-              icon: "search" as const,
-              t: "Vyhledávání nemovitosti na míru",
-              d: "Hledáme podle vašich požadavků, sledujeme nabídky, spolupracujeme s makléři a prověřujeme i nevystavené nemovitosti.",
-              cta: ["Domluvit schůzku", "/kontakt"],
-              detail: "/vyhledavani-na-miru",
-            },
-            {
-              icon: "gift" as const,
-              t: "Pošli tip na reality",
-              d: "Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete kontakt a získejte odměnu, pokud se obchod uskuteční.",
-              cta: ["Poslat tip", "/kontakt"],
-              detail: "/tipni-realitu",
-            },
-          ].map((x) => (
-            <div
-              key={x.t}
-              className="rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm"
-            >
-              <div className="flex items-center gap-4">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
-                  <Icon name={x.icon} />
-                </span>
-                <div className="flex-1">
-                  <p className="text-lg font-semibold text-black">{x.t}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-black/70">
-                    {x.d}
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {x.cta[1].startsWith("http") ? (
-                      <a
-                        href={x.cta[1]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white"
-                      >
-                        <Icon name={x.icon} className="h-4 w-4" />
-                        {x.cta[0]}
-                      </a>
-                    ) : (
-                      <Link
-                        href={x.cta[1]}
-                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white"
-                      >
-                        <Icon name={x.icon} className="h-4 w-4" />
-                        {x.cta[0]}
-                      </Link>
-                    )}
-                    {x.detail.startsWith("http") ? (
-                      <a
-                        href={x.detail}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
-                      >
-                        <Icon name="arrowRight" className="h-4 w-4" />
-                        Detail
-                      </a>
-                    ) : (
-                      <Link
-                        href={x.detail}
-                        className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
-                      >
-                        <Icon name="arrowRight" className="h-4 w-4" />
-                        Detail
-                      </Link>
-                    )}
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-10 lg:items-start">
+          <div className="order-1 grid gap-4 md:grid-cols-2 lg:col-span-8">
+            {[
+              {
+                icon: "keyRound" as const,
+                t: "Prodej a pronájem nemovitosti",
+                d: "Kompletní servis od ocenění až po předání klíčů: home staging, foto/video, inzerce, propagace, prohlídky, vyjednávání a právní dohled.",
+                cta: ["Domluvit schůzku", "/kontakt"],
+                detail: "/prodej-pronajem",
+              },
+              {
+                icon: "handCoins" as const,
+                t: "Ocenění nemovitosti zdarma",
+                d: "Bezplatné a nezávazné ocenění založené na prohlídce, znalosti trhu a srovnatelných prodejích v okolí.",
+                cta: [
+                  "Získat ocenění",
+                  "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
+                ],
+                detail:
+                  "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
+              },
+              {
+                icon: "search" as const,
+                t: "Vyhledávání nemovitosti na míru",
+                d: "Hledáme podle vašich požadavků, sledujeme nabídky, spolupracujeme s makléři a prověřujeme i nevystavené nemovitosti.",
+                cta: ["Domluvit schůzku", "/kontakt"],
+                detail: "/vyhledavani-na-miru",
+              },
+              {
+                icon: "gift" as const,
+                t: "Pošli tip na reality",
+                d: "Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete kontakt a získejte odměnu, pokud se obchod uskuteční.",
+                cta: ["Poslat tip", "/kontakt"],
+                detail: "/tipni-realitu",
+              },
+            ].map((x) => (
+              <div
+                key={x.t}
+                className="flex h-full flex-col rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm"
+              >
+                <div className="grid grid-cols-[auto_1fr] items-start gap-4">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
+                    <Icon name={x.icon} className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-lg font-semibold text-black">{x.t}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-black/70">
+                      {x.d}
+                    </p>
                   </div>
                 </div>
+                <div className="mt-5 grid grid-cols-2 gap-2">
+                  {x.cta[1].startsWith("http") ? (
+                    <a
+                      href={x.cta[1]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-4 py-2.5 text-center text-sm font-semibold text-white"
+                    >
+                      <Icon name={x.icon} className="h-4 w-4" />
+                      {x.cta[0]}
+                    </a>
+                  ) : (
+                    <Link
+                      href={x.cta[1]}
+                      className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-4 py-2.5 text-center text-sm font-semibold text-white"
+                    >
+                      <Icon name={x.icon} className="h-4 w-4" />
+                      {x.cta[0]}
+                    </Link>
+                  )}
+                  {x.detail.startsWith("http") ? (
+                    <a
+                      href={x.detail}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-4 py-2.5 text-center text-sm font-semibold text-black"
+                    >
+                      <Icon name="arrowRight" className="h-4 w-4" />
+                      Detail
+                    </a>
+                  ) : (
+                    <Link
+                      href={x.detail}
+                      className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-4 py-2.5 text-center text-sm font-semibold text-black"
+                    >
+                      <Icon name="arrowRight" className="h-4 w-4" />
+                      Detail
+                    </Link>
+                  )}
+                </div>
               </div>
+            ))}
+          </div>
+
+          <div className="order-2 hidden lg:col-span-2 lg:block">
+            <div className="relative h-full min-h-[680px] w-full">
+              <Image
+                src="/Terka.avif"
+                alt="Tým NISA CENTRUM REALITY"
+                fill
+                className="object-contain object-center lg:-translate-y-[10%] lg:scale-[0.83]"
+                sizes="(min-width: 1024px) 24vw, 0px"
+              />
             </div>
-          ))}
           </div>
         </div>
       </Section>
@@ -719,58 +810,60 @@ export default function Home() {
         title="Časté dotazy"
         subtitle="Nejčastější otázky k prodeji, pronájmu, provizím, smlouvám a bezpečnosti převodu."
       >
-        <div className="relative">
-          <div className="pointer-events-none absolute left-0 -top-8 z-0 hidden -translate-x-[80%] lg:block">
-            <Image
-              src="/Mirek.png"
-              alt="Člen týmu Nisa Centrum Reality"
-              width={520}
-              height={740}
-              className="h-auto w-[420px] -scale-x-100 rounded-2xl object-cover"
-            />
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-10 lg:items-start">
+          <div className="order-2 hidden lg:order-1 lg:col-span-3 lg:block">
+            <div className="relative aspect-[2/3] w-full">
+              <Image
+                src="/Mirek.avif"
+                alt="Člen týmu Nisa Centrum Reality"
+                fill
+                className="object-contain object-center scale-x-[-1] lg:translate-y-[20%] lg:scale-x-[-1.1] lg:scale-y-[1.1]"
+                sizes="(min-width: 1024px) 30vw, 0px"
+              />
+            </div>
           </div>
 
-          <div className="relative z-10 mx-auto grid max-w-4xl gap-3">
+          <div className="order-1 grid gap-3 text-left lg:order-2 lg:col-span-7">
             {[
-            {
-              q: "Jaké služby nabízíte a co vše je jejich součástí?",
-              a: "Zajišťujeme ocenění nemovitosti (zdarma a nezávazně), kompletní prodej i pronájem. Součástí je příprava prezentace (home staging, foto/video), inzerce, cílená propagace, prohlídky, komunikace se zájemci a dohled nad celým procesem.",
-            },
-            {
-              q: "Kolik stojí vaše služby a kdy se hradí provize?",
-              a: "U prodeje se provize typicky pohybuje v rozmezí 3–5 % dle typu nemovitosti a rozsahu služeb (vždy je jasně sjednaná předem ve smlouvě). U pronájmu je služba pro majitele zpravidla bez přímé platby – hradí ji budoucí nájemník.",
-            },
-            {
-              q: "Vyhledáváte nemovitosti i na míru podle požadavků klienta?",
-              a: "Ano. Aktivně hledáme podle vašich parametrů, sledujeme aktuální nabídky, spolupracujeme s dalšími makléři a pomáháme prověřit vhodnost vybraných nemovitostí.",
-            },
-            {
-              q: "Jak probíhá prodej nebo pronájem nemovitosti krok za krokem?",
-              a: "Začneme osobní schůzkou a prohlídkou nemovitosti. Navrhneme cenu a strategii, připravíme prezentaci a propagaci. Následně řešíme komunikaci, prohlídky a vyjednávání. U prodeje následují rezervační a kupní smlouvy (přes advokátní servis) a převod na katastru. U pronájmu prověřujeme zájemce, připravují se smlouvy a proběhne předání.",
-            },
-            {
-              q: "Kolik stojí ocenění nemovitosti a je možné jej získat zdarma?",
-              a: "Ocenění je zdarma a nezávazné. Pomůže vám mít reálný přehled o hodnotě nemovitosti – pro budoucí prodej, pronájem i pro majetková/dědická řešení.",
-            },
-            {
-              q: "V jakých lokalitách působíte?",
-              a: "Působíme v Libereckém, Ústeckém, Královéhradeckém a Středočeském kraji, v Praze a okolí. Díky rozsáhlé síti spolupracujících makléřů a hluboké znalosti regionu dokážeme efektivně zajistit prodej, pronájem i vyhledání nemovitostí napříč těmito lokalitami.",
-            },
-            {
-              q: "Jak vás mohu kontaktovat a je možné se nejprve nezávazně poradit?",
-              a: "Ano, nezávazná konzultace je možná. Zavolejte, napište SMS nebo e-mail – zvolíme způsob, který vám vyhovuje.",
-            },
-            {
-              q: "Jak určíte správnou cenu mé nemovitosti?",
-              a: "Cenu neurčujeme od stolu. Podíváme se na nemovitost osobně, zohledníme stav, lokalitu a srovnatelné prodeje. Odhad vždy vysvětlíme a nastavíme společně realistický plán.",
-            },
+              {
+                q: "Jaké služby nabízíte a co vše je jejich součástí?",
+                a: "Zajišťujeme ocenění nemovitosti (zdarma a nezávazně), kompletní prodej i pronájem. Součástí je příprava prezentace (home staging, foto/video), inzerce, cílená propagace, prohlídky, komunikace se zájemci a dohled nad celým procesem.",
+              },
+              {
+                q: "Kolik stojí vaše služby a kdy se hradí provize?",
+                a: "U prodeje se provize typicky pohybuje v rozmezí 3–5 % dle typu nemovitosti a rozsahu služeb (vždy je jasně sjednaná předem ve smlouvě). U pronájmu je služba pro majitele zpravidla bez přímé platby – hradí ji budoucí nájemník.",
+              },
+              {
+                q: "Vyhledáváte nemovitosti i na míru podle požadavků klienta?",
+                a: "Ano. Aktivně hledáme podle vašich parametrů, sledujeme aktuální nabídky, spolupracujeme s dalšími makléři a pomáháme prověřit vhodnost vybraných nemovitostí.",
+              },
+              {
+                q: "Jak probíhá prodej nebo pronájem nemovitosti krok za krokem?",
+                a: "Začneme osobní schůzkou a prohlídkou nemovitosti. Navrhneme cenu a strategii, připravíme prezentaci a propagaci. Následně řešíme komunikaci, prohlídky a vyjednávání. U prodeje následují rezervační a kupní smlouvy (přes advokátní servis) a převod na katastru. U pronájmu prověřujeme zájemce, připravují se smlouvy a proběhne předání.",
+              },
+              {
+                q: "Kolik stojí ocenění nemovitosti a je možné jej získat zdarma?",
+                a: "Ocenění je zdarma a nezávazné. Pomůže vám mít reálný přehled o hodnotě nemovitosti – pro budoucí prodej, pronájem i pro majetková/dědická řešení.",
+              },
+              {
+                q: "V jakých lokalitách působíte?",
+                a: "Působíme v Libereckém, Ústeckém, Královéhradeckém a Středočeském kraji, v Praze a okolí. Díky rozsáhlé síti spolupracujících makléřů a hluboké znalosti regionu dokážeme efektivně zajistit prodej, pronájem i vyhledání nemovitostí napříč těmito lokalitami.",
+              },
+              {
+                q: "Jak vás mohu kontaktovat a je možné se nejprve nezávazně poradit?",
+                a: "Ano, nezávazná konzultace je možná. Zavolejte, napište SMS nebo e-mail – zvolíme způsob, který vám vyhovuje.",
+              },
+              {
+                q: "Jak určíte správnou cenu mé nemovitosti?",
+                a: "Cenu neurčujeme od stolu. Podíváme se na nemovitost osobně, zohledníme stav, lokalitu a srovnatelné prodeje. Odhad vždy vysvětlíme a nastavíme společně realistický plán.",
+              },
             ].map((x) => (
               <details
                 key={x.q}
                 className="group rounded-2xl border border-black/10 bg-white/70 p-5 shadow-sm open:bg-white/80"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-black">
-                  <span>{x.q}</span>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-base font-semibold text-black [&::-webkit-details-marker]:hidden [&::marker]:content-['']">
+                  <span className="flex-1 text-left">{x.q}</span>
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-black/70 transition group-open:rotate-45">
                     +
                   </span>
@@ -800,7 +893,7 @@ export default function Home() {
         id="kontakt"
         align="center"
         title="Kontakt"
-        subtitle="Ozvěte se nám – rádi s vámi probereme prodej, pronájem, ocenění i vyhledání nemovitosti."
+        subtitle="Ozvěte se nám – rádi s Vámi probereme prodej, pronájem, ocenění i vyhledání nemovitosti."
       >
         <div className="grid gap-6 md:grid-cols-3">
           <div className="md:col-span-2 rounded-3xl border border-black/10 bg-white/70 p-7 shadow-sm">
@@ -814,7 +907,7 @@ export default function Home() {
 
             <div className="mt-6 grid gap-3 md:grid-cols-2">
               <a
-                href="tel:+420702064442"
+                href="tel:+420721292462"
                 className="flex items-center gap-3 rounded-2xl border border-black/10 bg-white/80 p-4 transition hover:border-[color:var(--gold1)]"
               >
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[color:var(--gold1)]/35 text-black">
@@ -824,7 +917,7 @@ export default function Home() {
                   <p className="text-xs uppercase tracking-[0.18em] text-black/50">
                     Telefon
                   </p>
-                  <p className="font-semibold text-black">+420 702 064 442</p>
+                  <p className="font-semibold text-black">+420 721 292 462</p>
                 </div>
               </a>
 
@@ -875,7 +968,7 @@ export default function Home() {
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href="tel:+420702064442"
+                href="tel:+420721292462"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-6 py-3 text-sm font-semibold text-black"
               >
                 <Icon name="phone" className="h-4 w-4" />
@@ -932,7 +1025,7 @@ export default function Home() {
                 href="/kontakt"
                 className="btn-main inline-flex items-center justify-center rounded-full border border-black/15 bg-white/60 px-6 py-3 text-sm font-semibold text-black"
               >
-                Kontaktní stránka →
+                Kontaktní stránka ›
               </Link>
             </div>
           </div>
@@ -941,6 +1034,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-

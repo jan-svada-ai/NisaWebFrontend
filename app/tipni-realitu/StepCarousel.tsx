@@ -33,16 +33,23 @@ const iconMap: Record<IconName, React.ComponentType<{ className?: string }>> = {
 
 export default function StepCarousel({ steps }: { steps: StepCard[] }) {
   const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    if (isPaused || steps.length <= 1) return;
+
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % steps.length);
     }, 3400);
     return () => clearInterval(timer);
-  }, [steps.length]);
+  }, [isPaused, steps.length]);
 
   return (
-    <div className="relative mx-auto mt-10 max-w-4xl">
+    <div
+      className="relative mx-auto mt-10 max-w-4xl"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <button
         type="button"
         onClick={() => setIndex((prev) => (prev - 1 + steps.length) % steps.length)}
@@ -101,3 +108,5 @@ export default function StepCarousel({ steps }: { steps: StepCard[] }) {
     </div>
   );
 }
+
+

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ChevronLeft,
@@ -32,8 +33,10 @@ interface DetailListing {
   makler: {
     id: number;
     jmeno: string;
+    slug?: string | null;
     email: string | null;
     telefon: string | null;
+    fotoUrl?: string | null;
   } | null;
   obrazky: Array<{ id: number; url: string; popis: string | null }>;
   atributy?: {
@@ -92,11 +95,39 @@ function resolveCurrencyLabel(value: string | null): string {
   return normalized;
 }
 
+function resolvePriceUnit(listing: DetailListing): string | null {
+  const unitRaw =
+    readStringFromObject(listing.atributy?.estate_readable, [
+      "advert_price_unit",
+      "price_unit",
+    ]) ??
+    readStringFromObject(listing.atributy?.estate, [
+      "advert_price_unit",
+      "price_unit",
+    ]);
+
+  if (!unitRaw) return null;
+
+  const normalized = unitRaw.toLowerCase();
+  const hasM2 = normalized.includes("m2") || normalized.includes("m²");
+  const hasMonth = normalized.includes("mesic") || normalized.includes("měsíc");
+
+  if (hasM2 && hasMonth) return "m² / měsíc";
+  if (hasM2) return "m²";
+  if (hasMonth) return "měsíc";
+
+  return unitRaw.replace(/^za\s+/i, "").trim();
+}
+
 export default function DetailPageClient({ slug }: { slug: string }) {
+  const THUMBNAIL_WINDOW_SIZE = 3;
+  const router = useRouter();
+
   const [listing, setListing] = useState<DetailListing | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [thumbnailStart, setThumbnailStart] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [contactForm, setContactForm] = useState({
     name: "",
@@ -121,6 +152,8 @@ export default function DetailPageClient({ slug }: { slug: string }) {
             ? result.data ?? null
             : (result as DetailListing);
         setListing(item);
+        setSelectedImage(0);
+        setThumbnailStart(0);
       } catch (error) {
         console.error("Nepodařilo se načíst detail inzerátu:", error);
         setError("Nacitani detailu nabidky trva prilis dlouho. Zkuste to prosim znovu.");
@@ -131,6 +164,52 @@ export default function DetailPageClient({ slug }: { slug: string }) {
 
     fetchListing();
   }, [slug]);
+
+  useEffect(() => {
+    if (!listing) return;
+
+    const imageCount = listing.obrazky.length;
+    if (imageCount === 0) return;
+
+    const maxStart = Math.max(0, imageCount - THUMBNAIL_WINDOW_SIZE);
+
+    setThumbnailStart((prevStart) => {
+      const clampedStart = Math.min(prevStart, maxStart);
+      if (selectedImage < clampedStart) return selectedImage;
+
+      const windowEnd = clampedStart + THUMBNAIL_WINDOW_SIZE - 1;
+      if (selectedImage > windowEnd) {
+        return Math.min(selectedImage - THUMBNAIL_WINDOW_SIZE + 1, maxStart);
+      }
+
+      return clampedStart;
+    });
+  }, [selectedImage, listing, THUMBNAIL_WINDOW_SIZE]);
+
+  useEffect(() => {
+    if (!isLightboxOpen || !listing || listing.obrazky.length === 0) return;
+    const imageCount = listing.obrazky.length;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsLightboxOpen(false);
+        return;
+      }
+
+      if (imageCount <= 1) return;
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setSelectedImage((prev) => (prev - 1 + imageCount) % imageCount);
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setSelectedImage((prev) => (prev + 1) % imageCount);
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isLightboxOpen, listing]);
 
   if (loading) {
     return (
@@ -162,7 +241,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
         <div className="mx-auto max-w-screen-2xl px-4 py-12">
           <Link
             href="/nabidka"
-            className="btn-main mb-6 inline-flex items-center gap-2 rounded-full border border-black/20 bg-white px-5 py-2.5 text-black"
+            className="btn-main mb-4 flex w-fit items-center gap-2 rounded-full border border-black/20 bg-white px-5 py-2.5 text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             Zpět na nabídku
@@ -176,10 +255,40 @@ export default function DetailPageClient({ slug }: { slug: string }) {
   }
 
   const hasImages = listing.obrazky && listing.obrazky.length > 0;
+  const showThumbnailPager = hasImages && listing.obrazky.length > THUMBNAIL_WINDOW_SIZE;
+  const maxThumbnailStart = hasImages
+    ? Math.max(0, listing.obrazky.length - THUMBNAIL_WINDOW_SIZE)
+    : 0;
+  const visibleThumbnails = hasImages
+    ? listing.obrazky.slice(
+        thumbnailStart,
+        thumbnailStart + THUMBNAIL_WINDOW_SIZE,
+      )
+    : [];
   const disposition = resolveDisposition(listing);
+  const priceUnit = resolvePriceUnit(listing);
+  const normalizedDisposition =
+    disposition && disposition.trim() && disposition.trim() !== "0"
+      ? disposition.trim()
+      : null;
+  const areaValue =
+    typeof listing.plocha === "number" ? listing.plocha : Number(listing.plocha);
+  const hasArea = Number.isFinite(areaValue) && areaValue > 0;
+  const roomsValue =
+    typeof listing.pokoje === "number" ? listing.pokoje : Number(listing.pokoje);
+  const hasRooms = Number.isFinite(roomsValue) && roomsValue > 0;
   const contactRecipient = listing.makler?.email ?? undefined;
   const contactName = listing.makler?.jmeno?.trim() || "Nisa Centrum Reality";
   const isCompanyContact = listing.makler?.id === 0;
+  const maklerDetailHref =
+    !isCompanyContact && listing.makler?.slug
+      ? `/nas-tym/${encodeURIComponent(listing.makler.slug)}/`
+      : null;
+
+  const openMaklerDetail = () => {
+    if (!maklerDetailHref) return;
+    router.push(maklerDetailHref);
+  };
 
   const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -231,36 +340,41 @@ export default function DetailPageClient({ slug }: { slug: string }) {
           "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
       }}
     >
-      <div className="mx-auto max-w-screen-2xl px-4 py-12">
+      <div className="mx-auto max-w-screen-2xl px-4 pb-12 pt-3 xl:pr-24">
         <Link
           href="/nabidka"
-          className="btn-main mb-8 inline-flex items-center gap-2 rounded-full border border-black/20 bg-white px-5 py-2.5 text-black"
+          className="btn-main mb-2 flex w-fit items-center gap-2 rounded-full border border-black/20 bg-white px-4 py-2 text-black"
         >
           <ArrowLeft className="h-4 w-4" />
           Zpět na nabídku
         </Link>
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <div
               onClick={() => setIsLightboxOpen(true)}
-              className="group relative mb-4 h-96 w-full cursor-pointer overflow-hidden rounded-2xl bg-gradient-to-br from-black/5 to-black/10"
+              className="group relative mb-4 w-full cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-black/5 aspect-[4/3]"
             >
               {hasImages ? (
                 <>
                   <Image
                     src={listing.obrazky[selectedImage].url}
+                    alt=""
+                    fill
+                    unoptimized
+                    aria-hidden
+                    className="pointer-events-none object-cover scale-105 opacity-28 blur-xl saturate-110"
+                  />
+                  <div aria-hidden className="absolute inset-0 bg-black/5" />
+                  <Image
+                    src={listing.obrazky[selectedImage].url}
                     alt={listing.nazev}
                     fill
                     unoptimized
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="relative z-10 rounded-2xl object-contain [image-rendering:-webkit-optimize-contrast]"
                     priority
+                    sizes="(min-width: 1280px) 62vw, (min-width: 1024px) 58vw, 100vw"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/10">
-                    <div className="text-sm font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
-                      Klikni pro zvětšení
-                    </div>
-                  </div>
                 </>
               ) : (
                 <div className="flex h-full items-center justify-center">
@@ -279,7 +393,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                           listing.obrazky.length,
                       );
                     }}
-                    className="btn-main absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2.5 backdrop-blur-sm"
+                    className="photo-switch-btn absolute left-4 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/80 p-2.5 backdrop-blur-sm"
                   >
                     <ChevronLeft className="h-6 w-6 text-black" />
                   </button>
@@ -290,18 +404,18 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                         (prev) => (prev + 1) % listing.obrazky.length,
                       );
                     }}
-                    className="btn-main absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2.5 backdrop-blur-sm"
+                    className="photo-switch-btn absolute right-4 top-1/2 z-30 -translate-y-1/2 rounded-full bg-white/80 p-2.5 backdrop-blur-sm"
                   >
                     <ChevronRight className="h-6 w-6 text-black" />
                   </button>
 
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
+                  <div className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
                     {selectedImage + 1} / {listing.obrazky.length}
                   </div>
                 </>
               )}
 
-              <div className="absolute right-4 top-4 flex gap-2">
+              <div className="absolute right-4 top-4 z-30 flex gap-2">
                 {listing.typPonuky && (
                   <span className="rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-bold text-black">
                     {listing.typPonuky === "prodej"
@@ -315,32 +429,84 @@ export default function DetailPageClient({ slug }: { slug: string }) {
             </div>
 
             {hasImages && listing.obrazky.length > 1 && (
-              <div className="grid grid-cols-4 gap-3">
-                {listing.obrazky.map((img, idx) => (
+              <div className="relative">
+                {showThumbnailPager && (
                   <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`relative h-24 overflow-hidden rounded-lg border-2 transition ${
-                      selectedImage === idx
-                        ? "border-[color:var(--gold1)]"
-                        : "border-black/10"
-                    }`}
+                    type="button"
+                    onClick={() =>
+                      setThumbnailStart((prev) => Math.max(0, prev - 1))
+                    }
+                    disabled={thumbnailStart === 0}
+                    className="photo-switch-btn absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-black shadow disabled:cursor-not-allowed disabled:opacity-40"
+                    aria-label="Předchozí náhledy"
                   >
-                    <Image
-                      src={img.url}
-                      alt={`${listing.nazev} ${idx + 1}`}
-                      fill
-                      unoptimized
-                      className="object-cover"
-                    />
+                    <ChevronLeft className="h-5 w-5" />
                   </button>
-                ))}
+                )}
+
+                <div
+                  className={`grid gap-3 ${
+                    showThumbnailPager ? "mx-8" : ""
+                  }`}
+                  style={{
+                    gridTemplateColumns: `repeat(${visibleThumbnails.length}, minmax(0, 1fr))`,
+                  }}
+                >
+                  {visibleThumbnails.map((img, idx) => {
+                    const originalIndex = thumbnailStart + idx;
+                    return (
+                      <button
+                        key={img.id}
+                        onClick={() => setSelectedImage(originalIndex)}
+                        className={`relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-black/5 transition ${
+                          selectedImage === originalIndex
+                            ? "ring-2 ring-[color:var(--gold1)] shadow-md"
+                            : "ring-1 ring-black/10 hover:ring-black/25"
+                        }`}
+                      >
+                        <Image
+                          src={img.url}
+                          alt=""
+                          fill
+                          unoptimized
+                          aria-hidden
+                          className="pointer-events-none object-cover scale-105 opacity-28 blur-lg saturate-110"
+                        />
+                        <div aria-hidden className="absolute inset-0 bg-black/5" />
+                        <Image
+                          src={img.url}
+                          alt={`${listing.nazev} ${originalIndex + 1}`}
+                          fill
+                          unoptimized
+                          className="relative z-10 object-contain [image-rendering:-webkit-optimize-contrast]"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {showThumbnailPager && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setThumbnailStart((prev) => Math.min(maxThumbnailStart, prev + 1))
+                    }
+                    disabled={thumbnailStart >= maxThumbnailStart}
+                    className="photo-switch-btn absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-black shadow disabled:cursor-not-allowed disabled:opacity-40"
+                    aria-label="Další náhledy"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                )}
               </div>
             )}
 
             <div className="mt-8 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur-sm">
               <h2 className="mb-4 text-lg font-semibold text-black">
-                Parametry nemovitosti
+                <span className="inline-flex flex-col items-start">
+                  <span>Parametry nemovitosti</span>
+                  <span className="mt-2 h-[5px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+                </span>
               </h2>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="rounded-xl bg-black/5 p-4">
@@ -353,6 +519,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                         {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
                         <span className="text-sm text-black/60">
                           {resolveCurrencyLabel(listing.mena)}
+                          {priceUnit ? ` / ${priceUnit}` : ""}
                         </span>
                       </>
                     ) : (
@@ -360,34 +527,30 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                     )}
                   </p>
                 </div>
-                {listing.plocha && (
+                {hasArea && (
                   <div className="rounded-xl bg-black/5 p-4">
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Plocha
                     </p>
-                    <p className="mt-1 text-xl font-bold text-black">
-                      {listing.plocha} m²
-                    </p>
+                    <p className="mt-1 text-xl font-bold text-black">{areaValue} m²</p>
                   </div>
                 )}
-                {disposition && (
+                {normalizedDisposition && (
                   <div className="rounded-xl bg-black/5 p-4">
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Dispozice
                     </p>
                     <p className="mt-1 text-xl font-bold text-black">
-                      {disposition}
+                      {normalizedDisposition}
                     </p>
                   </div>
                 )}
-                {listing.pokoje && !disposition && (
+                {hasRooms && !normalizedDisposition && (
                   <div className="rounded-xl bg-black/5 p-4">
                     <p className="text-xs uppercase tracking-wide text-black/50">
                       Pokoje
                     </p>
-                    <p className="mt-1 text-xl font-bold text-black">
-                      {listing.pokoje}
-                    </p>
+                    <p className="mt-1 text-xl font-bold text-black">{roomsValue}</p>
                   </div>
                 )}
               </div>
@@ -395,7 +558,12 @@ export default function DetailPageClient({ slug }: { slug: string }) {
 
             {listing.popis && (
               <div className="mt-8 rounded-2xl border border-black/10 bg-white/60 p-6 backdrop-blur-sm">
-                <h2 className="mb-4 text-lg font-semibold text-black">Popis</h2>
+                <h2 className="mb-4 text-lg font-semibold text-black">
+                  <span className="inline-flex flex-col items-start">
+                    <span>Popis</span>
+                    <span className="mt-2 h-[5px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+                  </span>
+                </h2>
                 <div className="whitespace-pre-line leading-relaxed text-black/80">
                   {listing.popis}
                 </div>
@@ -405,9 +573,14 @@ export default function DetailPageClient({ slug }: { slug: string }) {
 
           <div className="lg:col-span-1">
             <div className="sticky top-24 rounded-2xl border border-black/10 bg-white/80 p-6 backdrop-blur-sm">
-              <h1 className="mb-3 text-2xl font-bold text-black">
-                {listing.nazev}
-              </h1>
+              <div className="mb-6 border-b border-black/10 pb-6 text-center">
+                <h1 className="text-2xl font-semibold text-black">
+                  <span className="inline-flex flex-col items-center">
+                    <span>{listing.nazev}</span>
+                    <span className="mt-2 h-[5px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+                  </span>
+                </h1>
+              </div>
 
               <div className="mb-6 flex items-start gap-2 border-b border-black/10 pb-6">
                 <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-[color:var(--gold1)]" />
@@ -437,33 +610,64 @@ export default function DetailPageClient({ slug }: { slug: string }) {
               )}
 
               {listing.makler && (
-                <div className="mb-6 rounded-xl border border-[color:var(--gold1)]/20 bg-gradient-to-br from-[color:var(--gold1)]/10 to-black/5 p-4">
-                  <p className="mb-3 text-xs uppercase tracking-wide text-black/50">
-                    {isCompanyContact ? "Kontakt" : "Váš makléř"}
-                  </p>
-                  <p className="mb-3 font-semibold text-black">
-                    {contactName}
-                  </p>
+                <div
+                  className={`mb-6 rounded-xl border border-[color:var(--gold1)]/20 bg-gradient-to-br from-[color:var(--gold1)]/10 to-black/5 p-4 ${maklerDetailHref ? "cursor-pointer transition hover:border-[color:var(--gold1)]/50" : ""}`}
+                  onClick={maklerDetailHref ? openMaklerDetail : undefined}
+                  onKeyDown={
+                    maklerDetailHref
+                      ? (e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            openMaklerDetail();
+                          }
+                        }
+                      : undefined
+                  }
+                  role={maklerDetailHref ? "link" : undefined}
+                  tabIndex={maklerDetailHref ? 0 : undefined}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs uppercase tracking-wide text-black/50">
+                        {isCompanyContact ? "Kontakt" : "Váš makléř"}
+                      </p>
+                      <p className="mt-2 mb-3 font-semibold text-black">{contactName}</p>
 
-                  {listing.makler.telefon && (
-                    <a
-                      href={`tel:${listing.makler.telefon}`}
-                      className="mb-2 flex items-center gap-2 text-black/70 transition hover:text-black"
-                    >
-                      <Phone className="h-4 w-4" />
-                      <span className="text-sm">{listing.makler.telefon}</span>
-                    </a>
-                  )}
+                      {listing.makler.telefon && (
+                        <a
+                          href={`tel:${listing.makler.telefon}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="mb-2 flex items-center gap-2 text-black/70 transition hover:text-black"
+                        >
+                          <Phone className="h-4 w-4" />
+                          <span className="text-sm">{listing.makler.telefon}</span>
+                        </a>
+                      )}
 
-                  {listing.makler.email && (
-                    <a
-                      href={`mailto:${listing.makler.email}`}
-                      className="flex items-center gap-2 text-black/70 transition hover:text-black"
-                    >
-                      <Mail className="h-4 w-4" />
-                      <span className="text-sm">{listing.makler.email}</span>
-                    </a>
-                  )}
+                      {listing.makler.email && (
+                        <a
+                          href={`mailto:${listing.makler.email}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-2 text-black/70 transition hover:text-black"
+                        >
+                          <Mail className="h-4 w-4" />
+                          <span className="text-sm">{listing.makler.email}</span>
+                        </a>
+                      )}
+                    </div>
+                    {!isCompanyContact && listing.makler.fotoUrl ? (
+                      <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-full border border-white/90 shadow-sm">
+                        <Image
+                          src={listing.makler.fotoUrl}
+                          alt={contactName}
+                          fill
+                          unoptimized
+                          sizes="112px"
+                          className="object-cover object-center [image-rendering:-webkit-optimize-contrast] contrast-[1.03] saturate-[1.03]"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               )}
 
@@ -483,7 +687,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                 <h2 className="mb-3 text-base font-semibold text-black">
                   {isCompanyContact
                     ? "Formulář pro Nisa Centrum Reality"
-                    : "Formulář pro tohoto makléře"}
+                    : "Formulář pro kontaktování makléře"}
                 </h2>
                 <form className="grid gap-3" onSubmit={handleContactSubmit}>
                   {sendSuccess ? (
@@ -563,7 +767,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
           <div className="relative flex h-full max-h-[90vh] w-full max-w-5xl items-center justify-center">
             <button
               onClick={() => setIsLightboxOpen(false)}
-              className="btn-main absolute right-4 top-4 z-50 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm"
+              className="photo-switch-btn absolute right-4 top-4 z-50 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm"
             >
               <X className="h-6 w-6" />
             </button>
@@ -574,7 +778,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                 alt={listing.nazev}
                 fill
                 unoptimized
-                className="object-contain"
+                className="object-contain [image-rendering:-webkit-optimize-contrast]"
                 priority
               />
             </div>
@@ -589,7 +793,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                         listing.obrazky.length,
                     )
                   }
-                  className="btn-main absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm"
+                  className="photo-switch-btn absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm"
                 >
                   <ChevronLeft className="h-8 w-8" />
                 </button>
@@ -599,7 +803,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
                       (prev) => (prev + 1) % listing.obrazky.length,
                     )
                   }
-                  className="btn-main absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm"
+                  className="photo-switch-btn absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm"
                 >
                   <ChevronRight className="h-8 w-8" />
                 </button>

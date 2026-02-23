@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site-url";
 import {
   ArrowRight,
   Gift,
@@ -16,6 +17,9 @@ export const metadata: Metadata = {
   title: "Pošli tip na reality | Nisa Centrum Reality",
   description:
     "Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete kontakt, my vše prověříme a po úspěšném obchodu vyplatíme odměnu.",
+  alternates: {
+    canonical: `${SITE_URL}/tipni-realitu/`,
+  },
 };
 
 type StepCard = {
@@ -61,7 +65,7 @@ const rewardSteps: StepCard[] = [
     title: "Vyplacení odměny",
     description:
       "Po úspěšném dokončení transakce vám vyplatíme odměnu podle typu obchodu a předem domluvených podmínek.",
-    duration: "do 14 dní po uzavření",
+    duration: "do týdne po uzavření",
     icon: "wallet",
   },
 ];
@@ -79,7 +83,7 @@ const benefits = [
     title: "Silný marketing v regionu",
     text: "Nabídky aktivně propagujeme v Liberci, Ústeckém, Královéhradeckém kraji, Středočeském a v Praze.",
     detail:
-      "Díky zkušenosti v lokálním trhu umíme rychle rozhodnout, kde a jak nemovitost komunikovat, aby se ozvali relevantní zájemci.",
+      "Díky zkušenosti v lokálním trhu umíme rychle rozhodnout, kde a jak nemovitost nabízet, aby se ozvali relevantní zájemci.",
   },
   {
     icon: Handshake,
@@ -126,57 +130,60 @@ export default function TipniRealituPage() {
           "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
       }}
     >
-      <section className="relative isolate min-h-dvh overflow-hidden">
+      <section className="relative min-h-dvh">
         <video
-          className="absolute inset-0 h-full w-full object-cover brightness-[1.2] contrast-[1.05] saturate-[1.05]"
+          className="absolute inset-0 h-full w-full object-cover brightness-[1.08]"
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-          poster="/hero-poster.jpg"
+          preload="auto"
+          poster="/hero-poster.avif"
         >
-          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
+          <source src="/hero.mp4" type="video/mp4" media="(min-width: 768px)" />
         </video>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
 
-        <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
-          <div className="mx-auto max-w-5xl">
-            <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+        <div className="relative z-10 flex min-h-dvh flex-col items-center justify-start pt-20 pb-6">
+          <div className="w-full max-w-6xl px-5 text-center sm:px-8 md:px-12 lg:px-16">
+            <p className="mb-4 text-[0.9rem] uppercase tracking-[0.2em] text-white/85">
+              Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a okolí
+            </p>
+
+            <h1 className="mx-auto max-w-5xl text-[2.8rem] font-semibold leading-tight text-white md:text-[4rem] [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               <span className="inline-flex flex-col items-center">
                 <span>Pošli tip na reality</span>
                 <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
               </span>
+              <span className="mt-3 block text-[0.63em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
+                S důrazem na cenu, rychlost a jistotu.
+              </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
+            <p className="mx-auto mt-7 max-w-3xl text-base font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
               Máte kontakt na majitele, který uvažuje o prodeji nebo pronájmu?
               Pošlete nám tip a po úspěšném obchodu získáte odměnu.
             </p>
+          </div>
 
-            <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="mt-auto w-full pb-10">
+            <div className="mx-auto mt-9 grid max-w-3xl gap-3 px-1 sm:grid-cols-2 sm:px-0">
               <a
                 href="#jak-ziskat-odmenu"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-base font-semibold text-black"
               >
                 <Gift className="h-5 w-5" />
                 Jak získat odměnu?
               </a>
               <Link
                 href="/kontakt"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-base font-semibold text-white backdrop-blur-sm"
               >
                 <Mail className="h-5 w-5" />
                 Kontaktujte nás
-              </Link>
-              <Link
-                href="/co-vse-pro-vas-udelame"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
-              >
-                <ArrowRight className="h-5 w-5" />
-                Co vše pro vás uděláme
               </Link>
             </div>
           </div>
@@ -194,8 +201,8 @@ export default function TipniRealituPage() {
           />
           <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
             Tip posuzujeme individuálně. Když má kontakt reálný potenciál,
-            převezmeme kompletní realizaci obchodu a vy se nemusíte starat o
-            marketing, prohlídky ani smlouvy.
+            převezmeme kompletní realizaci obchodu a po dokončení Vás čeká
+            odměna.
           </p>
           <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
             V praxi je důležité hlavně to, aby byl tip aktuální, kontakt ověřitelný
@@ -289,3 +296,8 @@ export default function TipniRealituPage() {
     </main>
   );
 }
+
+
+
+
+

@@ -94,6 +94,29 @@ body {
   .btn-main:active {
     transform: translateY(0);
   }
+
+  .photo-switch-btn {
+    transition:
+      box-shadow 160ms ease,
+      background-color 160ms ease,
+      border-color 160ms ease,
+      opacity 160ms ease;
+  }
+
+  .photo-switch-btn:hover:not(:disabled) {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+  }
+
+  input.no-spinner::-webkit-outer-spin-button,
+  input.no-spinner::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input.no-spinner[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 }
 
 ::selection {

@@ -1,10 +1,14 @@
 ﻿import Link from "next/link";
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Ocenění nemovitosti zdarma | Nisa Centrum Reality",
   description:
     "Nezávazné a profesionální ocenění vaší nemovitosti zdarma. Získejte reálnou tržní hodnotu na základě prohlídky a analýzy trhu.",
+  alternates: {
+    canonical: `${SITE_URL}/oceneni-zdarma/`,
+  },
 };
 
 function Icon({ name, className = "" }: { name: string; className?: string }) {
@@ -245,3 +249,5 @@ export default function OceneniZdarmaPage() {
     </main>
   );
 }
+
+

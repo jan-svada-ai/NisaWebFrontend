@@ -1,102 +1,127 @@
 ﻿import type { Metadata } from "next";
-import { Clock3, FileText, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import type { ComponentType } from "react";
+import {
+  Camera,
+  CircleDollarSign,
+  FileText,
+  Flower2,
+  HandCoins,
+  Megaphone,
+  ShieldCheck,
+  Signature,
+  Target,
+  UserRound,
+  Users,
+} from "lucide-react";
+import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Co vše pro vás uděláme | Nisa Centrum Reality",
   description:
     "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
+  alternates: {
+    canonical: `${SITE_URL}/co-vse-pro-vas-udelame/`,
+  },
 };
 
-const details = [
+type DetailCard = {
+  id: string;
+  title: string;
+  text: string;
+  appliesTo: string;
+  icon: ComponentType<{ className?: string }>;
+  imageSrc?: string;
+};
+
+const details: DetailCard[] = [
   {
-    id: "prodej-konzultace",
-    title: "Prodej: Konzultace",
-    text: "Zjistíme vaše cíle, časové možnosti a stav nemovitosti. Nastavíme realistickou strategii prodeje i plán dalších kroků.",
-    time: "1-2 dny",
+    id: "konzultace",
+    title: "Konzultace",
+    text: "Na začátku si vyjasníme vaše cíle, termín, očekávání i stav nemovitosti. Navrhneme konkrétní postup, aby celý proces běžel plynule.",
+    appliesTo: "Prodej i pronájem",
+    icon: UserRound,
+    imageSrc: "/konzultace.avif",
   },
   {
-    id: "prodej-naceneni",
-    title: "Prodej: Nacenění",
-    text: "Porovnáme tržní data, konkurenční nabídky a potenciál lokality. Výsledkem je cena, která je atraktivní pro trh a zároveň chrání hodnotu nemovitosti.",
-    time: "1-3 dny",
+    id: "naceneni",
+    title: "Nacenění",
+    text: "Pracujeme s tržními daty i lokální zkušeností. Nastavíme cenu tak, aby byla konkurenceschopná a současně chránila hodnotu vaší nemovitosti.",
+    appliesTo: "Prodej i pronájem",
+    icon: HandCoins,
+    imageSrc: "/naceneni.avif",
   },
   {
-    id: "prodej-prezentace",
-    title: "Prodej: Foto a homestaging",
-    text: "Připravíme nemovitost k prezentaci, zajistíme foto i video a vytvoříme text nabídky tak, aby inzerát působil profesionálně a důvěryhodně.",
-    time: "2-5 dní",
+    id: "strategie",
+    title: "Strategie",
+    text: "Navrhneme konkrétní obchodní a marketingový postup podle typu nemovitosti, lokality i aktuální situace na trhu.",
+    appliesTo: "Prodej i pronájem",
+    icon: Target,
+    imageSrc: "/strategie.avif",
   },
   {
-    id: "prodej-inzerce",
-    title: "Prodej: Inzerce",
-    text: "Nabídku publikujeme na důležitých realitních kanálech a doplníme ji cílenou propagací, která osloví správné publikum v daném regionu.",
-    time: "1 den",
+    id: "prezentace",
+    title: "Foto, video",
+    text: "Zajistíme profesionální fotografie a video, aby nabídka působila důvěryhodně, přitažlivě a oslovila správné zájemce.",
+    appliesTo: "Prodej i pronájem",
+    icon: Camera,
+    imageSrc: "/fotoVideo.avif",
   },
   {
-    id: "prodej-prohlidky",
-    title: "Prodej: Prohlídky",
-    text: "Organizujeme prohlídky, komunikujeme se zájemci a sbíráme relevantní zpětnou vazbu. Vedení jednání držíme pevně v rukou.",
-    time: "1-6 týdnů",
+    id: "homestaging",
+    title: "Homestaging",
+    text: "Připravíme nemovitost pro focení i prohlídky tak, aby vynikly její silné stránky a zvýšila se atraktivita inzerátu.",
+    appliesTo: "Prodej i pronájem",
+    icon: Flower2,
+    imageSrc: "/homestaging.avif",
   },
   {
-    id: "prodej-smlouvy",
-    title: "Prodej: Smlouvy a podpisy",
-    text: "Připravíme rezervační i kupní dokumentaci a zajistíme bezpečný průběh podpisů i plateb s právním dohledem.",
-    time: "1-3 týdny",
+    id: "inzerce",
+    title: "Inzerce a propagace",
+    text: "Nemovitost publikujeme na relevantních portálech a podpoříme ji cílenou propagací. Sledujeme výsledky a průběžně upravujeme strategii.",
+    appliesTo: "Prodej i pronájem",
+    icon: Megaphone,
+    imageSrc: "/inzerce.avif",
   },
   {
-    id: "prodej-hotovo",
-    title: "Prodej: Máme hotovo",
-    text: "Předání, převody a finální administrativu dotáhneme do detailu. Máte jistotu, že nic nezůstalo otevřené.",
-    time: "1-2 dny",
+    id: "prohlidky",
+    title: "Prohlídky a komunikace",
+    text: "Organizujeme prohlídky, vedeme jednání a filtrujeme relevantní zájemce. Vy dostáváte přehledné informace i doporučení dalšího postupu.",
+    appliesTo: "Prodej i pronájem",
+    icon: Users,
+    imageSrc: "/Prohlidky.avif",
   },
   {
-    id: "pronajem-konzultace",
-    title: "Pronájem: Konzultace",
-    text: "Nastavíme cíle pronájmu, rozpočet i harmonogram. Domluvíme rozsah služeb a odpovědnost jednotlivých kroků.",
-    time: "1-2 dny",
-  },
-  {
-    id: "pronajem-naceneni",
-    title: "Pronájem: Nacenění",
-    text: "Stanovíme tržní nájemné tak, aby byt nebo dům nebyl pod cenou a současně se zbytečně neprodlužovala doba obsazení.",
-    time: "1 den",
-  },
-  {
-    id: "pronajem-prezentace",
-    title: "Pronájem: Foto a příprava inzerátu",
-    text: "Připravíme kvalitní prezentaci a nabídku, která přitáhne relevantní zájemce s vyšší šancí na dlouhodobě stabilní pronájem.",
-    time: "1-3 dny",
-  },
-  {
-    id: "pronajem-inzerce",
-    title: "Pronájem: Inzerce",
-    text: "Publikujeme nabídku, filtrujeme dotazy a průběžně vyhodnocujeme kvalitu poptávek podle vašich priorit.",
-    time: "1 den",
-  },
-  {
-    id: "pronajem-zajemci",
-    title: "Pronájem: Prověření zájemců",
+    id: "zajemci",
+    title: "Prověření zájemců",
     text: "Prověřujeme bonitu, spolehlivost i motivaci zájemců. Cílem je snížit rizika a vybrat nájemníka, který bude fungovat dlouhodobě.",
-    time: "2-5 dní",
+    appliesTo: "Pronájem",
+    icon: ShieldCheck,
+    imageSrc: "/provereniZajemcu.avif",
   },
   {
-    id: "pronajem-prohlidky",
-    title: "Pronájem: Prohlídky",
-    text: "Vedeme prohlídky profesionálně, srozumitelně a efektivně. Vy dostáváte jasné doporučení pro finální výběr nájemníka.",
-    time: "1-3 týdny",
+    id: "penb",
+    title: "PENB průkaz en. nár.",
+    text: "Průkaz energetické náročnosti budovy (PENB) je dokument, kterým se vypočítává spotřeba spotřebovávané energie budovy.",
+    appliesTo: "Prodej",
+    icon: FileText,
+    imageSrc: "/PENB.avif",
   },
   {
-    id: "pronajem-smlouvy",
-    title: "Pronájem: Smlouvy a podpisy",
-    text: "Zajistíme kvalitní nájemní dokumentaci, podpisy i předávací protokoly. Vše má jasná pravidla a kontrolní body.",
-    time: "2-5 dní",
+    id: "financovani",
+    title: "Zajištění financování",
+    text: "Při prodeji umíme zájemcům pomoci se zajištěním financování. Díky tomu se může celý obchod uzavřít rychleji a s menším rizikem komplikací.",
+    appliesTo: "Prodej",
+    icon: CircleDollarSign,
+    imageSrc: "/Financovani.avif",
   },
   {
-    id: "pronajem-hotovo",
-    title: "Pronájem: Máme hotovo",
-    text: "Finální předání proběhne bezpečně a transparentně. Máte kompletní dokumentaci a jistotu navazujících kroků.",
-    time: "1 den",
+    id: "smlouvy",
+    title: "Smlouvy a podpisy",
+    text: "Připravíme potřebnou dokumentaci, ohlídáme právní návaznosti a zajistíme bezpečný podpis i předání. Vše přehledně a bez chaosu.",
+    appliesTo: "Prodej i pronájem",
+    icon: Signature,
+    imageSrc: "/Smlouvy.avif",
   },
 ];
 
@@ -121,49 +146,94 @@ export default function CoVseProVasUdelamePage() {
             </span>
           </h1>
           <p className="mt-4 text-base text-black/70 md:text-lg">
-            Detailní popis kroků prodeje a pronájmu, včetně časových odhadů,
-            odpovědnosti a návaznosti jednotlivých fází.
+            Přehledně a krok za krokem. Níže vidíte, co pro vás zajišťujeme při
+            prodeji i pronájmu a jak dlouho jednotlivé fáze obvykle trvají.
           </p>
         </div>
 
-        <div className="mx-auto mt-10 max-w-5xl space-y-4">
+        <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {details.map((item) => (
             <article
               key={item.id}
               id={item.id}
-              className="scroll-mt-28 rounded-3xl border border-black/10 bg-white/85 p-6 shadow-sm"
+              className="group scroll-mt-28 flex h-full flex-col rounded-3xl border border-black/10 bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[color:var(--gold1)]/45 hover:shadow-xl"
             >
-              <h2 className="text-xl font-semibold text-black">{item.title}</h2>
-              <p className="mt-2 text-base leading-relaxed text-black/75">
+              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-black/55">
+                {item.appliesTo}
+              </div>
+
+              <h2 className="mt-3 text-xl font-semibold text-black">
+                <span className="inline-flex flex-col">
+                  <span className="inline-flex items-center gap-2">
+                    <item.icon className="h-5 w-5 text-[color:var(--gold2)]" />
+                    {item.title}
+                  </span>
+                  <span className="mt-2 h-[5px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)] transition duration-300 group-hover:brightness-110" />
+                </span>
+              </h2>
+
+              <p className="mt-3 text-base leading-relaxed text-black/75">
                 {item.text}
               </p>
-              <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-black/70">
-                <Clock3 className="h-4 w-4 text-[color:var(--gold2)]" />
-                Odhad: {item.time}
-              </p>
+
+              {item.imageSrc ? (
+                <div className="mt-auto pt-4">
+                  <div className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-black/10 bg-white">
+                    <Image
+                      src={item.imageSrc}
+                      alt={item.title}
+                      fill
+                      sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="mt-3 flex h-11 items-center justify-center">
+                    {item.id === "financovani" ? (
+                      <a
+                        href="http://www.tohavefinance.cz/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-main flex w-fit items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                      >
+                        <Users className="h-4 w-4" />
+                        Naši specialisté
+                      </a>
+                    ) : item.id === "homestaging" ? (
+                      <a
+                        href="https://www.designbyterez.cz/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-main flex w-fit items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                      >
+                        <Users className="h-4 w-4" />
+                        Naše specialistka
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-auto pt-4">
+                  <div className="rounded-2xl border border-black/10 bg-[linear-gradient(135deg,rgba(243,232,203,0.7),rgba(255,255,255,0.85))] p-4 text-sm text-black/55">
+                    Prostor pro fotografii kroku (doplníme z public).
+                  </div>
+                </div>
+              )}
             </article>
           ))}
         </div>
 
-        <div className="mx-auto mt-12 max-w-5xl rounded-3xl border border-black/10 bg-white/85 p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-black">Právní a procesní jistota</h2>
-          <p className="mt-2 text-base leading-relaxed text-black/75">
-            Každý obchod vedeme tak, aby byl bezpečný pro všechny strany. Hlídáme
-            návaznost kroků, dokumentaci i termíny převodu. Díky tomu je celý
-            proces čitelný, předvídatelný a bez zbytečných prodlev.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2 text-sm font-semibold text-black/70">
-            <span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1.5">
-              <ShieldCheck className="h-4 w-4 text-[color:var(--gold2)]" />
-              Právní dohled
-            </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-black/5 px-3 py-1.5">
-              <FileText className="h-4 w-4 text-[color:var(--gold2)]" />
-              Kompletní dokumentace
-            </span>
-          </div>
-        </div>
       </div>
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+

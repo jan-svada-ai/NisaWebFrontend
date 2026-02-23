@@ -1,7 +1,10 @@
 ﻿import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site-url";
 import {
   ArrowRight,
+  ExternalLink,
   Hourglass,
   KeyRound,
   Mail,
@@ -16,6 +19,9 @@ export const metadata: Metadata = {
   title: "Prodej a pronájem nemovitostí | Nisa Centrum Reality",
   description:
     "Postup prodeje a pronájmu krok za krokem: od konzultace přes prezentaci, inzerci a prohlídky až po smlouvy a bezpečné předání.",
+  alternates: {
+    canonical: `${SITE_URL}/prodej-pronajem/`,
+  },
 };
 
 type StepCard = {
@@ -42,7 +48,7 @@ const saleSteps: StepCard[] = [
     title: "Konzultace",
     description:
       "Probereme cíl prodeje, stav nemovitosti i časový plán. Hned na začátku nastavíme realistickou strategii.",
-    duration: "1-2 týdny",
+    duration: "2-7 dní",
     icon: "users",
   },
   {
@@ -51,7 +57,7 @@ const saleSteps: StepCard[] = [
     title: "Nacenění",
     description:
       "Na základě dat z trhu a lokální poptávky nastavíme cenu, která podpoří rychlý a zároveň výhodný prodej.",
-    duration: "3-7 dní",
+    duration: "2-3 dny",
     icon: "handCoins",
   },
   {
@@ -96,7 +102,7 @@ const saleSteps: StepCard[] = [
     title: "Máme hotovo",
     description:
       "Dokončíme převod a předání nemovitosti. Kontrolujeme, aby byla transakce uzavřena bez otevřených bodů.",
-    duration: "2-5 dní",
+    duration: "3-6 měsíců",
     icon: "checkCircle",
   },
 ];
@@ -108,7 +114,7 @@ const rentSteps: StepCard[] = [
     title: "Konzultace",
     description:
       "Nastavíme strategii pronájmu, cílovou skupinu a ideální načasování uvedení nemovitosti na trh.",
-    duration: "3-7 dní",
+    duration: "2-7 dní",
     icon: "users",
   },
   {
@@ -117,7 +123,7 @@ const rentSteps: StepCard[] = [
     title: "Nacenění",
     description:
       "Spočítáme tržní nájemné podle lokality, dispozice a stavu, aby byl pronájem konkurenceschopný i výhodný.",
-    duration: "2-5 dní",
+    duration: "2-3 dny",
     icon: "handCoins",
   },
   {
@@ -207,6 +213,44 @@ const benefits = [
   },
 ];
 
+const advertisingPortals = [
+  {
+    name: "Sreality.cz",
+    href: "https://www.sreality.cz/adresar/nisa-centrum-reality-liberec-liberec-iv-perstyn/19609",
+    note: "Největší realitní portál v ČR s velmi silným dosahem poptávky.",
+    logoSrc: "/portal-sreality.svg",
+    logoAlt: "Logo Sreality.cz",
+  },
+  {
+    name: "Reality.iDNES.cz",
+    href: "https://reality.idnes.cz/rk/detail/nisa-centrum-s-r-o/5f194b2337ba4d3b6e2d8b23/",
+    note: "Silný realitní portál mediální skupiny iDNES s vysokou návštěvností.",
+    logoSrc: "/portal-reality-idnes.svg",
+    logoAlt: "Logo Reality.iDNES.cz",
+  },
+  {
+    name: "Nemovitosti Blesk",
+    href: "https://nemovitosti.blesk.cz/nisa-centrum-s-r-o-1224",
+    note: "Realitní platforma Blesk s širokým mainstreamovým zásahem.",
+    logoSrc: "/portal-blesk-nemovitosti.svg",
+    logoAlt: "Logo Nemovitosti Blesk",
+  },
+  {
+    name: "ČESKÉREALITY.cz",
+    href: "https://www.ceskereality.cz/realitni-kancelare/nisa-centrum-liberec/",
+    note: "Dlouhodobě zavedený realitní portál se silnou regionální návštěvností.",
+    logoSrc: "/portal-ceskereality.svg",
+    logoAlt: "Logo ČESKÉREALITY.cz",
+  },
+  {
+    name: "Black Reality",
+    href: "https://www.black-reality.cz/reality/vse/?pobocka=821",
+    note: "Moderní realitní portál s aktivní poptávkou a kvalitní prezentací nabídek.",
+    logoSrc: "/portal-black-reality.png",
+    logoAlt: "Logo Black Reality",
+  },
+];
+
 function SectionHeading({
   title,
   subtitle,
@@ -238,54 +282,64 @@ export default function ProdejPronajemPage() {
           "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
       }}
     >
-      <section className="relative isolate min-h-dvh overflow-hidden">
+      <section className="relative min-h-dvh">
         <video
-          className="absolute inset-0 h-full w-full object-cover brightness-[1.2] contrast-[1.05] saturate-[1.05]"
+          className="absolute inset-0 h-full w-full object-cover brightness-[1.08]"
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-          poster="/hero-poster.jpg"
+          preload="auto"
+          poster="/hero-poster.avif"
         >
-          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
+          <source src="/hero.mp4" type="video/mp4" media="(min-width: 768px)" />
         </video>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
 
-        <div className="relative z-10 flex min-h-dvh items-center justify-center px-6 py-20 text-center">
-          <div className="mx-auto max-w-5xl">
-            <h1 className="text-5xl font-semibold leading-tight text-white md:text-7xl [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+        <div className="relative z-10 flex min-h-dvh flex-col items-center justify-start pt-20 pb-6">
+          <div className="w-full max-w-6xl px-5 text-center sm:px-8 md:px-12 lg:px-16">
+            <p className="mb-4 text-[0.9rem] uppercase tracking-[0.2em] text-white/85">
+              Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a okolí
+            </p>
+
+            <h1 className="mx-auto max-w-5xl text-[2.8rem] font-semibold leading-tight text-white md:text-[4rem] [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               <span className="inline-flex flex-col items-center">
                 <span>Prodej a pronájem nemovitostí</span>
                 <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
               </span>
+              <span className="mt-3 block text-[0.63em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
+                S důrazem na cenu, rychlost a jistotu.
+              </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-3xl text-lg font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
+            <p className="mx-auto mt-7 max-w-3xl text-base font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
               Transparentní postup krok za krokem. Od první konzultace přes
               přípravu a marketing až po bezpečné dokončení obchodu.
             </p>
+          </div>
 
-            <div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="mt-auto w-full pb-10">
+            <div className="mx-auto mt-9 grid max-w-5xl gap-3 px-1 sm:grid-cols-2 sm:px-0 lg:grid-cols-6">
               <a
                 href="#jak-probiha-prodej"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-base font-semibold text-black lg:col-span-2"
               >
                 <KeyRound className="h-5 w-5" />
                 Jak probíhá prodej?
               </a>
               <Link
                 href="/kontakt"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-base font-semibold text-white backdrop-blur-sm lg:col-span-2"
               >
                 <Mail className="h-5 w-5" />
                 Kontaktujte nás
               </Link>
               <a
                 href="#jak-probiha-pronajem"
-                className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-7 py-4 text-base font-semibold text-black lg:col-span-2"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-base font-semibold text-black lg:col-span-2"
               >
                 <SearchCheck className="h-5 w-5" />
                 Jak probíhá pronájem?
@@ -413,6 +467,64 @@ export default function ProdejPronajemPage() {
       <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
         <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
           <SectionHeading
+            title="Kde všude bude vidět Váš inzerát"
+            subtitle="Vaši nabídku publikujeme na klíčových realitních portálech, aby získala maximální viditelnost a kvalitní poptávku."
+          />
+          <p className="mx-auto mt-5 max-w-4xl text-base leading-relaxed text-black/70">
+            Kombinujeme více inzertních kanálů najednou, takže nemovitost
+            nečeká jen na jeden zdroj poptávky. Díky tomu zvyšujeme počet
+            relevantních zájemců i šanci na rychlejší uzavření obchodu.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-base leading-relaxed text-black/70">
+            Propagaci zároveň podporujeme i na Instagramu a Facebooku. Níže je
+            uvedený hlavní výběr portálů, ve skutečnosti využíváme ještě více
+            relevantních inzertních kanálů podle typu nemovitosti a cílové
+            skupiny.
+          </p>
+
+          <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2">
+            {advertisingPortals.map((portal, index) => (
+              <a
+                key={portal.name}
+                href={portal.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group rounded-2xl border border-black/10 bg-white/85 p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:bg-white ${
+                  index === advertisingPortals.length - 1
+                    ? "sm:col-span-2 sm:w-[calc((100%-1rem)/2)] sm:justify-self-center"
+                    : ""
+                }`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <p className="text-lg font-semibold text-black">
+                      {portal.name}
+                    </p>
+                    <p className="text-sm text-black/65">{portal.note}</p>
+                  </div>
+                  <div className="flex h-14 w-36 items-center justify-center rounded-xl border border-black/10 bg-white px-3">
+                    <Image
+                      src={portal.logoSrc}
+                      alt={portal.logoAlt}
+                      width={132}
+                      height={36}
+                      className="h-8 w-auto object-contain"
+                    />
+                  </div>
+                </div>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-black/75 transition group-hover:text-black">
+                  Otevřít portál
+                  <ExternalLink className="h-4 w-4" />
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4 text-center">
+          <SectionHeading
             title="Začněte ještě dnes"
             subtitle="Stačí jeden kontakt. Navrhneme nejlepší postup přesně pro vaši situaci a vezmeme za něj odpovědnost."
           />
@@ -442,3 +554,7 @@ export default function ProdejPronajemPage() {
     </main>
   );
 }
+
+
+
+
