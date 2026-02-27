@@ -23,6 +23,25 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${SITE_URL}/co-vse-pro-vas-udelame`,
   },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/co-vse-pro-vas-udelame`,
+    title: "Co vše pro vás uděláme | Nisa Centrum Reality",
+    description:
+      "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
+    images: [
+      {
+        url: "/og-image.png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Co vše pro vás uděláme | Nisa Centrum Reality",
+    description:
+      "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
+    images: ["/og-image.png"],
+  },
 };
 
 type DetailCard = {
