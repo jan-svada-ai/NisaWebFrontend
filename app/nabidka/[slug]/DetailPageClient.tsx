@@ -678,9 +678,9 @@ export default function DetailPageClient({
                           src={listing.makler.fotoUrl}
                           alt={contactName}
                           fill
-                          unoptimized
-                          sizes="112px"
-                          className="object-cover object-center [image-rendering:-webkit-optimize-contrast] contrast-[1.03] saturate-[1.03]"
+                          sizes="(max-width: 640px) 96px, 112px"
+                          quality={92}
+                          className="object-cover object-center contrast-[1.03] saturate-[1.03]"
                         />
                       </div>
                     ) : null}

@@ -49,7 +49,8 @@ const nextConfig: NextConfig = {
         },
       }),
   images: {
-    unoptimized: true,
+    // Keep static export compatibility, but allow real image optimization on VPS/server mode.
+    unoptimized: isStaticExport,
     remotePatterns: [
       {
         protocol: "https",
