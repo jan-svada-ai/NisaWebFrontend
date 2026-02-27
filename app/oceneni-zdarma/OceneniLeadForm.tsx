@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { CheckCircle, ChevronDown, Send, Users } from "lucide-react";
 import { apiUrl } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 
 type SubjectOption = {
   value: string;
@@ -139,6 +140,10 @@ export default function OceneniLeadForm() {
       });
 
       if (response.ok) {
+        trackEvent("generate_lead", {
+          lead_source: "oceneni_presne_form",
+          lead_type: formData.subject || "oceneni",
+        });
         setSubmitted(true);
         setFormData({
           name: "",

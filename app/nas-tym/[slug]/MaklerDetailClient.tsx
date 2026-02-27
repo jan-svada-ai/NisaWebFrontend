@@ -17,6 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import { fetchJsonWithRetry } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 
 interface Inzerat {
   id: number;
@@ -412,6 +413,12 @@ export default function MaklerDetailClient({
       );
 
       if (response.ok) {
+        trackEvent("generate_lead", {
+          lead_source: "makler_detail_form",
+          lead_type: "makler",
+          makler_id: makler.id,
+          makler_slug: makler.slug,
+        });
         setSendSuccess("Zpráva byla odeslána. Makléř se vám brzy ozve.");
         setContactForm({ name: "", email: "", phone: "", message: "" });
       } else {

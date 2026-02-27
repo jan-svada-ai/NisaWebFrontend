@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { fetchJsonWithRetry } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 
 export interface DetailListing {
   id: number;
@@ -336,6 +337,12 @@ export default function DetailPageClient({
       );
 
       if (response.ok) {
+        trackEvent("generate_lead", {
+          lead_source: "inzerat_detail_form",
+          lead_type: "inzerat",
+          listing_id: listing.id,
+          listing_slug: listing.slug,
+        });
         setSendSuccess("Zpráva byla odeslána. Makléř se vám brzy ozve.");
         setContactForm({ name: "", email: "", phone: "", message: "" });
       } else {

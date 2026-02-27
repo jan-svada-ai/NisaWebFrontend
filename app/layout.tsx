@@ -5,6 +5,7 @@ import "./globals.css";
 
 import SiteHeader from "@/components/SiteHeader";
 import ContactDock from "@/components/ContactDock";
+import GlobalClickAnalytics from "@/components/GlobalClickAnalytics";
 import { SITE_URL } from "@/lib/site-url";
 
 const siteUrl = SITE_URL;
@@ -256,6 +257,7 @@ gtag('config', '${gaMeasurementId}');`,
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <GlobalClickAnalytics />
         <SiteHeader />
         <main>{children}</main>
 

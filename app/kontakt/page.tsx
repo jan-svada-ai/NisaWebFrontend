@@ -17,6 +17,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { apiUrl } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 
 type SubjectOption = {
   value: string;
@@ -136,6 +137,10 @@ export default function Page() {
       });
 
       if (response.ok) {
+        trackEvent("generate_lead", {
+          lead_source: "kontakt_form",
+          lead_type: formData.subject || "kontakt",
+        });
         setSubmitted(true);
         setFormData({
           name: "",

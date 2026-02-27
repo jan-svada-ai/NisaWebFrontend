@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Calculator, CheckCircle2, ChevronDown, Loader2, Search } from "lucide-react";
 import { fetchJsonWithRetry } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 
 type CemapAction = "Prodej" | "Pronájem";
 type CemapKind = "apartment" | "house" | "land" | "commercial" | "other";
@@ -604,6 +605,12 @@ export default function CemapCalculator() {
         return;
       }
 
+      trackEvent("generate_lead", {
+        lead_source: "oceneni_online_kalkulace",
+        lead_type: action,
+        property_kind: kind,
+        sale_kind: saleKind,
+      });
       setEstimation(response.data);
       setGdprConsent(false);
     } catch (error) {
