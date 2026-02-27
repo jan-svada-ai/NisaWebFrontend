@@ -141,6 +141,10 @@ export default function Page() {
           lead_source: "kontakt_form",
           lead_type: formData.subject || "kontakt",
         });
+        trackEvent("qualify_lead", {
+          lead_source: "kontakt_form",
+          lead_type: formData.subject || "kontakt",
+        });
         setSubmitted(true);
         setFormData({
           name: "",

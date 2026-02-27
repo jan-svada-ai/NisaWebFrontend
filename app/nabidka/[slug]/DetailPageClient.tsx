@@ -343,6 +343,12 @@ export default function DetailPageClient({
           listing_id: listing.id,
           listing_slug: listing.slug,
         });
+        trackEvent("qualify_lead", {
+          lead_source: "inzerat_detail_form",
+          lead_type: "inzerat",
+          listing_id: listing.id,
+          listing_slug: listing.slug,
+        });
         setSendSuccess("Zpráva byla odeslána. Makléř se vám brzy ozve.");
         setContactForm({ name: "", email: "", phone: "", message: "" });
       } else {

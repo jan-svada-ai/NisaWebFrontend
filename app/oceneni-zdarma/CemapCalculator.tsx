@@ -611,6 +611,12 @@ export default function CemapCalculator() {
         property_kind: kind,
         sale_kind: saleKind,
       });
+      trackEvent("qualify_lead", {
+        lead_source: "oceneni_online_kalkulace",
+        lead_type: action,
+        property_kind: kind,
+        sale_kind: saleKind,
+      });
       setEstimation(response.data);
       setGdprConsent(false);
     } catch (error) {

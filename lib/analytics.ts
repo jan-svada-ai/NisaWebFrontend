@@ -5,7 +5,7 @@ type AnalyticsParams = Record<string, string | number | boolean | null | undefin
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
-    dataLayer?: Array<Record<string, unknown>>;
+    dataLayer?: Array<unknown>;
   }
 }
 
@@ -31,13 +31,15 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}): voi
       return;
     }
 
-    if (Array.isArray(window.dataLayer)) {
-      window.dataLayer.push({ event: eventName, ...normalizedParams });
+    if (!Array.isArray(window.dataLayer)) {
+      window.dataLayer = [];
     }
+
+    // Queue event in gtag-compatible format for cases when gtag bootstrap is delayed.
+    window.dataLayer.push(["event", eventName, normalizedParams]);
   } catch (error) {
     if (process.env.NODE_ENV !== "production") {
       console.warn("Analytics event dispatch failed:", eventName, error);
     }
   }
 }
-

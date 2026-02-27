@@ -419,6 +419,12 @@ export default function MaklerDetailClient({
           makler_id: makler.id,
           makler_slug: makler.slug,
         });
+        trackEvent("qualify_lead", {
+          lead_source: "makler_detail_form",
+          lead_type: "makler",
+          makler_id: makler.id,
+          makler_slug: makler.slug,
+        });
         setSendSuccess("Zpráva byla odeslána. Makléř se vám brzy ozve.");
         setContactForm({ name: "", email: "", phone: "", message: "" });
       } else {

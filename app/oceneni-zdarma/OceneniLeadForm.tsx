@@ -144,6 +144,10 @@ export default function OceneniLeadForm() {
           lead_source: "oceneni_presne_form",
           lead_type: formData.subject || "oceneni",
         });
+        trackEvent("qualify_lead", {
+          lead_source: "oceneni_presne_form",
+          lead_type: formData.subject || "oceneni",
+        });
         setSubmitted(true);
         setFormData({
           name: "",
