@@ -24,7 +24,7 @@ const structuredData = {
       name: "Nisa Centrum Reality",
       url: siteUrl,
       logo: `${siteUrl}/android-chrome-512x512.png`,
-      image: [`${siteUrl}/og-image.png`],
+      image: [`${siteUrl}/og-logo.png`],
       telephone: "+420721292462",
       email: "info@nisacentrum.cz",
       sameAs: socialProfiles,
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
       "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-logo.png",
         width: 1200,
         height: 630,
         alt: "Nisa Centrum Reality - prodej a pronajem nemovitosti",
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
       "Nisa Centrum Reality | Prodej a pronájem nemovitostí v Libereckém kraji, Praze a okolí",
     description:
       "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma.",
-    images: ["/og-image.png"],
+    images: ["/og-logo.png"],
   },
 };
 
