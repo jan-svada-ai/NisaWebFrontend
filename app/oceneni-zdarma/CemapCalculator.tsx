@@ -31,7 +31,12 @@ type CemapEstimationResult = {
   warnings: string[];
 };
 
-type CemapEstimationEnvelope = { ok: boolean; data: CemapEstimationResult };
+type CemapEstimationEnvelope = {
+  ok: boolean;
+  data?: CemapEstimationResult;
+  error?: string;
+  retryAfterSeconds?: number;
+};
 type Option = { value: string; label: string };
 
 function CemapSelectDropdown({
@@ -216,6 +221,35 @@ function formatCzk(value: number): string {
 function getErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof Error && error.message.trim()) return error.message.trim();
   return fallback;
+}
+
+function normalizeEstimationErrorMessage(
+  message: string,
+  retryAfterSeconds?: number,
+): string {
+  const trimmed = message.trim();
+  if (!trimmed) return ESTIMATION_TECHNICAL_ERROR;
+
+  const withoutHttpPrefix = trimmed.replace(/^HTTP\s+\d{3}\s*:?\s*/i, "").trim();
+  const normalized = withoutHttpPrefix || trimmed;
+
+  if (/^Limit\s+\d+\s+odhadů/i.test(normalized)) {
+    if (Number.isFinite(retryAfterSeconds ?? NaN) && (retryAfterSeconds ?? 0) > 0) {
+      const minutes = Math.max(1, Math.ceil((retryAfterSeconds as number) / 60));
+      return `${normalized} Další pokus zkuste přibližně za ${minutes} min.`;
+    }
+    return normalized;
+  }
+
+  if (
+    /CeMAP API není nakonfigurované/i.test(normalized) ||
+    /Interní kontaktní e-mail není nakonfigurovaný/i.test(normalized) ||
+    /lead-email-failed/i.test(normalized)
+  ) {
+    return ESTIMATION_TECHNICAL_ERROR;
+  }
+
+  return normalized;
 }
 
 function isValidEmail(value: string): boolean {
@@ -547,13 +581,18 @@ export default function CemapCalculator() {
       });
 
       if (!response.ok || !response.data) {
-        setSubmitError(ESTIMATION_TECHNICAL_ERROR);
+        const message = normalizeEstimationErrorMessage(
+          typeof response.error === "string" ? response.error : ESTIMATION_TECHNICAL_ERROR,
+          response.retryAfterSeconds,
+        );
+        setSubmitError(message);
         return;
       }
 
       setEstimation(response.data);
-    } catch {
-      setSubmitError(ESTIMATION_TECHNICAL_ERROR);
+    } catch (error) {
+      const raw = getErrorMessage(error, ESTIMATION_TECHNICAL_ERROR);
+      setSubmitError(normalizeEstimationErrorMessage(raw));
     } finally {
       setIsSubmitting(false);
     }
