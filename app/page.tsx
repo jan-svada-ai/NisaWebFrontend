@@ -498,7 +498,7 @@ export default function Home() {
           {/* Fotka */}
           <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-black/10 shadow-xl">
             <Image
-              src="/Onas.webp"
+              src="/Onas.avif"
               alt="O nás"
               fill
               unoptimized
