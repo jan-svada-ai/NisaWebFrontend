@@ -673,14 +673,15 @@ export default function DetailPageClient({
                       )}
                     </div>
                     {!isCompanyContact && listing.makler.fotoUrl ? (
-                      <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden rounded-2xl border border-white/90 bg-black/5 shadow-sm">
+                      <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-full border border-white/90 bg-black/5 shadow-sm">
                         <Image
                           src={listing.makler.fotoUrl}
                           alt={contactName}
                           fill
-                          sizes="128px"
-                          quality={95}
-                          className="object-cover"
+                          unoptimized
+                          sizes="160px"
+                          className="object-cover object-[72%_34%] scale-[1.35] transform-gpu"
+                          style={{ transformOrigin: "72% 34%" }}
                         />
                       </div>
                     ) : null}
