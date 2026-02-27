@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { fetchJsonWithRetry } from "@/lib/api";
 
-interface DetailListing {
+export interface DetailListing {
   id: number;
   nazev: string;
   slug: string;
@@ -45,6 +45,11 @@ interface DetailListing {
   } | null;
   vytvoren: string;
   zmenen: string;
+}
+
+interface DetailPageClientProps {
+  slug: string;
+  initialListing?: DetailListing | null;
 }
 
 function readStringFromObject(
@@ -119,12 +124,15 @@ function resolvePriceUnit(listing: DetailListing): string | null {
   return unitRaw.replace(/^za\s+/i, "").trim();
 }
 
-export default function DetailPageClient({ slug }: { slug: string }) {
+export default function DetailPageClient({
+  slug,
+  initialListing = null,
+}: DetailPageClientProps) {
   const THUMBNAIL_WINDOW_SIZE = 3;
   const router = useRouter();
 
-  const [listing, setListing] = useState<DetailListing | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [listing, setListing] = useState<DetailListing | null>(initialListing);
+  const [loading, setLoading] = useState(!initialListing);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [thumbnailStart, setThumbnailStart] = useState(0);
@@ -140,6 +148,15 @@ export default function DetailPageClient({ slug }: { slug: string }) {
   const [sendSuccess, setSendSuccess] = useState<string | null>(null);
 
   useEffect(() => {
+    if (initialListing) {
+      setListing(initialListing);
+      setLoading(false);
+      setError(null);
+      setSelectedImage(0);
+      setThumbnailStart(0);
+      return;
+    }
+
     const fetchListing = async () => {
       try {
         setError(null);
@@ -163,7 +180,7 @@ export default function DetailPageClient({ slug }: { slug: string }) {
     };
 
     fetchListing();
-  }, [slug]);
+  }, [slug, initialListing]);
 
   useEffect(() => {
     if (!listing) return;

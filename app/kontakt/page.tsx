@@ -472,15 +472,13 @@ export default function Page() {
             <p className="mb-4 text-sm text-black/70">
               Chcete vědět, jakou může mít vaše nemovitost reálnou tržní hodnotu?
             </p>
-            <a
-              href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/oceneni-zdarma/"
               className="btn-main flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-4 py-2 text-sm font-semibold text-black"
             >
               <HandCoins className="h-4 w-4" />
               Ocenit nemovitost
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ interface Inzerat {
   } | null;
 }
 
-interface MaklerDetail {
+export interface MaklerDetail {
   id: number;
   jmeno: string;
   slug: string;
@@ -55,6 +55,11 @@ interface MaklerDetail {
   popis: string | null;
   fotoUrl: string | null;
   inzeraty: Inzerat[];
+}
+
+interface MaklerDetailClientProps {
+  slug: string;
+  initialMakler?: MaklerDetail | null;
 }
 
 type MaklerReview = {
@@ -238,17 +243,21 @@ function ReviewsSourceBlock({
             rel="noopener noreferrer"
             className="inline-flex items-center"
           >
-            <img
+            <Image
               src={firmyWidgetImage}
               alt="Nisa centrum reality na Firmy.cz"
+              width={170}
+              height={28}
               className="block"
             />
           </a>
         ) : isSeznam ? (
           <span className="inline-flex items-center opacity-80">
-            <img
+            <Image
               src={firmyWidgetImage}
               alt="Nisa centrum reality na Firmy.cz"
+              width={170}
+              height={28}
               className="block"
             />
           </span>
@@ -311,9 +320,12 @@ function ReviewsSourceBlock({
   );
 }
 
-export default function MaklerDetailClient({ slug }: { slug: string }) {
-  const [makler, setMakler] = useState<MaklerDetail | null>(null);
-  const [loading, setLoading] = useState(true);
+export default function MaklerDetailClient({
+  slug,
+  initialMakler = null,
+}: MaklerDetailClientProps) {
+  const [makler, setMakler] = useState<MaklerDetail | null>(initialMakler);
+  const [loading, setLoading] = useState(!initialMakler);
   const [error, setError] = useState<string | null>(null);
   const [contactForm, setContactForm] = useState({
     name: "",
@@ -326,6 +338,13 @@ export default function MaklerDetailClient({ slug }: { slug: string }) {
   const [sendSuccess, setSendSuccess] = useState<string | null>(null);
 
   useEffect(() => {
+    if (initialMakler) {
+      setMakler(initialMakler);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
     const fetchMakler = async () => {
       setLoading(true);
       setMakler(null);
@@ -346,7 +365,7 @@ export default function MaklerDetailClient({ slug }: { slug: string }) {
     };
 
     fetchMakler();
-  }, [slug]);
+  }, [slug, initialMakler]);
 
   if (loading) {
     return (

@@ -122,3 +122,14 @@ body {
 ::selection {
   background: rgba(230, 194, 94, 0.4);
 }
+
+/* Kotvy pod fixed headerem */
+main [id] {
+  scroll-margin-top: 90px;
+}
+
+@media (min-width: 1024px) {
+  main [id] {
+    scroll-margin-top: 96px;
+  }
+}

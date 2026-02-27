@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site-url";
 
 export const dynamic = "force-static";
+export const revalidate = 1800;
 
 const siteUrl = SITE_URL;
 
@@ -42,47 +43,46 @@ type StaticRoute = {
   route: string;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   priority: number;
-  section: "core" | "service" | "legal";
 };
 
 const staticRoutes: StaticRoute[] = [
-  { route: "/", changeFrequency: "daily", priority: 1, section: "core" },
+  { route: "/", changeFrequency: "daily", priority: 1 },
   {
-    route: "/prodej-pronajem/",
+    route: "/prodej-pronajem",
     changeFrequency: "weekly",
     priority: 0.92,
-    section: "service",
   },
   {
-    route: "/vyhledavani-na-miru/",
+    route: "/vyhledavani-na-miru",
     changeFrequency: "weekly",
     priority: 0.92,
-    section: "service",
   },
   {
-    route: "/tipni-realitu/",
+    route: "/tipni-realitu",
     changeFrequency: "weekly",
     priority: 0.9,
-    section: "service",
   },
   {
-    route: "/oceneni-zdarma/",
+    route: "/oceneni-zdarma",
     changeFrequency: "weekly",
     priority: 0.9,
-    section: "service",
   },
   {
-    route: "/co-vse-pro-vas-udelame/",
+    route: "/co-vse-pro-vas-udelame",
     changeFrequency: "weekly",
     priority: 0.88,
-    section: "service",
   },
-  { route: "/nabidka/", changeFrequency: "daily", priority: 0.95, section: "core" },
-  { route: "/nas-tym/", changeFrequency: "weekly", priority: 0.9, section: "core" },
-  { route: "/reference/", changeFrequency: "weekly", priority: 0.82, section: "core" },
-  { route: "/kontakt/", changeFrequency: "monthly", priority: 0.82, section: "core" },
-  { route: "/cookies/", changeFrequency: "yearly", priority: 0.35, section: "legal" },
-  { route: "/gdpr/", changeFrequency: "yearly", priority: 0.35, section: "legal" },
+  { route: "/nabidka", changeFrequency: "daily", priority: 0.95 },
+  { route: "/nas-tym", changeFrequency: "weekly", priority: 0.9 },
+  { route: "/reference", changeFrequency: "weekly", priority: 0.82 },
+  { route: "/kontakt", changeFrequency: "monthly", priority: 0.82 },
+  { route: "/cookies", changeFrequency: "yearly", priority: 0.35 },
+  { route: "/gdpr", changeFrequency: "yearly", priority: 0.35 },
+  {
+    route: "/zpracovani-osobnich-udaju-oceneni",
+    changeFrequency: "yearly",
+    priority: 0.35,
+  },
 ];
 
 function toDate(value?: string | null): Date | undefined {
@@ -91,10 +91,12 @@ function toDate(value?: string | null): Date | undefined {
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
+const staticLastModified = toDate(process.env.SITEMAP_STATIC_LASTMOD);
+
 async function fetchJson<T>(path: string): Promise<T> {
   const response = await fetch(`${apiBase}${path}`, {
     headers: { Accept: "application/json" },
-    next: { revalidate: 60 * 60 },
+    next: { revalidate },
   });
 
   if (!response.ok) {
@@ -106,7 +108,14 @@ async function fetchJson<T>(path: string): Promise<T> {
 
 async function fetchAllListings(): Promise<ListingItem[]> {
   const limit = 100;
-  const maxPages = Number(process.env.SITEMAP_MAX_PAGES ?? "50");
+  const parsedMaxPages = Number.parseInt(
+    process.env.SITEMAP_MAX_PAGES ?? "50",
+    10,
+  );
+  const maxPages =
+    Number.isFinite(parsedMaxPages) && parsedMaxPages > 0
+      ? parsedMaxPages
+      : 50;
   const allItems: ListingItem[] = [];
 
   let page = 1;
@@ -121,10 +130,9 @@ async function fetchAllListings(): Promise<ListingItem[]> {
     allItems.push(...items);
 
     const nextTotalPages = Number(payload.pagination?.totalPages ?? totalPages);
-    const safeMaxPages = Number.isFinite(maxPages) && maxPages > 0 ? maxPages : 50;
     totalPages =
       Number.isFinite(nextTotalPages) && nextTotalPages > 0
-        ? Math.min(nextTotalPages, safeMaxPages)
+        ? Math.min(nextTotalPages, maxPages)
         : totalPages;
 
     if (items.length === 0) break;
@@ -140,17 +148,22 @@ async function fetchAllBrokers(): Promise<BrokerItem[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
+  const generatedAt = new Date();
   const entries = new Map<string, MetadataRoute.Sitemap[number]>();
 
   for (const item of staticRoutes) {
     const url = `${siteUrl}${item.route}`;
-    entries.set(url, {
+    const staticEntry: MetadataRoute.Sitemap[number] = {
       url,
-      lastModified: now,
       changeFrequency: item.changeFrequency,
       priority: item.priority,
-    });
+    };
+
+    if (staticLastModified) {
+      staticEntry.lastModified = staticLastModified;
+    }
+
+    entries.set(url, staticEntry);
   }
 
   try {
@@ -163,12 +176,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const slug = listing.slug?.trim();
       if (!slug) continue;
 
-      const url = `${siteUrl}/nabidka/${encodeURIComponent(slug)}/`;
+      const url = `${siteUrl}/nabidka/${encodeURIComponent(slug)}`;
       const coverImage = listing.obrazky?.[0]?.url?.trim() || undefined;
 
       entries.set(url, {
         url,
-        lastModified: toDate(listing.zmenen) ?? toDate(listing.vytvoren) ?? now,
+        lastModified:
+          toDate(listing.zmenen) ?? toDate(listing.vytvoren) ?? generatedAt,
         changeFrequency: "weekly",
         priority: 0.8,
         ...(coverImage ? { images: [coverImage] } : {}),
@@ -179,12 +193,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const slug = broker.slug?.trim();
       if (!slug) continue;
 
-      const url = `${siteUrl}/nas-tym/${encodeURIComponent(slug)}/`;
+      const url = `${siteUrl}/nas-tym/${encodeURIComponent(slug)}`;
       const photo = broker.fotoUrl?.trim() || undefined;
 
       entries.set(url, {
         url,
-        lastModified: toDate(broker.zmenen) ?? toDate(broker.vytvoren) ?? now,
+        lastModified:
+          toDate(broker.zmenen) ?? toDate(broker.vytvoren) ?? generatedAt,
         changeFrequency: "weekly",
         priority: 0.75,
         ...(photo ? { images: [photo] } : {}),

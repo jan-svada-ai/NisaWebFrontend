@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
   alternates: {
-    canonical: `${SITE_URL}/co-vse-pro-vas-udelame/`,
+    canonical: `${SITE_URL}/co-vse-pro-vas-udelame`,
   },
 };
 

@@ -13,22 +13,22 @@ const nextConfig: NextConfig = {
           return [
             {
               source: "/sluzby/prodej-pronajem",
-              destination: "/prodej-pronajem/",
+              destination: "/prodej-pronajem",
               permanent: true,
             },
             {
               source: "/sluzby/prodej-pronajem/",
-              destination: "/prodej-pronajem/",
+              destination: "/prodej-pronajem",
               permanent: true,
             },
             {
               source: "/sluzby/vyhledavani-na-miru",
-              destination: "/vyhledavani-na-miru/",
+              destination: "/vyhledavani-na-miru",
               permanent: true,
             },
             {
               source: "/sluzby/vyhledavani-na-miru/",
-              destination: "/vyhledavani-na-miru/",
+              destination: "/vyhledavani-na-miru",
               permanent: true,
             },
           ];
@@ -58,6 +58,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "**.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "www.firmy.cz",
       },
     ],
   },

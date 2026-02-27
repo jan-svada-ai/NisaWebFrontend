@@ -4,7 +4,8 @@ import { SITE_URL } from "@/lib/site-url";
 const siteUrl = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Aktuální nabídka nemovitostí | Prodej a pronájem | Nisa Centrum Reality",
+  title:
+    "Aktuální nabídka nemovitostí | Prodej a pronájem | Nisa Centrum Reality",
   description:
     "Aktuální nabídka bytů, domů, pozemků a komerčních nemovitostí. Prodej i pronájem v Liberci, Praze, Ústí nad Labem, Hradci Králové a okolí.",
   keywords: [
@@ -18,11 +19,11 @@ export const metadata: Metadata = {
     "nemovitosti Liberec",
   ],
   alternates: {
-    canonical: `${siteUrl}/nabidka/`,
+    canonical: `${siteUrl}/nabidka`,
   },
   openGraph: {
     type: "website",
-    url: `${siteUrl}/nabidka/`,
+    url: `${siteUrl}/nabidka`,
     title: "Aktuální nabídka nemovitostí | Nisa Centrum Reality",
     description:
       "Procházejte aktuální nabídku prodeje a pronájmu nemovitostí v klíčových regionech.",
@@ -30,8 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Aktuální nabídka nemovitostí | Nisa Centrum Reality",
-    description:
-      "Byty, domy, pozemky i komerční nemovitosti v aktuální nabídce.",
+    description: "Byty, domy, pozemky i komerční nemovitosti v aktuální nabídce.",
   },
 };
 
@@ -42,3 +42,4 @@ export default function NabidkaLayout({
 }) {
   return children;
 }
+

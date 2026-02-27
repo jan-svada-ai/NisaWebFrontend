@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "pronájem nemovitosti kontakt",
   ],
   alternates: {
-    canonical: `${siteUrl}/kontakt/`,
+    canonical: `${siteUrl}/kontakt`,
   },
   openGraph: {
     type: "website",
-    url: `${siteUrl}/kontakt/`,
+    url: `${siteUrl}/kontakt`,
     title: "Kontakt | Nisa Centrum Reality",
     description:
       "Domluvte konzultaci pro prodej, pronájem nebo ocenění nemovitosti.",

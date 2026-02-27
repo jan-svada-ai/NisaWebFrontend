@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ExternalLink, MessageSquareQuote, Star } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 
@@ -223,9 +224,12 @@ export default function ReferencePage() {
 
           <div className="mb-6 flex justify-center">
             <a href={FIRMY_PROFILE_URL} target="_blank" rel="noopener">
-              <img
+              <Image
                 src="https://www.firmy.cz/img-stars/light-13200814.svg"
                 alt="Nisa centrum reality na Firmy.cz"
+                width={170}
+                height={28}
+                className="h-auto w-[170px]"
               />
             </a>
           </div>

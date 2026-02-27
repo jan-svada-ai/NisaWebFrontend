@@ -365,9 +365,7 @@ function HeroSection({
         >
           <div className={ctaGridClass}>
             <Link
-              href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/oceneni-zdarma/"
               className={`btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] font-semibold text-black lg:col-span-2 ${ctaSizeClass}`}
             >
               <Icon name="handCoins" className="h-5 w-5" />
@@ -709,10 +707,9 @@ export default function Home() {
                 d: "Bezplatné a nezávazné ocenění založené na prohlídce, znalosti trhu a srovnatelných prodejích v okolí.",
                 cta: [
                   "Získat ocenění",
-                  "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
+                  "/oceneni-zdarma/",
                 ],
-                detail:
-                  "https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9",
+                detail: "/oceneni-zdarma/",
               },
               {
                 icon: "search" as const,
@@ -981,15 +978,13 @@ export default function Home() {
                 <Icon name="mail" className="h-4 w-4" />
                 Napsat e-mail
               </a>
-              <a
-                href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/oceneni-zdarma/"
                 className="btn-main inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold text-white"
               >
                 <Icon name="handCoins" className="h-4 w-4" />
                 Ocenění zdarma
-              </a>
+              </Link>
             </div>
           </div>
 

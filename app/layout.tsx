@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   manifest: "/manifest.json",
   alternates: {
-    canonical: `${siteUrl}/`,
+    canonical: siteUrl,
   },
   icons: {
     icon: [

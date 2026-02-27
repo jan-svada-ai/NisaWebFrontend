@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     "Google recenze reality",
   ],
   alternates: {
-    canonical: `${siteUrl}/reference/`,
+    canonical: `${siteUrl}/reference`,
   },
   openGraph: {
     type: "website",
-    url: `${siteUrl}/reference/`,
+    url: `${siteUrl}/reference`,
     title: "Reference klientů | Nisa Centrum Reality",
     description:
       "Recenze z Google a Firmy.cz. Reálné zkušenosti klientů s naší realitní kanceláří.",

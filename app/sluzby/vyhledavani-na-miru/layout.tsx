@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: `${SITE_URL}/vyhledavani-na-miru/`,
+    canonical: `${SITE_URL}/vyhledavani-na-miru`,
   },
 };
 

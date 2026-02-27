@@ -3,6 +3,7 @@ import NabidkaPageClient, {
   type ListingsResponse,
   type PaginationInfo,
 } from "./NabidkaPageClient";
+import { SITE_URL } from "@/lib/site-url";
 
 const API_BASE = (
   process.env.BACKEND_URL ??
@@ -10,6 +11,8 @@ const API_BASE = (
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   "http://127.0.0.1:4000"
 ).replace(/\/+$/, "");
+
+export const dynamic = "force-dynamic";
 
 const DEFAULT_PAGINATION: PaginationInfo = {
   page: 1,
@@ -30,6 +33,7 @@ async function getInitialListings(): Promise<{
         headers: {
           Accept: "application/json",
         },
+        cache: "no-store",
       },
     );
 
@@ -60,11 +64,48 @@ async function getInitialListings(): Promise<{
 
 export default async function NabidkaPage() {
   const { listings, pagination } = await getInitialListings();
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Aktuální nabídka nemovitostí | Nisa Centrum Reality",
+    url: `${SITE_URL}/nabidka`,
+    about: {
+      "@id": `${SITE_URL}#real-estate-agent`,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: pagination.total ?? listings.length,
+      itemListElement: listings.map((listing, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "RealEstateListing",
+          name: listing.nazev,
+          url: `${SITE_URL}/nabidka/${encodeURIComponent(listing.slug)}`,
+          image: listing.obrazky?.[0]?.url ?? undefined,
+          offers:
+            typeof listing.cena === "number" && listing.cena > 0
+              ? {
+                  "@type": "Offer",
+                  price: listing.cena,
+                  priceCurrency: listing.mena || "CZK",
+                }
+              : undefined,
+        },
+      })),
+    },
+  };
 
   return (
-    <NabidkaPageClient
-      initialListings={listings}
-      initialPagination={pagination}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <NabidkaPageClient
+        initialListings={listings}
+        initialPagination={pagination}
+      />
+    </>
   );
 }

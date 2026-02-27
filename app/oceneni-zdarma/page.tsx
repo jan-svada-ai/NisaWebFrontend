@@ -1,253 +1,389 @@
-﻿import Link from "next/link";
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  Coins,
+  HandCoins,
+  Hourglass,
+  MapPinHouse,
+  Projector,
+  Scale,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import { SITE_URL } from "@/lib/site-url";
+import CemapCalculator from "./CemapCalculator";
+import OceneniLeadForm from "./OceneniLeadForm";
+import StepCarousel, { type StepCard } from "./StepCarousel";
+
+const faqItems = [
+  {
+    question: "Je online ocenění nemovitosti zdarma opravdu bez závazků?",
+    answer:
+      "Ano. Online výpočet ani následná konzultace vás nic nestojí. Výsledek můžete využít jako podklad pro další rozhodnutí o prodeji nebo pronájmu.",
+  },
+  {
+    question: "Jak přesný je online odhad ceny nemovitosti?",
+    answer:
+      "Výstup je datový tržní odhad založený na lokalitě, parametrech a historických transakcích. Pro finální prodejní strategii vždy doporučujeme doplnit osobní konzultaci makléře.",
+  },
+  {
+    question: "Pro jaké nemovitosti umí kalkulace spočítat odhad?",
+    answer:
+      "Nejčastěji byty, domy a pozemky. U atypických nemovitostí je vždy lepší přímá konzultace s makléřem, protože zohlední konkrétní stav, lokalitu i obchodní strategii.",
+  },
+  {
+    question: "Je možné získat odhad i pro pronájem?",
+    answer:
+      "Ano, kalkulace umí i orientační odhad pro pronájem. Pro dosažení lepší ceny ale doporučujeme využít realitní kancelář, která pomůže nastavit správnou strategii i prezentaci nabídky.",
+  },
+];
+
+const valuationSteps: StepCard[] = [
+  {
+    id: "oceneni-parametry",
+    number: 1,
+    title: "Vyplnění parametrů",
+    description:
+      "Vyplníte adresu a základní údaje o nemovitosti potřebné pro orientační odhad ceny.",
+    duration: "1-2 minuty",
+    icon: "textWrap",
+    href: "#online-kalkulacka",
+    ctaLabel: "Vyplnit parametry",
+  },
+  {
+    id: "oceneni-vypocet",
+    number: 2,
+    title: "Proběhne výpočet",
+    description:
+      "Po odeslání údajů proběhne automatický výpočet ceny na základě dat z trhu.",
+    duration: "pár sekund",
+    icon: "calculator",
+    href: "#online-kalkulacka",
+    ctaLabel: "Spočítat odhad",
+  },
+  {
+    id: "oceneni-orientacni-cena",
+    number: 3,
+    title: "Máte orientační cenu",
+    description:
+      "Po výpočtu získáte orientační cenu, která slouží jako první přehled o hodnotě nemovitosti.",
+    duration: "ihned",
+    icon: "coins",
+    href: "#online-kalkulacka",
+    ctaLabel: "Zobrazit odhad",
+  },
+  {
+    id: "oceneni-kontakt-maklere",
+    number: 4,
+    title: "Kontaktujete naše makléře",
+    description:
+      "Navážete kontakt s naším týmem a předáte detailnější informace o nemovitosti a cíli ocenění.",
+    duration: "dle dostupnosti",
+    icon: "users",
+    href: "#formular",
+    ctaLabel: "Kontaktovat makléře",
+  },
+  {
+    id: "oceneni-domluva-schuzky",
+    number: 5,
+    title: "Dohodnete si schůzku",
+    description:
+      "Domluvíte si termín osobní konzultace a prohlídky, kde makléř posoudí reálný stav nemovitosti.",
+    duration: "1-3 dny",
+    icon: "coffee",
+    href: "#formular",
+    ctaLabel: "Domluvit schůzku",
+  },
+  {
+    id: "oceneni-presny-odhad",
+    number: 6,
+    title: "Proběhne přesný odhad",
+    description:
+      "Po osobním posouzení dostanete přesné ocenění a doporučení pro další postup prodeje nebo pronájmu.",
+    duration: "dle domluvy",
+    icon: "fileCheck",
+    href: "#formular",
+    ctaLabel: "Kontaktovat makléře",
+  },
+];
+
+const onlineEstimatePoints = [
+  {
+    icon: Coins,
+    text: "Odhad tržní ceny bytu, domu a pozemku během pár sekund.",
+  },
+  {
+    icon: HandCoins,
+    text: "Vhodné pro prodej, pronájem, dědictví i orientační nacenění.",
+  },
+  {
+    icon: UserRound,
+    text: "Následná konzultace makléře vám pomůže nastavit prodejní taktiku.",
+  },
+  {
+    icon: ShieldCheck,
+    text: "Bez závazků a bez nutnosti okamžité spolupráce.",
+  },
+];
 
 export const metadata: Metadata = {
-  title: "Ocenění nemovitosti zdarma | Nisa Centrum Reality",
+  title: "Ocenění nemovitosti zdarma | Online tržní odhad | Nisa Centrum Reality",
   description:
-    "Nezávazné a profesionální ocenění vaší nemovitosti zdarma. Získejte reálnou tržní hodnotu na základě prohlídky a analýzy trhu.",
+    "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
   alternates: {
-    canonical: `${SITE_URL}/oceneni-zdarma/`,
+    canonical: `${SITE_URL}/oceneni-zdarma`,
   },
 };
 
-function Icon({ name, className = "" }: { name: string; className?: string }) {
-  const icons: Record<string, string> = {
-    shield:
-      "M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z",
-    home: "m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25",
-    check: "m4.5 12.75 6 6 9-13.5",
-    chart:
-      "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z",
-    eye: "M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
-    document:
-      "M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z",
-  };
-
+function SectionHeading({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className={className || "h-6 w-6"}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d={icons[name]} />
-    </svg>
+    <div className="mx-auto max-w-4xl text-center">
+      <h2 className="text-4xl font-semibold text-black md:text-5xl">
+        <span className="inline-flex flex-col items-center">
+          <span>{title}</span>
+          <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+        </span>
+      </h2>
+      <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">{subtitle}</p>
+    </div>
   );
 }
 
 export default function OceneniZdarmaPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
   return (
-    <main className="min-h-screen bg-white">
-      <section className="relative overflow-hidden border-b border-black/10 bg-gradient-to-br from-[#F6E3B1]/20 via-white to-white pt-24 pb-16">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-5xl font-bold tracking-tight text-black sm:text-6xl lg:text-7xl">
-              Ocenění nemovitosti zdarma
-            </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-black/70">
-              Zjistěte reálnou tržní hodnotu vaší nemovitosti. Nezávazně,
-              profesionálně a bez skrytých podmínek.
-            </p>
-            <p className="mx-auto mt-3 max-w-3xl text-lg leading-relaxed text-black/70">
-              Ocenění vychází z osobní prohlídky, aktuálních dat z trhu a
-              dlouhodobé znalosti regionu. Dostanete jasný základ pro další
-              rozhodnutí.
-            </p>
-            <div className="mt-8">
+    <main
+      className="min-h-screen"
+      style={{
+        background:
+          "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
+      }}
+    >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <section className="relative min-h-dvh">
+        <video
+          className="absolute inset-0 h-full w-full object-cover brightness-[1.08]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/hero-poster.avif"
+        >
+          <source src="/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
+          <source src="/hero.mp4" type="video/mp4" media="(min-width: 768px)" />
+        </video>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/35" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.56)_40%,rgba(0,0,0,0.26)_72%,rgba(0,0,0,0.1)_100%)]" />
+
+        <div className="relative z-10 flex min-h-dvh flex-col items-center justify-start px-5 pb-8 pt-20 text-center sm:px-8 md:px-12 lg:px-16">
+          <p className="mb-4 text-[0.9rem] uppercase tracking-[0.2em] text-white/85">
+            Liberecký, Ústecký, Královéhradecký, Středočeský kraj, Praha a okolí
+          </p>
+
+          <h1 className="mx-auto max-w-5xl text-[2.8rem] font-semibold leading-tight text-white md:text-[4rem] [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+            <span className="inline-flex flex-col items-center">
+              <span>Ocenění nemovitosti zdarma</span>
+              <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
+            </span>
+            <span className="mt-3 block text-[0.63em] text-[color:var(--gold1)] [text-shadow:0_2px_30px_rgba(0,0,0,0.8)]">
+              Online tržní odhad ceny.
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-7 max-w-3xl text-base font-medium leading-relaxed text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.75)]">
+            Zadejte adresu a parametry nemovitosti. Odhad ceny bytu, domu nebo pozemku
+            získáte během pár sekund.
+          </p>
+
+          <div className="mt-auto w-full pb-10">
+            <div className="mx-auto mt-9 grid max-w-3xl gap-3 px-1 sm:grid-cols-2 sm:px-0">
               <a
-                href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-main inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
+                href="#online-kalkulacka"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-base font-semibold text-black"
               >
-                Získat ocenění zdarma
+                <HandCoins className="h-5 w-5" />
+                Spočítat odhad hned online
+              </a>
+              <a
+                href="#formular"
+                className="btn-main inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-base font-semibold text-white backdrop-blur-sm"
+              >
+                <ArrowRight className="h-5 w-5" />
+                Konzultace s makléřem
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-black/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-black sm:text-5xl">
-              Jak probíhá ocenění
-            </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-lg text-black/70">
-              Jednoduchý a srozumitelný postup od prvního kontaktu po
-              orientační cenové rozpětí.
-            </p>
+      <section id="online-kalkulacka" className="border-t border-black/10 py-20 md:py-24">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Online odhad ceny nemovitosti"
+            subtitle="Výpočet slouží jako automatický orientační odhad. Pro přesné nacenění, strategii a finální prodejní cenu doporučujeme osobní konzultaci s naším makléřem."
+          />
+
+          <div className="mx-auto mt-10 max-w-5xl">
+            <CemapCalculator />
           </div>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
-            {[
-              {
-                step: "1",
-                title: "Vyplníte základní údaje",
-                desc: "Zadáte informace o nemovitosti: lokalitu, typ, velikost, stav a časovou představu.",
-              },
-              {
-                step: "2",
-                title: "Proběhne prohlídka",
-                desc: "Podíváme se na nemovitost osobně a zhodnotíme její skutečný stav i prezentační potenciál.",
-              },
-              {
-                step: "3",
-                title: "Dostanete odhad",
-                desc: "Obdržíte orientační tržní cenu s vysvětlením, z čeho vychází a jak ji dál využít.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--gold1)]/35 text-2xl font-bold text-black">
-                  {item.step}
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-black/70">{item.desc}</p>
-              </div>
-            ))}
+          <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-2">
+            {onlineEstimatePoints.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article
+                  key={item.text}
+                  className="rounded-2xl border border-black/10 bg-white/80 p-4 shadow-sm md:p-5"
+                >
+                  <div className="flex items-center gap-4 md:gap-5">
+                    <span className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[color:var(--gold1)]/30 md:h-16 md:w-16">
+                      <Icon className="h-7 w-7 text-[color:var(--gold2)] md:h-8 md:w-8" />
+                    </span>
+                    <p className="text-base leading-relaxed text-black/75 md:text-lg">
+                      {item.text}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-black/10 bg-[#F6E3B1]/10 py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-black sm:text-5xl">
-              Co zahrnuje naše ocenění
-            </h2>
-          </div>
+      <OceneniLeadForm />
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                icon: "eye",
-                title: "Osobní prohlídka",
-                desc: "Navštívíme vaši nemovitost, zhodnotíme dispozici, stav i detaily, které mají vliv na cenu.",
-              },
-              {
-                icon: "chart",
-                title: "Analýza trhu",
-                desc: "Porovnáme ceny srovnatelných nemovitostí v okolí a aktuální tržní situaci.",
-              },
-              {
-                icon: "document",
-                title: "Jasný výstup",
-                desc: "Dostanete srozumitelný odhad ceny a doporučení, jak postupovat dál při prodeji nebo pronájmu.",
-              },
-              {
-                icon: "check",
-                title: "Nezávazný proces",
-                desc: "Ocenění je nezávazné. Máte prostor se rozhodnout, jestli chcete v dalším kroku spolupracovat.",
-              },
-              {
-                icon: "shield",
-                title: "Bez skrytých poplatků",
-                desc: "Opravdu zdarma, bez skrytých nákladů a bez nepříjemných překvapení.",
-              },
-              {
-                icon: "home",
-                title: "Doporučení strategie",
-                desc: "Navrhneme další postup, jak nemovitost připravit na trh a jak zvýšit šanci na lepší výsledek.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm"
-              >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--gold1)]/35 text-black">
-                  <Icon name={item.icon} />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-black/70">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+      <section className="border-t border-black/10 py-20 md:py-24 min-h-screen flex items-center">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Jak probíhá ocenění krok za krokem"
+            subtitle="Stejný jasný postup pro prodej i pronájem, od prvního vyplnění až po osobní přesné ocenění s makléřem."
+          />
+          <p className="mx-auto mt-5 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Nejprve získáte orientační cenu online. Poté navážeme osobní konzultací,
+            kde nastavíme přesné nacenění podle reálného stavu nemovitosti a trhu.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Díky tomu máte rychlý datový základ i přesný expertní pohled pro
+            prodej, pronájem nebo další strategické rozhodnutí.
+          </p>
+          <p className="mx-auto mt-3 max-w-4xl text-center text-base leading-relaxed text-black/70">
+            Ať řešíte prodej bytu, domu, pozemku nebo nastavení nájemného, získáte
+            nejdřív rychlý orientační odhad a pak navazující přesné ocenění.
+            Působíme v lokalitách Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí.
+          </p>
+          <StepCarousel steps={valuationSteps} />
+          <p className="mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-base font-medium text-black/70">
+            <Hourglass className="h-4 w-4 text-[color:var(--gold2)]" />
+            Celkový odhad: online výpočet během sekund, přesné ocenění po osobní schůzce.
+          </p>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-black sm:text-5xl">
-              Proč si nechat nemovitost ocenit
-            </h2>
-          </div>
+      <section className="border-t border-black/10 py-20 md:py-24">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Co má největší vliv na cenu nemovitosti"
+            subtitle="Nejde jen o m². Výslednou tržní cenu ovlivňuje kombinace lokality, stavu, dispozice, právního stavu a aktuální poptávky."
+          />
 
-          <div className="mt-12 space-y-6">
+          <div className="mx-auto mt-10 grid max-w-6xl gap-6 md:grid-cols-2">
             {[
               {
-                title: "Reálná tržní cena",
-                desc: "Získáte skutečnou představu o hodnotě nemovitosti, ne jen orientační číslo z online kalkulace.",
+                icon: MapPinHouse,
+                title: "Lokalita a mikrolokalita",
+                text: "Dopravní dostupnost, občanská vybavenost, okolní zástavba a poptávka v konkrétní části města.",
               },
               {
-                title: "Lepší vyjednávací pozice",
-                desc: "Správné nacenění je základ pro vyšší finální cenu i pro rychlejší rozhodování zájemců.",
+                icon: Scale,
+                title: "Technický a právní stav",
+                text: "Rekonstrukce, energetická náročnost, věcná břemena, zástavy a další faktory ovlivňující prodejnost.",
               },
               {
-                title: "Rychlejší obchod",
-                desc: "Realisticky nastavená cena zkracuje dobu inzerce a omezuje zbytečná kola vyjednávání.",
+                icon: BriefcaseBusiness,
+                title: "Typ obchodu",
+                text: "Jinou strategii potřebuje rychlý prodej, jinou výnosový pronájem nebo příprava na dědické řízení.",
               },
               {
-                title: "Strategie dalších kroků",
-                desc: "Dozvíte se, co před prodejem upravit, na co dát důraz v prezentaci a jak nastavit ideální postup.",
+                icon: Projector,
+                title: "Prezentace a načasování",
+                text: "Kvalitní marketing, správné nacenění a vhodný čas uvedení na trh rozhodují o výsledné ceně i rychlosti obchodu. Přesně s tím vám pomůžeme, abyste dosáhli maximální možné ceny.",
               },
-            ].map((item, i) => (
-              <div
-                key={i}
+            ].map((item) => (
+              <article
+                key={item.title}
                 className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm"
               >
-                <h3 className="text-xl font-semibold text-black">
-                  {item.title}
-                </h3>
-                <p className="mt-2 leading-relaxed text-black/70">
-                  {item.desc}
-                </p>
-              </div>
+                <div className="grid grid-cols-[auto_1fr] items-start gap-4">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F6E3B1] text-black ring-1 ring-black/10">
+                    <item.icon className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-black">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-black/70">{item.text}</p>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-black/10 bg-gradient-to-br from-[#F6E3B1]/20 to-white py-20">
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-black sm:text-5xl">
-              Získejte ocenění ještě dnes
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-black/70">
-              Vyplňte jednoduchý formulář a ozveme se vám s návrhem dalšího
-              postupu.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <a
-                href="https://leady.valuo.cz/kalkulace/5dfdb68a089d608a996823b2bc0f53d9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-main inline-flex items-center justify-center rounded-full bg-[color:var(--gold1)] px-8 py-3.5 text-base font-semibold text-black"
+      <section className="border-t border-black/10 py-20 md:py-24">
+        <div className="mx-auto w-full max-w-screen-xl px-4">
+          <SectionHeading
+            title="Časté dotazy"
+            subtitle="Nejčastější otázky k online odhadu ceny, přesnosti výpočtu a navazující spolupráci s makléřem."
+          />
+
+          <div className="mx-auto mt-10 grid max-w-5xl gap-3">
+            {faqItems.map((item) => (
+              <details
+                key={item.question}
+                className="group rounded-2xl border border-black/10 bg-white/80 p-5 shadow-sm open:bg-white"
               >
-                Vyplnit formulář
-              </a>
-              <Link
-                href="/kontakt"
-                className="btn-main inline-flex items-center justify-center rounded-full border border-black/15 bg-white px-8 py-3.5 text-base font-semibold text-black"
-              >
-                Kontaktovat přímo
-              </Link>
-            </div>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                  <span className="text-left text-base font-semibold text-black">{item.question}</span>
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/5 text-black/70 transition group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 border-l-2 border-[color:var(--gold1)]/35 pl-4 text-sm leading-relaxed text-black/70">
+                  {item.answer}
+                </p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
     </main>
   );
 }
+
+
 
 

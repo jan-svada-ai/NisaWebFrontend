@@ -316,10 +316,16 @@ export default function NabidkaPageClient({
   };
 
   useEffect(() => {
-    void fetchListings(1, { ...DEFAULT_FILTERS }, {
-      background: initialListings.length > 0,
-      showError: initialListings.length === 0,
-    });
+    if (initialListings.length > 0) return;
+
+    void fetchListings(
+      1,
+      { ...DEFAULT_FILTERS },
+      {
+        background: false,
+        showError: true,
+      },
+    );
   }, [fetchListings, initialListings.length]);
 
   return (

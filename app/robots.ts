@@ -15,6 +15,9 @@ const robotsDisallow = [
   "/*?*fbclid=*",
   "/*?*gclid=*",
   "/*?*yclid=*",
+  "/*?*msclkid=*",
+  "/*?*_gl=*",
+  "/*?*_ga=*",
   "/*?*ref=*",
   "/*?*source=*",
 ];

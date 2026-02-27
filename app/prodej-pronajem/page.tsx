@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Postup prodeje a pronájmu krok za krokem: od konzultace přes prezentaci, inzerci a prohlídky až po smlouvy a bezpečné předání.",
   alternates: {
-    canonical: `${SITE_URL}/prodej-pronajem/`,
+    canonical: `${SITE_URL}/prodej-pronajem`,
   },
 };
 

@@ -7,9 +7,9 @@ const siteUrl = SITE_URL;
 export const metadata: Metadata = {
   title: "Zásady cookies | Nisa Centrum Reality",
   description:
-    "Informace o používání cookies na webu Nisa Centrum Reality včetně správy souhlasu a nastavení prohlížeče.",
+    "Informace o používání cookies na webu Nisa Centrum Reality, jejich účelu a možnostech správy souhlasu.",
   alternates: {
-    canonical: `${siteUrl}/cookies/`,
+    canonical: `${siteUrl}/cookies`,
   },
   robots: {
     index: true,
@@ -20,9 +20,7 @@ export const metadata: Metadata = {
 export default function CookiesPage() {
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-24 sm:px-6 xl:px-8">
-      <p className="text-sm uppercase tracking-[0.2em] text-black/60">
-        Právní informace
-      </p>
+      <p className="text-sm uppercase tracking-[0.2em] text-black/60">Právní informace</p>
       <h1 className="mt-2 text-4xl font-semibold text-black sm:text-5xl">
         <span className="inline-flex flex-col items-start">
           <span>Zásady cookies</span>
@@ -37,38 +35,45 @@ export default function CookiesPage() {
             1. Co jsou cookies
           </h2>
           <p className="mt-2">
-            Cookies jsou malé textové soubory, které web ukládá do vašeho
-            prohlížeče. Pomáhají zajistit správné fungování webu a v některých
-            případech také měřit nebo personalizovat obsah.
+            Cookies jsou malé textové soubory, které web ukládá do vašeho zařízení.
+            Umožňují správné fungování webu, zapamatování voleb uživatele a v některých
+            případech i měření návštěvnosti.
           </p>
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-black">
-            2. Jaké cookies používáme
-          </h2>
+          <h2 className="text-lg font-semibold text-black">2. Jaké cookies používáme</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>
-              <strong>Technické (nezbytné)</strong> cookies pro správné
-              fungování webu a API.
+              <strong>Nezbytné cookies</strong> pro technické fungování webu a bezpečnost provozu.
             </li>
             <li>
-              <strong>Externí obsah</strong>: na stránce Kontakt je vložená
-              mapa Google, která může po načtení nastavit cookies třetí strany.
+              <strong>Funkční cookies</strong> pro lepší uživatelský komfort (např. preference zobrazení).
+            </li>
+            <li>
+              <strong>Obsah třetích stran</strong> (např. mapové podklady) může nastavovat vlastní cookies
+              podle podmínek příslušného poskytovatele.
             </li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold text-black">3. Správa cookies</h2>
+          <h2 className="text-lg font-semibold text-black">3. Právní základ</h2>
           <p className="mt-2">
-            Cookies můžete kdykoliv omezit nebo smazat v nastavení svého
-            prohlížeče. Po zablokování technických cookies nemusí některé části
-            webu fungovat správně.
+            Nezbytné cookies používáme na základě oprávněného zájmu na provozu webu.
+            Ostatní cookies používáme pouze na základě vašeho souhlasu, pokud je vyžadován.
           </p>
         </section>
 
-        <p className="text-xs text-black/55">Poslední aktualizace: 20. února 2026.</p>
+        <section>
+          <h2 className="text-lg font-semibold text-black">4. Jak můžete cookies spravovat</h2>
+          <p className="mt-2">
+            Cookies můžete kdykoliv omezit nebo smazat v nastavení prohlížeče. Po vypnutí
+            nezbytných cookies nemusí některé části webu fungovat správně.
+          </p>
+        </section>
+
+        <p className="text-xs text-black/55">Poslední aktualizace: 25. února 2026.</p>
       </div>
     </div>
   );

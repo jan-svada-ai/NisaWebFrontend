@@ -1,9 +1,7 @@
-﻿"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from "next/link";
 import { ArrowRight, Mail, Phone, Users } from "lucide-react";
-import { fetchJsonWithRetry } from "@/lib/api";
+import { SITE_URL } from "@/lib/site-url";
 
 interface MaklerCard {
   id: number;
@@ -16,30 +14,71 @@ interface MaklerCard {
   aktivniInzeraty: number;
 }
 
-export default function NasTymPage() {
-  const [makleri, setMakleri] = useState<MaklerCard[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface BrokersResponse {
+  data?: MaklerCard[];
+}
 
-  useEffect(() => {
-    const fetchMakleri = async () => {
-      try {
-        setError(null);
-        const result = await fetchJsonWithRetry<{ data?: MaklerCard[] }>(
-          "/api/makleri",
-          { timeoutMs: 25000, retries: 3, retryDelayMs: 900 },
-        );
-        setMakleri(result.data || []);
-      } catch (error) {
-        console.error("Failed to fetch makleri:", error);
-        setError("Načítání makléřů trvá příliš dlouho. Zkuste to prosím znovu.");
-      } finally {
-        setLoading(false);
-      }
+const API_BASE = (
+  process.env.BACKEND_URL ??
+  process.env.SITEMAP_API_BASE_URL ??
+  process.env.NEXT_PUBLIC_API_BASE_URL ??
+  "http://127.0.0.1:4000"
+).replace(/\/+$/, "");
+
+export const dynamic = "force-dynamic";
+
+async function getBrokers(): Promise<{
+  brokers: MaklerCard[];
+  failed: boolean;
+}> {
+  try {
+    const response = await fetch(`${API_BASE}/api/makleri`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return { brokers: [], failed: true };
+    }
+
+    const payload = (await response.json()) as BrokersResponse;
+    return {
+      brokers: Array.isArray(payload.data) ? payload.data : [],
+      failed: false,
     };
+  } catch {
+    return { brokers: [], failed: true };
+  }
+}
 
-    fetchMakleri();
-  }, []);
+export default async function NasTymPage() {
+  const { brokers, failed } = await getBrokers();
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Náš tým makléřů | Nisa Centrum Reality",
+    url: `${SITE_URL}/nas-tym`,
+    about: {
+      "@id": `${SITE_URL}#real-estate-agent`,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: brokers.map((broker, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "RealEstateAgent",
+          name: broker.jmeno,
+          url: `${SITE_URL}/nas-tym/${encodeURIComponent(broker.slug)}`,
+          telephone: broker.telefon ?? undefined,
+          email: broker.email ?? undefined,
+        },
+      })),
+    },
+  };
 
   return (
     <main
@@ -49,6 +88,10 @@ export default function NasTymPage() {
           "linear-gradient(180deg, var(--paper0), var(--paper1) 45%, var(--paper2))",
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <div className="mx-auto max-w-screen-2xl px-4 py-12 xl:pr-24">
         <div className="mb-10 text-center">
           <p className="text-sm uppercase tracking-[0.2em] text-black/50">
@@ -62,14 +105,10 @@ export default function NasTymPage() {
           </h1>
         </div>
 
-        {loading ? (
-          <div className="py-12 text-center text-black/60">Načítání...</div>
-        ) : error ? (
-          <div className="py-12 text-center text-black/60">{error}</div>
-        ) : makleri.length > 0 ? (
+        {brokers.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {makleri.map((m) => (
-              <a
+            {brokers.map((m) => (
+              <Link
                 key={m.id}
                 href={`/nas-tym/${encodeURIComponent(m.slug)}/`}
                 className="group overflow-hidden rounded-2xl border border-black/10 bg-white/80 p-5 text-center shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
@@ -120,17 +159,17 @@ export default function NasTymPage() {
                     <ArrowRight className="h-4 w-4" />
                   </div>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         ) : (
           <div className="py-12 text-center text-black/60">
-            Makléři nejsou k dispozici. Zkontrolujte, že je API server spuštěný.
+            {failed
+              ? "Načítání makléřů trvá příliš dlouho. Zkuste to prosím znovu."
+              : "Makléři nejsou aktuálně k dispozici."}
           </div>
         )}
       </div>
     </main>
   );
 }
-
-

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "Najdeme nemovitost podle vašich požadavků. Jasný postup, prověření nabídek a bezpečné dotažení celého procesu.",
   alternates: {
-    canonical: `${SITE_URL}/vyhledavani-na-miru/`,
+    canonical: `${SITE_URL}/vyhledavani-na-miru`,
   },
 };
 

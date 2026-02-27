@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description:
     "Máte tip na nemovitost k prodeji nebo pronájmu? Pošlete kontakt, my vše prověříme a po úspěšném obchodu vyplatíme odměnu.",
   alternates: {
-    canonical: `${SITE_URL}/tipni-realitu/`,
+    canonical: `${SITE_URL}/tipni-realitu`,
   },
 };
 

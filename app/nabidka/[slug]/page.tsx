@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import DetailPageClient from "./DetailPageClient";
+import { notFound } from "next/navigation";
+import DetailPageClient, { type DetailListing } from "./DetailPageClient";
 import { SITE_URL } from "@/lib/site-url";
 
 const siteUrl = SITE_URL;
@@ -11,95 +12,147 @@ const apiBase = (
   "http://127.0.0.1:4000"
 ).replace(/\/+$/, "");
 
-type ListingDetail = {
-  nazev?: string | null;
-  slug?: string | null;
-  popis?: string | null;
-  zmenen?: string | null;
-  vytvoren?: string | null;
-  cena?: number | null;
-  mena?: string | null;
-  typPonuky?: string | null;
-  mesto?: { nazev?: string | null } | null;
-  obrazky?: Array<{ url?: string | null }> | null;
-};
+type ListingPayload = DetailListing | { data?: DetailListing | null };
 
-export const revalidate = 1800;
-export const dynamicParams = false;
+export const dynamic = "force-dynamic";
 
 function summarizeText(text?: string | null, max = 165): string {
   if (!text) return "";
   const cleaned = text.replace(/\s+/g, " ").trim();
   if (cleaned.length <= max) return cleaned;
-  return `${cleaned.slice(0, max - 1).trimEnd()}…`;
+  return `${cleaned.slice(0, max - 1).trimEnd()}...`;
 }
 
-async function fetchListing(slug: string): Promise<ListingDetail | null> {
+function unwrapListing(payload: ListingPayload | null): DetailListing | null {
+  if (!payload) return null;
+  if (isWrappedListingPayload(payload)) return payload.data ?? null;
+  return payload;
+}
+
+function isWrappedListingPayload(
+  payload: ListingPayload,
+): payload is { data?: DetailListing | null } {
+  return typeof payload === "object" && payload !== null && "data" in payload;
+}
+
+async function fetchListing(slug: string): Promise<DetailListing | null> {
   try {
     const response = await fetch(
       `${apiBase}/api/inzeraty/slug/${encodeURIComponent(slug)}`,
       {
         headers: { Accept: "application/json" },
-        next: { revalidate },
+        cache: "no-store",
       },
     );
 
     if (!response.ok) return null;
-    return (await response.json()) as ListingDetail;
+    const payload = (await response.json()) as ListingPayload;
+    return unwrapListing(payload);
   } catch {
     return null;
   }
 }
 
-async function fetchListingSlugs(): Promise<string[]> {
-  const slugs: string[] = [];
-  const limit = 100;
-  const maxPages = Number(process.env.SITEMAP_MAX_PAGES ?? "50");
-  const safeMaxPages = Number.isFinite(maxPages) && maxPages > 0 ? maxPages : 50;
-
-  let page = 1;
-  let totalPages = 1;
-
-  while (page <= totalPages && page <= safeMaxPages) {
-    const response = await fetch(
-      `${apiBase}/api/inzeraty?page=${page}&limit=${limit}&razeni=vytvoren-desc`,
-      {
-        headers: { Accept: "application/json" },
-        next: { revalidate },
-      },
-    );
-
-    if (!response.ok) break;
-    const payload = (await response.json()) as {
-      data?: Array<{ slug?: string | null }>;
-      pagination?: { totalPages?: number };
-    };
-
-    const pageSlugs = (payload.data ?? [])
-      .map((item) => item.slug?.trim())
-      .filter((item): item is string => Boolean(item));
-
-    slugs.push(...pageSlugs);
-
-    const nextTotal = Number(payload.pagination?.totalPages ?? totalPages);
-    if (Number.isFinite(nextTotal) && nextTotal > 0) {
-      totalPages = Math.min(nextTotal, safeMaxPages);
-    }
-
-    if (pageSlugs.length === 0) break;
-    page += 1;
-  }
-
-  return Array.from(new Set(slugs));
+function toAbsoluteUrl(url: string): string {
+  if (/^https?:\/\//i.test(url)) return url;
+  const normalized = url.startsWith("/") ? url : `/${url}`;
+  return `${siteUrl}${normalized}`;
 }
 
-export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
-  try {
-    const slugs = await fetchListingSlugs();
-    return slugs.map((slug) => ({ slug }));
-  } catch {
-    return [];
-  }
+function toIsoDate(value?: string): string | undefined {
+  if (!value) return undefined;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return undefined;
+  return date.toISOString();
+}
+
+function getBusinessFunction(offerType?: string | null): string {
+  return offerType === "pronajeti"
+    ? "http://purl.org/goodrelations/v1#LeaseOut"
+    : "http://purl.org/goodrelations/v1#Sell";
+}
+
+function buildListingJsonLd(listing: DetailListing, slug: string): Record<string, unknown> {
+  const canonical = `${siteUrl}/nabidka/${encodeURIComponent(slug)}`;
+  const priceCurrency = listing.mena?.trim() || "CZK";
+  const hasPrice = typeof listing.cena === "number" && listing.cena > 0;
+  const images = (listing.obrazky ?? [])
+    .map((image) => image?.url?.trim())
+    .filter((url): url is string => Boolean(url))
+    .map((url) => toAbsoluteUrl(url));
+  const city = listing.mesto?.nazev?.trim();
+  const offerName = listing.nazev?.trim() || "Detail nabidky";
+
+  const offer: Record<string, unknown> = {
+    "@type": "Offer",
+    name: offerName,
+    url: canonical,
+    businessFunction: getBusinessFunction(listing.typPonuky),
+    itemOffered: {
+      "@type": "Place",
+      name: offerName,
+      ...(city
+        ? {
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: city,
+              addressCountry: "CZ",
+            },
+          }
+        : {}),
+      ...(images.length > 0 ? { image: images } : {}),
+    },
+    seller: {
+      "@type": "RealEstateAgent",
+      name: "Nisa Centrum Reality",
+      url: siteUrl,
+    },
+    ...(hasPrice
+      ? {
+          price: listing.cena,
+          priceCurrency,
+        }
+      : {}),
+    ...(toIsoDate(listing.zmenen ?? listing.vytvoren)
+      ? { dateModified: toIsoDate(listing.zmenen ?? listing.vytvoren) }
+      : {}),
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: offerName,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Uvod",
+            item: `${siteUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Nabidka",
+            item: `${siteUrl}/nabidka`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: offerName,
+            item: canonical,
+          },
+        ],
+      },
+      offer,
+    ],
+  };
 }
 
 export async function generateMetadata({
@@ -109,7 +162,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const listing = await fetchListing(slug);
-  const canonical = `${siteUrl}/nabidka/${encodeURIComponent(slug)}/`;
+  const canonical = `${siteUrl}/nabidka/${encodeURIComponent(slug)}`;
 
   if (!listing) {
     return {
@@ -176,5 +229,21 @@ export default async function NabidkaSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  return <DetailPageClient slug={slug} />;
+  const listing = await fetchListing(slug);
+
+  if (!listing) {
+    notFound();
+  }
+
+  const listingJsonLd = buildListingJsonLd(listing, slug);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listingJsonLd) }}
+      />
+      <DetailPageClient slug={slug} initialListing={listing} />
+    </>
+  );
 }
