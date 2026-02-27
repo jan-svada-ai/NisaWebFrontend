@@ -13,6 +13,11 @@ const apiBase = (
 ).replace(/\/+$/, "");
 
 type BrokerPayload = MaklerDetail | { data?: MaklerDetail | null };
+type BrokerFetchResult = {
+  broker: MaklerDetail | null;
+  isNotFound: boolean;
+  isUpstreamError: boolean;
+};
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +40,7 @@ function isWrappedBrokerPayload(
   return typeof payload === "object" && payload !== null && "data" in payload;
 }
 
-async function fetchBroker(slug: string): Promise<MaklerDetail | null> {
+async function fetchBroker(slug: string): Promise<BrokerFetchResult> {
   try {
     const response = await fetch(
       `${apiBase}/api/makleri/slug/${encodeURIComponent(slug)}`,
@@ -45,11 +50,23 @@ async function fetchBroker(slug: string): Promise<MaklerDetail | null> {
       },
     );
 
-    if (!response.ok) return null;
+    if (response.status === 404) {
+      return { broker: null, isNotFound: true, isUpstreamError: false };
+    }
+
+    if (!response.ok) {
+      return { broker: null, isNotFound: false, isUpstreamError: true };
+    }
+
     const payload = (await response.json()) as BrokerPayload;
-    return unwrapBroker(payload);
+    const broker = unwrapBroker(payload);
+    if (!broker) {
+      return { broker: null, isNotFound: true, isUpstreamError: false };
+    }
+
+    return { broker, isNotFound: false, isUpstreamError: false };
   } catch {
-    return null;
+    return { broker: null, isNotFound: false, isUpstreamError: true };
   }
 }
 
@@ -78,7 +95,7 @@ function buildBrokerJsonLd(broker: MaklerDetail, slug: string): Record<string, u
         "@type": "ProfilePage",
         "@id": `${canonical}#profile-page`,
         url: canonical,
-        name: broker.jmeno || "Detail maklere",
+        name: broker.jmeno || "Detail makléře",
         mainEntity: {
           "@id": `${canonical}#person`,
         },
@@ -87,7 +104,7 @@ function buildBrokerJsonLd(broker: MaklerDetail, slug: string): Record<string, u
         "@type": "Person",
         "@id": `${canonical}#person`,
         name: broker.jmeno,
-        jobTitle: broker.pozice || "Realitni makler",
+        jobTitle: broker.pozice || "Realitní makléř",
         url: canonical,
         ...(broker.fotoUrl ? { image: toAbsoluteUrl(broker.fotoUrl) } : {}),
         ...(broker.email ? { email: broker.email } : {}),
@@ -105,19 +122,19 @@ function buildBrokerJsonLd(broker: MaklerDetail, slug: string): Record<string, u
           {
             "@type": "ListItem",
             position: 1,
-            name: "Uvod",
+            name: "Úvod",
             item: `${siteUrl}/`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Nas tym",
+            name: "Náš tým",
             item: `${siteUrl}/nas-tym`,
           },
           {
             "@type": "ListItem",
             position: 3,
-            name: broker.jmeno || "Detail maklere",
+            name: broker.jmeno || "Detail makléře",
             item: canonical,
           },
         ],
@@ -132,10 +149,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const broker = await fetchBroker(slug);
+  const brokerResult = await fetchBroker(slug);
   const canonical = `${siteUrl}/nas-tym/${encodeURIComponent(slug)}`;
 
-  if (!broker) {
+  if (brokerResult.isNotFound) {
     return {
       title: "Detail makléře | Nisa Centrum Reality",
       description:
@@ -145,6 +162,16 @@ export async function generateMetadata({
     };
   }
 
+  if (brokerResult.isUpstreamError || !brokerResult.broker) {
+    return {
+      title: "Detail makléře | Nisa Centrum Reality",
+      description:
+        "Profil realitního makléře Nisa Centrum Reality včetně kontaktu a aktivních nabídek.",
+      alternates: { canonical },
+    };
+  }
+
+  const broker = brokerResult.broker;
   const name = broker.jmeno?.trim() || "Makléř";
   const role = broker.pozice?.trim();
   const description =
@@ -180,12 +207,17 @@ export default async function NasTymSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const broker = await fetchBroker(slug);
+  const brokerResult = await fetchBroker(slug);
 
-  if (!broker) {
+  if (brokerResult.isNotFound) {
     notFound();
   }
 
+  if (brokerResult.isUpstreamError || !brokerResult.broker) {
+    throw new Error("Dočasně se nepodařilo načíst detail makléře.");
+  }
+
+  const broker = brokerResult.broker;
   const brokerJsonLd = buildBrokerJsonLd(broker, slug);
 
   return (

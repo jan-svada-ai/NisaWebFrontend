@@ -357,6 +357,7 @@ export default function CemapCalculator() {
   const [attributes, setAttributes] = useState<string[]>([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitLockRef = useRef(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [estimation, setEstimation] = useState<CemapEstimationResult | null>(null);
   const [contactName, setContactName] = useState("");
@@ -473,27 +474,34 @@ export default function CemapCalculator() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitLockRef.current || isSubmitting) return;
+    submitLockRef.current = true;
     setSubmitError(null);
     setEstimation(null);
 
     if (!selectedAddress) {
       setSubmitError("Nejprve ověřte adresu nemovitosti.");
+      submitLockRef.current = false;
       return;
     }
     if (!contactName.trim()) {
       setSubmitError("Vyplňte prosím jméno a příjmení.");
+      submitLockRef.current = false;
       return;
     }
     if (!isValidEmail(contactEmail.trim())) {
       setSubmitError("Vyplňte prosím platný e-mail.");
+      submitLockRef.current = false;
       return;
     }
     if (!isValidPhone(contactPhone.trim())) {
       setSubmitError("Vyplňte prosím platný telefon.");
+      submitLockRef.current = false;
       return;
     }
     if (!gdprConsent) {
       setSubmitError("Bez souhlasu se zpracováním osobních údajů nelze pokračovat.");
+      submitLockRef.current = false;
       return;
     }
 
@@ -506,29 +514,35 @@ export default function CemapCalculator() {
     const usableAreaValue = Number(usableArea);
     if (requiresUsableArea && (!Number.isFinite(usableAreaValue) || usableAreaValue <= 0)) {
       setSubmitError("Vyplňte platnou užitnou plochu (usable_area) v m².");
+      submitLockRef.current = false;
       return;
     }
 
     const landAreaValue = Number(landArea);
     if (requiresLandArea && (!Number.isFinite(landAreaValue) || landAreaValue <= 0)) {
       setSubmitError("Vyplňte platnou plochu pozemku (land_area) v m².");
+      submitLockRef.current = false;
       return;
     }
 
     if (!category.trim()) {
       setSubmitError("Vyberte kategorii nemovitosti.");
+      submitLockRef.current = false;
       return;
     }
     if (requiresOwnership && !ownership.trim()) {
       setSubmitError("Vyberte vlastnictví (ownership).");
+      submitLockRef.current = false;
       return;
     }
     if (requiresObjectState && !objectState.trim()) {
       setSubmitError("Vyberte stav objektu (object_state).");
+      submitLockRef.current = false;
       return;
     }
     if (requiresHouseType && !houseType.trim()) {
       setSubmitError("Vyberte typ domu (house_type).");
+      submitLockRef.current = false;
       return;
     }
 
@@ -560,6 +574,7 @@ export default function CemapCalculator() {
       const floorValue = Number(floor);
       if (!Number.isFinite(floorValue) || !Number.isInteger(floorValue)) {
         setSubmitError("Podlaží (floor) musí být celé číslo.");
+        submitLockRef.current = false;
         return;
       }
       payload.floor = floorValue;
@@ -590,11 +605,13 @@ export default function CemapCalculator() {
       }
 
       setEstimation(response.data);
+      setGdprConsent(false);
     } catch (error) {
       const raw = getErrorMessage(error, ESTIMATION_TECHNICAL_ERROR);
       setSubmitError(normalizeEstimationErrorMessage(raw));
     } finally {
       setIsSubmitting(false);
+      submitLockRef.current = false;
     }
   }
 

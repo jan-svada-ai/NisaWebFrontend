@@ -12,6 +12,7 @@ type FetchJsonRetryOptions = RequestInit & {
   retries?: number;
   retryDelayMs?: number;
   init?: RequestInit;
+  allowRetryUnsafeMethods?: boolean;
 };
 
 function sleep(ms: number): Promise<void> {
@@ -28,13 +29,17 @@ export async function fetchJsonWithRetry<T>(
     retryDelayMs = 800,
     init,
     headers,
+    allowRetryUnsafeMethods = false,
     ...requestInit
   } = options;
 
   const requestUrl = /^https?:\/\//i.test(path) ? path : apiUrl(path);
+  const method = String(init?.method ?? requestInit.method ?? "GET").toUpperCase();
+  const isRetrySafeMethod = method === "GET" || method === "HEAD" || method === "OPTIONS";
+  const effectiveRetries = isRetrySafeMethod || allowRetryUnsafeMethods ? retries : 0;
   let lastError: unknown = null;
 
-  for (let attempt = 0; attempt <= retries; attempt += 1) {
+  for (let attempt = 0; attempt <= effectiveRetries; attempt += 1) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -63,7 +68,7 @@ export async function fetchJsonWithRetry<T>(
       return (await response.json()) as T;
     } catch (error) {
       lastError = error;
-      if (attempt >= retries) break;
+      if (attempt >= effectiveRetries) break;
       await sleep(retryDelayMs * (attempt + 1));
     } finally {
       clearTimeout(timeout);

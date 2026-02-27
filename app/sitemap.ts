@@ -155,9 +155,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const url = `${siteUrl}${item.route}`;
     const staticEntry: MetadataRoute.Sitemap[number] = {
       url,
-      lastModified: staticLastModified ?? generatedAt,
       changeFrequency: item.changeFrequency,
       priority: item.priority,
+      ...(staticLastModified ? { lastModified: staticLastModified } : {}),
     };
 
     entries.set(url, staticEntry);

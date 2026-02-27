@@ -41,15 +41,15 @@ export default function SiteHeader() {
   };
 
   const isHomeActive = isPathActive("/");
-  const isProdejActive = isPathActive("/prodej-pronajem/", ["/sluzby/prodej-pronajem"]);
-  const isOceneniActive = isPathActive("/oceneni-zdarma/");
-  const isVyhledavaniActive = isPathActive("/vyhledavani-na-miru/", ["/sluzby/vyhledavani-na-miru"]);
-  const isTipActive = isPathActive("/tipni-realitu/");
-  const isNabidkaActive = isPathActive("/nabidka/", ["/nabidka/detail/"]);
-  const isSluzbyActive = isPathActive("/co-vse-pro-vas-udelame/");
-  const isTymActive = isPathActive("/nas-tym/", ["/nas-tym/detail/"]);
-  const isKontaktActive = isPathActive("/kontakt/");
-  const isReferenceActive = isPathActive("/reference/");
+  const isProdejActive = isPathActive("/prodej-pronajem", ["/sluzby/prodej-pronajem"]);
+  const isOceneniActive = isPathActive("/oceneni-zdarma");
+  const isVyhledavaniActive = isPathActive("/vyhledavani-na-miru", ["/sluzby/vyhledavani-na-miru"]);
+  const isTipActive = isPathActive("/tipni-realitu");
+  const isNabidkaActive = isPathActive("/nabidka", ["/nabidka/detail"]);
+  const isSluzbyActive = isPathActive("/co-vse-pro-vas-udelame");
+  const isTymActive = isPathActive("/nas-tym", ["/nas-tym/detail"]);
+  const isKontaktActive = isPathActive("/kontakt");
+  const isReferenceActive = isPathActive("/reference");
 
   const isMoreActive =
     isTipActive || isNabidkaActive || isSluzbyActive || isTymActive || isKontaktActive || isReferenceActive;
@@ -109,7 +109,7 @@ export default function SiteHeader() {
               <span className="block">Úvod</span>
             </Link>
 
-            <Link href="/prodej-pronajem/" className={navItemClass(isProdejActive)}>
+            <Link href="/prodej-pronajem" className={navItemClass(isProdejActive)}>
               <KeyRound className={navIconClass(isProdejActive)} />
               <span className="block">
                 <span className="block">Prodej a</span>
@@ -117,7 +117,7 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/oceneni-zdarma/" className={navItemClass(isOceneniActive)}>
+            <Link href="/oceneni-zdarma" className={navItemClass(isOceneniActive)}>
               <HandCoins className={navIconClass(isOceneniActive)} />
               <span className="block">
                 <span className="block">Ocenění</span>
@@ -125,7 +125,7 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/vyhledavani-na-miru/" className={navItemClass(isVyhledavaniActive)}>
+            <Link href="/vyhledavani-na-miru" className={navItemClass(isVyhledavaniActive)}>
               <Search className={navIconClass(isVyhledavaniActive)} />
               <span className="block">
                 <span className="block">Vyhledávání</span>
@@ -133,7 +133,7 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/tipni-realitu/" className={`${navItemClass(isTipActive)} max-[1060px]:hidden`}>
+            <Link href="/tipni-realitu" className={`${navItemClass(isTipActive)} max-[1060px]:hidden`}>
               <Gift className={navIconClass(isTipActive)} />
               <span className="block">
                 <span className="block">Pošli tip</span>
@@ -141,7 +141,7 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/nabidka/" className={`${navItemClass(isNabidkaActive)} max-[1140px]:hidden`}>
+            <Link href="/nabidka" className={`${navItemClass(isNabidkaActive)} max-[1140px]:hidden`}>
               <ListChecks className={navIconClass(isNabidkaActive)} />
               <span className="block">
                 <span className="block">Aktuální</span>
@@ -150,7 +150,7 @@ export default function SiteHeader() {
             </Link>
 
             <Link
-              href="/co-vse-pro-vas-udelame/"
+              href="/co-vse-pro-vas-udelame"
               className={`${navItemClass(isSluzbyActive)} max-[1220px]:hidden`}
             >
               <Layers className={navIconClass(isSluzbyActive)} />
@@ -160,7 +160,7 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/nas-tym/" className={`${navItemClass(isTymActive)} max-[1300px]:hidden`}>
+            <Link href="/nas-tym" className={`${navItemClass(isTymActive)} max-[1300px]:hidden`}>
               <Handshake className={navIconClass(isTymActive)} />
               <span className="block">
                 <span className="block">Náš</span>
@@ -168,14 +168,14 @@ export default function SiteHeader() {
               </span>
             </Link>
 
-            <Link href="/kontakt/" className={`${navItemClass(isKontaktActive)} max-[1400px]:hidden`}>
+            <Link href="/kontakt" className={`${navItemClass(isKontaktActive)} max-[1400px]:hidden`}>
               <MapPin className={navIconClass(isKontaktActive)} />
               <span className="block">
                 <span className="block">Kontakt</span>
               </span>
             </Link>
 
-            <Link href="/reference/" className={`${navItemClass(isReferenceActive)} max-[1500px]:hidden`}>
+            <Link href="/reference" className={`${navItemClass(isReferenceActive)} max-[1500px]:hidden`}>
               <Star className={navIconClass(isReferenceActive)} />
               <span className="block">
                 <span className="block">Reference</span>
@@ -204,42 +204,42 @@ export default function SiteHeader() {
                 <div className={`w-72 ${panel}`}>
                   <Link
                     className={dropdownItemClass(isTipActive, "hidden max-[1060px]:flex")}
-                    href="/tipni-realitu/"
+                    href="/tipni-realitu"
                   >
                     <Gift className="h-4 w-4 text-[color:var(--gold2)]" />
                     Pošli tip na reality
                   </Link>
                   <Link
                     className={dropdownItemClass(isNabidkaActive, "hidden max-[1140px]:flex")}
-                    href="/nabidka/"
+                    href="/nabidka"
                   >
                     <ListChecks className="h-4 w-4 text-[color:var(--gold2)]" />
                     Aktuální nabídka
                   </Link>
                   <Link
                     className={dropdownItemClass(isSluzbyActive, "hidden max-[1220px]:flex")}
-                    href="/co-vse-pro-vas-udelame/"
+                    href="/co-vse-pro-vas-udelame"
                   >
                     <Layers className="h-4 w-4 text-[color:var(--gold2)]" />
                     Co vše pro vás uděláme
                   </Link>
                   <Link
                     className={dropdownItemClass(isTymActive, "hidden max-[1300px]:flex")}
-                    href="/nas-tym/"
+                    href="/nas-tym"
                   >
                     <Handshake className="h-4 w-4 text-[color:var(--gold2)]" />
                     Náš tým
                   </Link>
                   <Link
                     className={dropdownItemClass(isKontaktActive, "hidden max-[1400px]:flex")}
-                    href="/kontakt/"
+                    href="/kontakt"
                   >
                     <MapPin className="h-4 w-4 text-[color:var(--gold2)]" />
                     Kontakt
                   </Link>
                   <Link
                     className={dropdownItemClass(isReferenceActive, "hidden max-[1500px]:flex")}
-                    href="/reference/"
+                    href="/reference"
                   >
                     <Star className="h-4 w-4 text-[color:var(--gold2)]" />
                     Reference
@@ -291,15 +291,15 @@ export default function SiteHeader() {
 
             <div className="min-h-0 flex-1 overflow-y-auto p-3 pb-5">
               <MobileItem href="/" title="Úvod" active={isHomeActive} icon={<Home className={mobileIconClass(isHomeActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/prodej-pronajem/" title="Prodej a pronájem nemovitosti" active={isProdejActive} icon={<KeyRound className={mobileIconClass(isProdejActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/oceneni-zdarma/" title="Ocenění nemovitosti zdarma" active={isOceneniActive} icon={<HandCoins className={mobileIconClass(isOceneniActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/vyhledavani-na-miru/" title="Vyhledávání nemovitosti na míru" active={isVyhledavaniActive} icon={<Search className={mobileIconClass(isVyhledavaniActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/tipni-realitu/" title="Pošli tip na reality" active={isTipActive} icon={<Gift className={mobileIconClass(isTipActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/nabidka/" title="Aktuální nabídka" active={isNabidkaActive} icon={<ListChecks className={mobileIconClass(isNabidkaActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/co-vse-pro-vas-udelame/" title="Co vše pro vás uděláme" active={isSluzbyActive} icon={<Layers className={mobileIconClass(isSluzbyActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/nas-tym/" title="Náš tým" active={isTymActive} icon={<Handshake className={mobileIconClass(isTymActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/kontakt/" title="Kontakt" active={isKontaktActive} icon={<MapPin className={mobileIconClass(isKontaktActive)} />} onClick={() => setMobileOpen(false)} />
-              <MobileItem href="/reference/" title="Reference" active={isReferenceActive} icon={<Star className={mobileIconClass(isReferenceActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/prodej-pronajem" title="Prodej a pronájem nemovitosti" active={isProdejActive} icon={<KeyRound className={mobileIconClass(isProdejActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/oceneni-zdarma" title="Ocenění nemovitosti zdarma" active={isOceneniActive} icon={<HandCoins className={mobileIconClass(isOceneniActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/vyhledavani-na-miru" title="Vyhledávání nemovitosti na míru" active={isVyhledavaniActive} icon={<Search className={mobileIconClass(isVyhledavaniActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/tipni-realitu" title="Pošli tip na reality" active={isTipActive} icon={<Gift className={mobileIconClass(isTipActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/nabidka" title="Aktuální nabídka" active={isNabidkaActive} icon={<ListChecks className={mobileIconClass(isNabidkaActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/co-vse-pro-vas-udelame" title="Co vše pro vás uděláme" active={isSluzbyActive} icon={<Layers className={mobileIconClass(isSluzbyActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/nas-tym" title="Náš tým" active={isTymActive} icon={<Handshake className={mobileIconClass(isTymActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/kontakt" title="Kontakt" active={isKontaktActive} icon={<MapPin className={mobileIconClass(isKontaktActive)} />} onClick={() => setMobileOpen(false)} />
+              <MobileItem href="/reference" title="Reference" active={isReferenceActive} icon={<Star className={mobileIconClass(isReferenceActive)} />} onClick={() => setMobileOpen(false)} />
             </div>
           </div>
         </div>

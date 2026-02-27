@@ -13,6 +13,11 @@ const apiBase = (
 ).replace(/\/+$/, "");
 
 type ListingPayload = DetailListing | { data?: DetailListing | null };
+type ListingFetchResult = {
+  listing: DetailListing | null;
+  isNotFound: boolean;
+  isUpstreamError: boolean;
+};
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +40,7 @@ function isWrappedListingPayload(
   return typeof payload === "object" && payload !== null && "data" in payload;
 }
 
-async function fetchListing(slug: string): Promise<DetailListing | null> {
+async function fetchListing(slug: string): Promise<ListingFetchResult> {
   try {
     const response = await fetch(
       `${apiBase}/api/inzeraty/slug/${encodeURIComponent(slug)}`,
@@ -45,11 +50,23 @@ async function fetchListing(slug: string): Promise<DetailListing | null> {
       },
     );
 
-    if (!response.ok) return null;
+    if (response.status === 404) {
+      return { listing: null, isNotFound: true, isUpstreamError: false };
+    }
+
+    if (!response.ok) {
+      return { listing: null, isNotFound: false, isUpstreamError: true };
+    }
+
     const payload = (await response.json()) as ListingPayload;
-    return unwrapListing(payload);
+    const listing = unwrapListing(payload);
+    if (!listing) {
+      return { listing: null, isNotFound: true, isUpstreamError: false };
+    }
+
+    return { listing, isNotFound: false, isUpstreamError: false };
   } catch {
-    return null;
+    return { listing: null, isNotFound: false, isUpstreamError: true };
   }
 }
 
@@ -81,7 +98,7 @@ function buildListingJsonLd(listing: DetailListing, slug: string): Record<string
     .filter((url): url is string => Boolean(url))
     .map((url) => toAbsoluteUrl(url));
   const city = listing.mesto?.nazev?.trim();
-  const offerName = listing.nazev?.trim() || "Detail nabidky";
+  const offerName = listing.nazev?.trim() || "Detail nabídky";
 
   const offer: Record<string, unknown> = {
     "@type": "Offer",
@@ -133,13 +150,13 @@ function buildListingJsonLd(listing: DetailListing, slug: string): Record<string
           {
             "@type": "ListItem",
             position: 1,
-            name: "Uvod",
+            name: "Úvod",
             item: `${siteUrl}/`,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Nabidka",
+            name: "Nabídka",
             item: `${siteUrl}/nabidka`,
           },
           {
@@ -161,10 +178,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const listing = await fetchListing(slug);
+  const listingResult = await fetchListing(slug);
   const canonical = `${siteUrl}/nabidka/${encodeURIComponent(slug)}`;
 
-  if (!listing) {
+  if (listingResult.isNotFound) {
     return {
       title: "Detail nabídky | Nisa Centrum Reality",
       description:
@@ -174,14 +191,22 @@ export async function generateMetadata({
     };
   }
 
+  if (listingResult.isUpstreamError || !listingResult.listing) {
+    return {
+      title: "Detail nabídky | Nisa Centrum Reality",
+      description:
+        "Detail nabídky nemovitosti od Nisa Centrum Reality. Aktuální prodej a pronájem nemovitostí.",
+      alternates: { canonical },
+    };
+  }
+
+  const listing = listingResult.listing;
   const titleBase = listing.nazev?.trim() || "Detail nabídky";
   const city = listing.mesto?.nazev?.trim();
   const offerKind = listing.typPonuky?.trim();
   const price =
     typeof listing.cena === "number" && listing.cena > 0
-      ? `${new Intl.NumberFormat("cs-CZ").format(listing.cena)} ${
-          listing.mena?.trim() || "Kč"
-        }`
+      ? `${new Intl.NumberFormat("cs-CZ").format(listing.cena)} ${listing.mena?.trim() || "Kč"}`
       : null;
 
   const fallbackDescription = [
@@ -229,12 +254,17 @@ export default async function NabidkaSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const listing = await fetchListing(slug);
+  const listingResult = await fetchListing(slug);
 
-  if (!listing) {
+  if (listingResult.isNotFound) {
     notFound();
   }
 
+  if (listingResult.isUpstreamError || !listingResult.listing) {
+    throw new Error("Dočasně se nepodařilo načíst detail nabídky.");
+  }
+
+  const listing = listingResult.listing;
   const listingJsonLd = buildListingJsonLd(listing, slug);
 
   return (
