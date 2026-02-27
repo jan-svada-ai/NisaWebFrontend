@@ -117,11 +117,6 @@ const actionOptions: Array<{ value: CemapAction; label: string }> = [
   { value: "Pronájem", label: "Pronájem" },
 ];
 
-const saleKindOptions: Array<{ value: CemapSaleKind; label: string }> = [
-  { value: "sale", label: "Prodej" },
-  { value: "lease", label: "Pronájem" },
-];
-
 const kindOptions: Array<{ value: CemapKind; label: string }> = [
   { value: "apartment", label: "Byt" },
   { value: "house", label: "Dům" },
@@ -313,7 +308,7 @@ export default function CemapCalculator() {
   const [addressError, setAddressError] = useState<string | null>(null);
 
   const [action, setAction] = useState<CemapAction>("Prodej");
-  const [saleKind, setSaleKind] = useState<CemapSaleKind>("sale");
+  const saleKind: CemapSaleKind = action === "Pronájem" ? "lease" : "sale";
   const [kind, setKind] = useState<CemapKind>("apartment");
   const [category, setCategory] = useState<string>(categoryOptionsByKind.apartment[0].value);
 
@@ -361,10 +356,6 @@ export default function CemapCalculator() {
       target.setCustomValidity("");
     }
   };
-
-  useEffect(() => {
-    setSaleKind(action === "Pronájem" ? "lease" : "sale");
-  }, [action]);
 
   useEffect(() => {
     const nextOptions = categoryOptionsByKind[kind];
@@ -689,15 +680,6 @@ export default function CemapCalculator() {
               value={action}
               onChange={(nextValue) => setAction(nextValue as CemapAction)}
               options={actionOptions}
-            />
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium text-black">Typ nabídky</label>
-            <CemapSelectDropdown
-              value={saleKind}
-              onChange={(nextValue) => setSaleKind(nextValue as CemapSaleKind)}
-              options={saleKindOptions}
             />
           </div>
 

@@ -188,17 +188,7 @@ export default function CoVseProVasUdelamePage() {
                     />
                   </div>
                   <div className="mt-3 flex h-11 items-center justify-center">
-                    {item.id === "financovani" ? (
-                      <a
-                        href="http://www.tohavefinance.cz/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-main flex w-fit items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
-                      >
-                        <Users className="h-4 w-4" />
-                        Naši specialisté
-                      </a>
-                    ) : item.id === "homestaging" ? (
+                    {item.id === "homestaging" ? (
                       <a
                         href="https://www.designbyterez.cz/"
                         target="_blank"
