@@ -12,6 +12,86 @@ const nextConfig: NextConfig = {
         redirects: async () => {
           return [
             {
+              source: "/kontakty",
+              destination: "/kontakt",
+              permanent: true,
+            },
+            {
+              source: "/kontakty/",
+              destination: "/kontakt",
+              permanent: true,
+            },
+            {
+              source: "/recenze",
+              destination: "/reference",
+              permanent: true,
+            },
+            {
+              source: "/recenze/",
+              destination: "/reference",
+              permanent: true,
+            },
+            {
+              source: "/sluzby",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/sluzby/",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/sluzby/pronajmy",
+              destination: "/prodej-pronajem",
+              permanent: true,
+            },
+            {
+              source: "/sluzby/pronajmy/",
+              destination: "/prodej-pronajem",
+              permanent: true,
+            },
+            {
+              source: "/sluzby/homestaging",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/sluzby/homestaging/",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/podporujeme",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/podporujeme/",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/vizualizace-dalsi",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/vizualizace-dalsi/",
+              destination: "/co-vse-pro-vas-udelame",
+              permanent: true,
+            },
+            {
+              source: "/kariera",
+              destination: "/kontakt",
+              permanent: true,
+            },
+            {
+              source: "/kariera/",
+              destination: "/kontakt",
+              permanent: true,
+            },
+            {
               source: "/sluzby/prodej-pronajem",
               destination: "/prodej-pronajem",
               permanent: true,
