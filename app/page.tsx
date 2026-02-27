@@ -547,16 +547,32 @@ export default function Home() {
         <AnimatedTestimonials
           items={[
             {
-              text: "Skvělý a profesionální přístup. Od hledání až po podpis smlouvy šlo vše hladce.",
-              author: "Klientka z Liberecka",
+              text: "Naprosto úžasná spolupráce. Podruhé jsme využili služby Nisa Centrum Reality a oceňujeme profesionální i lidský přístup.",
+              author: "Hana Richterová",
+              source: "google",
+              url: "https://www.google.com/maps/contrib/104345977813047399669/reviews",
+              rating: 5,
             },
             {
-              text: "Výborná komunikace, rychlé řešení problémů a jistota v každém kroku obchodu.",
-              author: "Klientka z Jablonecka",
+              text: "Naprosto profesionální přístup a služby. Všichni byli velmi milí, ochotní a vyšli vstříc všem požadavkům.",
+              author: "Nela Marková",
+              source: "google",
+              url: "https://www.google.com/maps/contrib/118188176893605864582/reviews",
+              rating: 5,
             },
             {
-              text: "Díky jasnému vedení celého procesu jsme prodali nemovitost bez zbytečných komplikací.",
-              author: "Klient z Prahy",
+              text: "Skvělý a profesionální přístup. Díky této firmě jsme našli pronájem podle našich představ. Vše šlo hladce.",
+              author: "Denisa Nikodýmová",
+              source: "firmy",
+              url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
+              rating: 5,
+            },
+            {
+              text: "Výborná komunikace, dobrá spolupráce a rychlé vyřešení všech problémů. Jsem maximálně spokojená.",
+              author: "Mattonidrink",
+              source: "firmy",
+              url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
+              rating: 5,
             },
           ]}
         />
