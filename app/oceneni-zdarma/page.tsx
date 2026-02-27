@@ -142,7 +142,10 @@ export const metadata: Metadata = {
       "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
     images: [
       {
-        url: "/android-chrome-512x512.png",
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Oceneni nemovitosti zdarma - Nisa Centrum Reality",
       },
     ],
   },
@@ -151,7 +154,7 @@ export const metadata: Metadata = {
     title: "Ocenění nemovitosti zdarma | Online tržní odhad | Nisa Centrum Reality",
     description:
       "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
-    images: ["/android-chrome-512x512.png"],
+    images: ["/og-image.png"],
   },
 };
 
@@ -179,6 +182,9 @@ export default function OceneniZdarmaPage() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": `${SITE_URL}/oceneni-zdarma#faq`,
+    url: `${SITE_URL}/oceneni-zdarma`,
+    inLanguage: "cs-CZ",
     mainEntity: faqItems.map((item) => ({
       "@type": "Question",
       name: item.question,

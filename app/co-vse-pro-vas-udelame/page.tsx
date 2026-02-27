@@ -31,7 +31,10 @@ export const metadata: Metadata = {
       "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
     images: [
       {
-        url: "/android-chrome-512x512.png",
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Nisa Centrum Reality - co vse pro vas udelame",
       },
     ],
   },
@@ -40,7 +43,7 @@ export const metadata: Metadata = {
     title: "Co vše pro vás uděláme | Nisa Centrum Reality",
     description:
       "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
-    images: ["/android-chrome-512x512.png"],
+    images: ["/og-image.png"],
   },
 };
 

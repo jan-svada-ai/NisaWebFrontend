@@ -2,6 +2,85 @@
 import Link from "next/link";
 import StatsSection from "@/components/StatsSection";
 import AnimatedTestimonials from "@/components/AnimatedTestimonials";
+import { SITE_URL } from "@/lib/site-url";
+
+
+type HomeTestimonialItem = {
+  text: string;
+  author: string;
+  source: "google" | "firmy";
+  url: string;
+  rating: number;
+};
+
+const homeTestimonials: HomeTestimonialItem[] = [
+  {
+    text: "Naprosto úžasná spolupráce. Podruhé jsme využili služby Nisa Centrum Reality a oceňujeme profesionální i lidský přístup.",
+    author: "Hana Richterová",
+    source: "google",
+    url: "https://www.google.com/maps/contrib/104345977813047399669/reviews",
+    rating: 5,
+  },
+  {
+    text: "Naprosto profesionální přístup a služby. Všichni byli velmi milí, ochotní a vyšli vstříc všem požadavkům.",
+    author: "Nela Marková",
+    source: "google",
+    url: "https://www.google.com/maps/contrib/118188176893605864582/reviews",
+    rating: 5,
+  },
+  {
+    text: "Skvělý a profesionální přístup. Díky této firmě jsme našli pronájem podle našich představ. Vše šlo hladce.",
+    author: "Denisa Nikodýmová",
+    source: "firmy",
+    url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
+    rating: 5,
+  },
+  {
+    text: "Výborná komunikace, dobrá spolupráce a rychlé vyřešení všech problémů. Jsem maximálně spokojená.",
+    author: "Mattonidrink",
+    source: "firmy",
+    url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
+    rating: 5,
+  },
+];
+
+const averageHomeRating =
+  homeTestimonials.reduce((sum, item) => sum + item.rating, 0) /
+  homeTestimonials.length;
+
+const homeReviewsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "@id": `${SITE_URL}#homepage-reviews`,
+  name: "Nisa Centrum Reality",
+  url: SITE_URL,
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: Number(averageHomeRating.toFixed(1)),
+    reviewCount: homeTestimonials.length,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  review: homeTestimonials.map((item) => ({
+    "@type": "Review",
+    author: {
+      "@type": "Person",
+      name: item.author,
+    },
+    reviewBody: item.text,
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: item.rating,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: item.source === "google" ? "Google" : "Firmy.cz",
+    },
+    url: item.url,
+  })),
+};
 
 function Icon({
   name,
@@ -409,6 +488,10 @@ function HeroSection({
 export default function Home() {
   return (
     <div className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeReviewsJsonLd) }}
+      />
       {/* HERO */}
       <HeroSection
         lowButtons
@@ -544,38 +627,7 @@ export default function Home() {
         title="Co o nás říkají klienti"
         subtitle="Reálné zkušenosti klientů z prodeje i pronájmu nemovitostí."
       >
-        <AnimatedTestimonials
-          items={[
-            {
-              text: "Naprosto úžasná spolupráce. Podruhé jsme využili služby Nisa Centrum Reality a oceňujeme profesionální i lidský přístup.",
-              author: "Hana Richterová",
-              source: "google",
-              url: "https://www.google.com/maps/contrib/104345977813047399669/reviews",
-              rating: 5,
-            },
-            {
-              text: "Naprosto profesionální přístup a služby. Všichni byli velmi milí, ochotní a vyšli vstříc všem požadavkům.",
-              author: "Nela Marková",
-              source: "google",
-              url: "https://www.google.com/maps/contrib/118188176893605864582/reviews",
-              rating: 5,
-            },
-            {
-              text: "Skvělý a profesionální přístup. Díky této firmě jsme našli pronájem podle našich představ. Vše šlo hladce.",
-              author: "Denisa Nikodýmová",
-              source: "firmy",
-              url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
-              rating: 5,
-            },
-            {
-              text: "Výborná komunikace, dobrá spolupráce a rychlé vyřešení všech problémů. Jsem maximálně spokojená.",
-              author: "Mattonidrink",
-              source: "firmy",
-              url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
-              rating: 5,
-            },
-          ]}
-        />
+        <AnimatedTestimonials items={homeTestimonials} />
       </Section>
 
       {/* PROČ MÍT SVÉHO REALITNÍHO MAKLÉŘE */}
