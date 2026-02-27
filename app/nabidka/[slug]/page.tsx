@@ -198,7 +198,7 @@ export async function generateMetadata({
       ? `${fallbackDescription}. Kompletní detail nabídky na webu Nisa Centrum Reality.`
       : "Kompletní detail nabídky nemovitosti na webu Nisa Centrum Reality.");
 
-  const ogImage = listing.obrazky?.[0]?.url?.trim() || "/og-image.png";
+  const ogImage = listing.obrazky?.[0]?.url?.trim() || "/android-chrome-512x512.png";
   const pageTitle = `${titleBase} | Nisa Centrum Reality`;
   const lastModified = listing.zmenen ?? listing.vytvoren ?? undefined;
 

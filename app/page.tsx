@@ -1,6 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import StatsSection from "@/components/StatsSection";
+import AnimatedTestimonials from "@/components/AnimatedTestimonials";
 
 function Icon({
   name,
@@ -499,7 +500,7 @@ export default function Home() {
           <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-black/10 shadow-xl">
             <Image
               src="/Onas.avif"
-              alt="O nás"
+              alt="Tým realitní kanceláře Nisa Centrum Reality"
               fill
               unoptimized
               className="object-cover"
@@ -536,6 +537,30 @@ export default function Home() {
           },
         ]}
       />
+      <div className="border-t border-black/10" />
+      <Section
+        id="reference-home"
+        align="center"
+        title="Co o nás říkají klienti"
+        subtitle="Reálné zkušenosti klientů z prodeje i pronájmu nemovitostí."
+      >
+        <AnimatedTestimonials
+          items={[
+            {
+              text: "Skvělý a profesionální přístup. Od hledání až po podpis smlouvy šlo vše hladce.",
+              author: "Klientka z Liberecka",
+            },
+            {
+              text: "Výborná komunikace, rychlé řešení problémů a jistota v každém kroku obchodu.",
+              author: "Klientka z Jablonecka",
+            },
+            {
+              text: "Díky jasnému vedení celého procesu jsme prodali nemovitost bez zbytečných komplikací.",
+              author: "Klient z Prahy",
+            },
+          ]}
+        />
+      </Section>
 
       {/* PROČ MÍT SVÉHO REALITNÍHO MAKLÉŘE */}
       <div className="border-t border-black/10" />
@@ -549,13 +574,13 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-10 lg:items-start">
             <div className="order-2 hidden lg:order-1 lg:col-span-3 lg:block">
               <div className="relative aspect-[2/3] w-full">
-                <Image
-                  src="/fotoVendy.avif"
-                  alt="Tým NISA CENTRUM REALITY"
-                  fill
-                  className="scale-x-[-1] object-contain object-center"
-                  sizes="(min-width: 1024px) 30vw, 0px"
-                  priority
+              <Image
+                src="/fotoVendy.avif"
+                alt="Makléřka Nisa Centrum Reality při práci s klienty"
+                fill
+                className="scale-x-[-1] object-contain object-center"
+                sizes="(min-width: 1024px) 30vw, 0px"
+                priority
                 />
               </div>
             </div>
@@ -790,7 +815,7 @@ export default function Home() {
             <div className="relative h-full min-h-[680px] w-full">
               <Image
                 src="/Terka.avif"
-                alt="Tým NISA CENTRUM REALITY"
+                alt="Makléřka Nisa Centrum Reality"
                 fill
                 className="object-contain object-center lg:-translate-y-[10%] lg:scale-[0.83]"
                 sizes="(min-width: 1024px) 24vw, 0px"
@@ -813,7 +838,7 @@ export default function Home() {
             <div className="relative aspect-[2/3] w-full">
               <Image
                 src="/Mirek.avif"
-                alt="Člen týmu Nisa Centrum Reality"
+                alt="Makléř Nisa Centrum Reality"
                 fill
                 className="object-contain object-center scale-x-[-1] lg:translate-y-[20%] lg:scale-x-[-1.1] lg:scale-y-[1.1]"
                 sizes="(min-width: 1024px) 30vw, 0px"

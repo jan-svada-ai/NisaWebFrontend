@@ -152,7 +152,7 @@ export async function generateMetadata({
     `${name}${role ? ` - ${role}` : ""}. Kontakt na realitního makléře Nisa Centrum Reality.`;
 
   const pageTitle = `${name}${role ? ` | ${role}` : ""} | Nisa Centrum Reality`;
-  const image = broker.fotoUrl?.trim() || "/og-image.png";
+  const image = broker.fotoUrl?.trim() || "/android-chrome-512x512.png";
 
   return {
     title: pageTitle,

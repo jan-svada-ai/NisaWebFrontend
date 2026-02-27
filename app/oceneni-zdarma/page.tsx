@@ -142,7 +142,7 @@ export const metadata: Metadata = {
       "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/android-chrome-512x512.png",
       },
     ],
   },
@@ -151,7 +151,7 @@ export const metadata: Metadata = {
     title: "Ocenění nemovitosti zdarma | Online tržní odhad | Nisa Centrum Reality",
     description:
       "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
-    images: ["/og-image.png"],
+    images: ["/android-chrome-512x512.png"],
   },
 };
 

@@ -22,49 +22,8 @@ function AnimatedNumber({
   value: number;
   duration?: number;
 }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-
-          const startTime = Date.now();
-          const startValue = 0;
-
-          const animate = () => {
-            const now = Date.now();
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / (duration * 1000), 1);
-
-            const currentValue = Math.floor(
-              startValue + (value - startValue) * progress,
-            );
-            setDisplayValue(currentValue);
-
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            }
-          };
-
-          requestAnimationFrame(animate);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 },
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [value, duration]);
-
-  return <div ref={ref}>{displayValue}</div>;
+  void duration;
+  return <div>{value}</div>;
 }
 
 function getIcon(iconName?: string) {
@@ -86,11 +45,36 @@ function getIcon(iconName?: string) {
 }
 
 export default function StatsSection({ stats }: StatsSectionProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="border-t border-black/10">
+    <section ref={sectionRef} className="border-t border-black/10">
       <div className="mx-auto max-w-screen-2xl px-6 py-16 md:py-24">
         {/* Heading */}
-        <div className="mb-16 text-center md:mb-20">
+        <div
+          className={[
+            "mb-16 text-center md:mb-20 transition-all duration-700",
+            revealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+          ].join(" ")}
+        >
           <p className="mb-3 text-sm uppercase tracking-[0.2em] text-black/60">
             Naše zkušenosti
           </p>
@@ -107,7 +91,11 @@ export default function StatsSection({ stats }: StatsSectionProps) {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="group rounded-3xl border border-black/10 bg-white/85 p-8 shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-center text-center"
+              className={[
+                "group rounded-3xl border border-black/10 bg-white/85 p-8 shadow-md backdrop-blur-sm transition-all duration-500 hover:shadow-lg hover:-translate-y-1 flex flex-col items-center text-center",
+                revealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+              ].join(" ")}
+              style={{ transitionDelay: `${idx * 120}ms` }}
             >
               {/* Icon */}
               {stat.icon && (
