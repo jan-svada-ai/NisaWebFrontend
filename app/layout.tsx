@@ -1,6 +1,7 @@
 ﻿import type { Metadata, Viewport } from "next";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 import "./globals.css";
 
 import SiteHeader from "@/components/SiteHeader";
@@ -8,6 +9,8 @@ import ContactDock from "@/components/ContactDock";
 import { SITE_URL } from "@/lib/site-url";
 
 const siteUrl = SITE_URL;
+const gaMeasurementId =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "G-SHJRYT54LL";
 
 const socialProfiles = [
   "https://www.facebook.com/realitynisacentrum?locale=cs_CZ",
@@ -234,6 +237,20 @@ export default function RootLayout({
         <meta name="seznam-wmt" content="x8ny2qBSoMqI6qy4h4d09l0Uu4zuEIVq" />
       </head>
       <body className="min-h-dvh antialiased text-[color:var(--ink)]">
+        {gaMeasurementId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaMeasurementId}');`}
+            </Script>
+          </>
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -248,6 +265,8 @@ export default function RootLayout({
     </html>
   );
 }
+
+
 
 
 
