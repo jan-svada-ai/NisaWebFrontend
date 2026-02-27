@@ -486,16 +486,22 @@ export default function MaklerDetailClient({
 
             <div className="mt-4 space-y-2 text-[18px] text-black/70">
               {makler.telefon && (
-                <div className="flex items-center gap-2">
+                <a
+                  href={`tel:${makler.telefon}`}
+                  className="flex w-fit items-center gap-2 transition-colors hover:text-black"
+                >
                   <Phone className="h-[1.3rem] w-[1.3rem] text-[color:var(--gold2)]" />
                   <span>{makler.telefon}</span>
-                </div>
+                </a>
               )}
               {makler.email && (
-                <div className="flex items-center gap-2">
+                <a
+                  href={`mailto:${makler.email}`}
+                  className="flex w-fit items-center gap-2 transition-colors hover:text-black"
+                >
                   <Mail className="h-[1.3rem] w-[1.3rem] text-[color:var(--gold2)]" />
                   <span>{makler.email}</span>
-                </div>
+                </a>
               )}
               {(instagramUrl || facebookUrl) && (
                 <div className="mt-1 flex flex-col items-start gap-2">
