@@ -67,7 +67,7 @@ export default async function NabidkaPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Aktuální nabídka nemovitostí | Nisa Centrum Reality",
+    name: "Aktu�ln� nab�dka nemovitost� | Nisa Centrum Reality",
     url: `${SITE_URL}/nabidka`,
     about: {
       "@id": `${SITE_URL}#real-estate-agent`,

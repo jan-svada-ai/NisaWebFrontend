@@ -19,7 +19,14 @@ import { SITE_URL } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Co vše pro vás uděláme | Nisa Centrum Reality",
   description:
-    "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
+    "Detailní přehled realitních služeb při prodeji, pronájmu a ocenění nemovitosti krok za krokem.",
+  keywords: [
+    "realitní služby",
+    "realitní služby Liberec",
+    "prodej nemovitosti",
+    "pronájem nemovitosti",
+    "ocenění nemovitosti zdarma",
+  ],
   alternates: {
     canonical: `${SITE_URL}/co-vse-pro-vas-udelame`,
   },
@@ -28,7 +35,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/co-vse-pro-vas-udelame`,
     title: "Co vše pro vás uděláme | Nisa Centrum Reality",
     description:
-      "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
+      "Detailní přehled realitních služeb při prodeji, pronájmu a ocenění nemovitosti krok za krokem.",
     images: [
       {
         url: "/og-logo.png",
@@ -42,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Co vše pro vás uděláme | Nisa Centrum Reality",
     description:
-      "Detailní přehled služeb při prodeji a pronájmu nemovitosti krok za krokem.",
+      "Detailní přehled realitních služeb při prodeji, pronájmu a ocenění nemovitosti krok za krokem.",
     images: ["/og-logo.png"],
   },
 };
@@ -168,8 +175,9 @@ export default function CoVseProVasUdelamePage() {
             </span>
           </h1>
           <p className="mt-4 text-base text-black/70 md:text-lg">
-            Přehledně a krok za krokem. Níže vidíte, co pro vás zajišťujeme při
-            prodeji i pronájmu a jak dlouho jednotlivé fáze obvykle trvají.
+            Přehledně a krok za krokem. Níže vidíte, jaké realitní služby pro
+            vás zajišťujeme při prodeji, pronájmu i ocenění nemovitosti a jak
+            dlouho jednotlivé fáze obvykle trvají.
           </p>
         </div>
 

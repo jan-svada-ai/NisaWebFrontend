@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Mail, Phone, Users } from "lucide-react";
@@ -26,6 +27,29 @@ const API_BASE = (
 ).replace(/\/+$/, "");
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Naši realitní makléři | Liberec a okolí | Nisa Centrum Reality",
+  description:
+    "Seznamte se s týmem Nisa Centrum Reality. Zkušení realitní makléři z Liberce a okolí vám pomohou s prodejem, pronájmem i oceněním nemovitosti zdarma.",
+  keywords: [
+    "realitní makléř Liberec",
+    "realitní kancelář Liberec",
+    "makléři Liberec",
+    "prodej nemovitosti Liberec",
+    "pronájem nemovitosti Liberec",
+    "ocenění nemovitosti zdarma",
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/nas-tym`,
+  },
+  openGraph: {
+    title: "Naši realitní makléři | Liberec a okolí | Nisa Centrum Reality",
+    description:
+      "Seznamte se s týmem Nisa Centrum Reality. Zkušení realitní makléři z Liberce a okolí vám pomohou s prodejem, pronájmem i oceněním nemovitosti zdarma.",
+    url: `${SITE_URL}/nas-tym`,
+  },
+};
 
 async function getBrokers(): Promise<{
   brokers: MaklerCard[];
@@ -59,7 +83,7 @@ export default async function NasTymPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Náš tým makléřů | Nisa Centrum Reality",
+    name: "Naši realitní makléři | Nisa Centrum Reality",
     url: `${SITE_URL}/nas-tym`,
     about: {
       "@id": `${SITE_URL}#real-estate-agent`,
@@ -99,10 +123,16 @@ export default async function NasTymPage() {
           </p>
           <h1 className="mt-3 text-4xl font-semibold text-black md:text-5xl">
             <span className="inline-flex flex-col items-center">
-              <span>Náš tým</span>
+              <span>Naši realitní makléři</span>
               <span className="mt-3 h-[6px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
             </span>
           </h1>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-black/70 md:text-lg">
+            Poznejte tým makléřů z Liberce a okolí, který vám pomůže s
+            prodejem, pronájmem i oceněním nemovitosti zdarma. Každý makléř má
+            vlastní specializaci, ale všichni pracují na stejném cíli:
+            bezpečný obchod a co nejlepší výsledek pro klienta.
+          </p>
         </div>
 
         {brokers.length > 0 ? (

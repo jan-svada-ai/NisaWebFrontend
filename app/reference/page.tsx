@@ -1,10 +1,8 @@
-﻿"use client";
-
-import { useEffect, useMemo, useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ExternalLink, MessageSquareQuote, Star } from "lucide-react";
-import { apiUrl } from "@/lib/api";
+import { SITE_URL } from "@/lib/site-url";
 
 type ReviewSource = "google" | "firmy";
 
@@ -33,23 +31,65 @@ type ReviewsResponse = {
   };
 };
 
+type ReviewsPageData = {
+  items: ReviewItem[];
+  googleUrl: string;
+  googleWriteUrl: string | null;
+  googleReason: string | null;
+  googleStatusText: string | null;
+  error: string | null;
+};
+
+const API_BASE = (
+  process.env.BACKEND_URL ??
+  process.env.SITEMAP_API_BASE_URL ??
+  process.env.NEXT_PUBLIC_API_BASE_URL ??
+  "http://127.0.0.1:4000"
+).replace(/\/+$/, "");
+
 const GOOGLE_REVIEWS_URL = "https://share.google/mTkMMCC6dhLqSGPAv";
 const FIRMY_PROFILE_URL =
   "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni";
+
+export const revalidate = 1800;
+
+export const metadata: Metadata = {
+  title: "Reference klientů | Realitní kancelář Liberec | Nisa Centrum Reality",
+  description:
+    "Skutečné reference klientů Nisa Centrum Reality z Google a Firmy.cz. Zjistěte, jak klienti hodnotí naši realitní kancelář, makléře i realitní služby.",
+  alternates: {
+    canonical: `${SITE_URL}/reference`,
+  },
+  openGraph: {
+    type: "website",
+    url: `${SITE_URL}/reference`,
+    title: "Reference klientů | Realitní kancelář Liberec | Nisa Centrum Reality",
+    description:
+      "Skutečné reference klientů Nisa Centrum Reality z Google a Firmy.cz. Zjistěte, jak klienti hodnotí naši realitní kancelář, makléře i realitní služby.",
+    images: [
+      {
+        url: "/og-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Reference klientů Nisa Centrum Reality",
+      },
+    ],
+  },
+};
 
 function googleReasonLabel(reason: string | null): string | null {
   if (!reason) return null;
   switch (reason) {
     case "missing-google-api-key":
-      return "Chybí GOOGLE_API_KEY (nebo GOOGLE_PLACES_API_KEY) na backendu.";
+      return "Chybí GOOGLE_API_KEY nebo GOOGLE_PLACES_API_KEY na backendu.";
     case "missing-google-place-id":
       return "Chybí GOOGLE_PLACE_ID na backendu.";
     case "google-http-error":
-      return "Google API vrátilo HTTP chybu (ověř API key restrikce a billing).";
+      return "Google API vrátilo HTTP chybu. Ověřte restrikce API klíče a billing.";
     case "google-status-error":
-      return "Google API odmítlo požadavek (REQUEST_DENIED / INVALID_REQUEST apod.).";
+      return "Google API odmítlo požadavek, například REQUEST_DENIED nebo INVALID_REQUEST.";
     case "google-empty-reviews":
-      return "Google API nevrátilo žádné recenze pro zadané místo.";
+      return "Google API pro zadané místo nevrátilo žádné recenze.";
     case "google-request-error":
       return "Backend se nedokázal spojit s Google API.";
     default:
@@ -92,9 +132,7 @@ function ReviewsGrid({ items }: { items: ReviewItem[] }) {
         >
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-base font-semibold text-black">
-                {item.author}
-              </p>
+              <p className="text-base font-semibold text-black">{item.author}</p>
               {item.date ? (
                 <p className="text-xs text-black/55">{item.date}</p>
               ) : null}
@@ -115,9 +153,7 @@ function ReviewsGrid({ items }: { items: ReviewItem[] }) {
             </span>
           </div>
 
-          <p className="mt-4 text-sm leading-relaxed text-black/75">
-            {item.text}
-          </p>
+          <p className="mt-4 text-sm leading-relaxed text-black/75">{item.text}</p>
 
           {item.url ? (
             <a
@@ -136,62 +172,94 @@ function ReviewsGrid({ items }: { items: ReviewItem[] }) {
   );
 }
 
-export default function ReferencePage() {
-  const [items, setItems] = useState<ReviewItem[]>([]);
-  const [googleUrl, setGoogleUrl] = useState(GOOGLE_REVIEWS_URL);
-  const [googleWriteUrl, setGoogleWriteUrl] = useState<string | null>(null);
-  const [googleReason, setGoogleReason] = useState<string | null>(null);
-  const [googleStatusText, setGoogleStatusText] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+async function getReviews(): Promise<ReviewsPageData> {
+  try {
+    const res = await fetch(`${API_BASE}/api/reference`, {
+      headers: { Accept: "application/json" },
+      next: { revalidate },
+    });
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadReviews() {
-      try {
-        const res = await fetch(apiUrl("/api/reference"), {
-          cache: "no-store",
-        });
-        if (!res.ok) {
-          throw new Error(`API returned ${res.status}`);
-        }
-        const json = (await res.json()) as ReviewsResponse;
-        if (!cancelled) {
-          setItems(Array.isArray(json.data) ? json.data : []);
-          if (json.links?.google) setGoogleUrl(json.links.google);
-          setGoogleWriteUrl(json.links?.googleWrite ?? null);
-          setGoogleReason(json.sources?.googleReason ?? null);
-          setGoogleStatusText(json.sources?.googleStatusText ?? null);
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setError(
-            e instanceof Error ? e.message : "Nepodařilo se načíst reference.",
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
+    if (!res.ok) {
+      throw new Error(`API returned ${res.status}`);
     }
 
-    loadReviews();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const grouped = useMemo(() => {
+    const json = (await res.json()) as ReviewsResponse;
     return {
-      google: items.filter((x) => x.source === "google"),
-      firmy: items.filter((x) => x.source === "firmy"),
+      items: Array.isArray(json.data) ? json.data : [],
+      googleUrl: json.links?.google ?? GOOGLE_REVIEWS_URL,
+      googleWriteUrl: json.links?.googleWrite ?? null,
+      googleReason: json.sources?.googleReason ?? null,
+      googleStatusText: json.sources?.googleStatusText ?? null,
+      error: null,
     };
-  }, [items]);
+  } catch (e) {
+    return {
+      items: [],
+      googleUrl: GOOGLE_REVIEWS_URL,
+      googleWriteUrl: null,
+      googleReason: null,
+      googleStatusText: null,
+      error: e instanceof Error ? e.message : "Nepodařilo se načíst reference.",
+    };
+  }
+}
+
+export default async function ReferencePage() {
+  const { items, googleUrl, googleWriteUrl, googleReason, googleStatusText, error } =
+    await getReviews();
+
+  const grouped = {
+    google: items.filter((x) => x.source === "google"),
+    firmy: items.filter((x) => x.source === "firmy"),
+  };
+
+  const reviewStructuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${SITE_URL}/reference#page`,
+        url: `${SITE_URL}/reference`,
+        name: "Reference klientů | Nisa Centrum Reality",
+        description:
+          "Skutečné reference klientů Nisa Centrum Reality z Google a Firmy.cz.",
+        about: {
+          "@id": `${SITE_URL}#real-estate-agent`,
+        },
+      },
+      ...(items.length
+        ? [
+            {
+              "@type": "ItemList",
+              itemListElement: items.map((item, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                item: {
+                  "@type": "Review",
+                  author: item.author,
+                  reviewBody: item.text,
+                  url: item.url ?? undefined,
+                  reviewRating: {
+                    "@type": "Rating",
+                    ratingValue: item.rating,
+                    bestRating: 5,
+                    worstRating: 1,
+                  },
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewStructuredData) }}
+      />
+
       <div className="mb-12 text-center">
         <p className="text-sm uppercase tracking-[0.2em] text-black/60">
           Nisa Centrum Reality
@@ -203,8 +271,8 @@ export default function ReferencePage() {
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-3xl text-center text-black/70">
-          Zobrazujeme aktuální hodnocení z externích portálů. Pokud právě
-          probíhá synchronizace, můžete přejít přímo na Google nebo Firmy.cz.
+          Zobrazujeme aktuální hodnocení z externích portálů. Díky server renderu
+          jsou reference dostupné rovnou při načtení stránky i pro vyhledávače.
         </p>
       </div>
 
@@ -223,22 +291,19 @@ export default function ReferencePage() {
           <CenterSectionHeading title="Firmy.cz recenze" />
 
           <div className="mb-6 flex justify-center">
-            <a href={FIRMY_PROFILE_URL} target="_blank" rel="noopener">
+            <a href={FIRMY_PROFILE_URL} target="_blank" rel="noopener noreferrer">
               <Image
                 src="https://www.firmy.cz/img-stars/light-13200814.svg"
-                alt="Nisa centrum reality na Firmy.cz"
+                alt="Nisa Centrum Reality na Firmy.cz"
                 width={170}
                 height={28}
                 className="h-auto w-[170px]"
+                unoptimized
               />
             </a>
           </div>
 
-          {loading ? (
-            <div className="rounded-3xl border border-black/10 bg-white/70 p-8 text-black/70 shadow-sm">
-              Načítáme reference...
-            </div>
-          ) : grouped.firmy.length > 0 ? (
+          {grouped.firmy.length > 0 ? (
             <ReviewsGrid items={grouped.firmy} />
           ) : (
             <div className="rounded-3xl border border-black/10 bg-white/70 p-8 shadow-sm">
@@ -278,11 +343,7 @@ export default function ReferencePage() {
             ) : null}
           </div>
 
-          {loading ? (
-            <div className="rounded-3xl border border-black/10 bg-white/70 p-8 text-black/70 shadow-sm">
-              Načítáme reference...
-            </div>
-          ) : grouped.google.length > 0 ? (
+          {grouped.google.length > 0 ? (
             <ReviewsGrid items={grouped.google} />
           ) : (
             <div className="rounded-3xl border border-black/10 bg-white/70 p-8 shadow-sm">

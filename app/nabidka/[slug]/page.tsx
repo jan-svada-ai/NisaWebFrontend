@@ -13,11 +13,6 @@ const apiBase = (
 ).replace(/\/+$/, "");
 
 type ListingPayload = DetailListing | { data?: DetailListing | null };
-type ListingFetchResult = {
-  listing: DetailListing | null;
-  isNotFound: boolean;
-  isUpstreamError: boolean;
-};
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +35,7 @@ function isWrappedListingPayload(
   return typeof payload === "object" && payload !== null && "data" in payload;
 }
 
-async function fetchListing(slug: string): Promise<ListingFetchResult> {
+async function fetchListing(slug: string): Promise<DetailListing | null> {
   try {
     const response = await fetch(
       `${apiBase}/api/inzeraty/slug/${encodeURIComponent(slug)}`,
@@ -50,23 +45,11 @@ async function fetchListing(slug: string): Promise<ListingFetchResult> {
       },
     );
 
-    if (response.status === 404) {
-      return { listing: null, isNotFound: true, isUpstreamError: false };
-    }
-
-    if (!response.ok) {
-      return { listing: null, isNotFound: false, isUpstreamError: true };
-    }
-
+    if (!response.ok) return null;
     const payload = (await response.json()) as ListingPayload;
-    const listing = unwrapListing(payload);
-    if (!listing) {
-      return { listing: null, isNotFound: true, isUpstreamError: false };
-    }
-
-    return { listing, isNotFound: false, isUpstreamError: false };
+    return unwrapListing(payload);
   } catch {
-    return { listing: null, isNotFound: false, isUpstreamError: true };
+    return null;
   }
 }
 
@@ -98,7 +81,7 @@ function buildListingJsonLd(listing: DetailListing, slug: string): Record<string
     .filter((url): url is string => Boolean(url))
     .map((url) => toAbsoluteUrl(url));
   const city = listing.mesto?.nazev?.trim();
-  const offerName = listing.nazev?.trim() || "Detail nabídky";
+  const offerName = listing.nazev?.trim() || "Detail nabidky";
 
   const offer: Record<string, unknown> = {
     "@type": "Offer",
@@ -143,6 +126,10 @@ function buildListingJsonLd(listing: DetailListing, slug: string): Record<string
         "@id": `${canonical}#webpage`,
         url: canonical,
         name: offerName,
+        description:
+          summarizeText(listing.popis) ||
+          "Detail nabídky nemovitosti od Nisa Centrum Reality.",
+        inLanguage: "cs-CZ",
       },
       {
         "@type": "BreadcrumbList",
@@ -178,10 +165,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const listingResult = await fetchListing(slug);
+  const listing = await fetchListing(slug);
   const canonical = `${siteUrl}/nabidka/${encodeURIComponent(slug)}`;
 
-  if (listingResult.isNotFound) {
+  if (!listing) {
     return {
       title: "Detail nabídky | Nisa Centrum Reality",
       description:
@@ -191,22 +178,14 @@ export async function generateMetadata({
     };
   }
 
-  if (listingResult.isUpstreamError || !listingResult.listing) {
-    return {
-      title: "Detail nabídky | Nisa Centrum Reality",
-      description:
-        "Detail nabídky nemovitosti od Nisa Centrum Reality. Aktuální prodej a pronájem nemovitostí.",
-      alternates: { canonical },
-    };
-  }
-
-  const listing = listingResult.listing;
   const titleBase = listing.nazev?.trim() || "Detail nabídky";
   const city = listing.mesto?.nazev?.trim();
   const offerKind = listing.typPonuky?.trim();
   const price =
     typeof listing.cena === "number" && listing.cena > 0
-      ? `${new Intl.NumberFormat("cs-CZ").format(listing.cena)} ${listing.mena?.trim() || "Kč"}`
+      ? `${new Intl.NumberFormat("cs-CZ").format(listing.cena)} ${
+          listing.mena?.trim() || "Kč"
+        }`
       : null;
 
   const fallbackDescription = [
@@ -223,7 +202,7 @@ export async function generateMetadata({
       ? `${fallbackDescription}. Kompletní detail nabídky na webu Nisa Centrum Reality.`
       : "Kompletní detail nabídky nemovitosti na webu Nisa Centrum Reality.");
 
-  const ogImage = listing.obrazky?.[0]?.url?.trim() || "/og-logo.png";
+  const ogImage = listing.obrazky?.[0]?.url?.trim() || "/og-image.png";
   const pageTitle = `${titleBase} | Nisa Centrum Reality`;
   const lastModified = listing.zmenen ?? listing.vytvoren ?? undefined;
 
@@ -254,17 +233,12 @@ export default async function NabidkaSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const listingResult = await fetchListing(slug);
+  const listing = await fetchListing(slug);
 
-  if (listingResult.isNotFound) {
+  if (!listing) {
     notFound();
   }
 
-  if (listingResult.isUpstreamError || !listingResult.listing) {
-    throw new Error("Dočasně se nepodařilo načíst detail nabídky.");
-  }
-
-  const listing = listingResult.listing;
   const listingJsonLd = buildListingJsonLd(listing, slug);
 
   return (

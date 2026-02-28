@@ -4,10 +4,11 @@ import { SITE_URL } from "@/lib/site-url";
 const siteUrl = SITE_URL;
 
 export const metadata: Metadata = {
-  title: "Náš tým makléřů | Liberec, Praha a okolí | Nisa Centrum Reality",
+  title: "Realitní makléři Liberec | Náš tým | Nisa Centrum Reality",
   description:
-    "Seznamte se s realitními makléři Nisa Centrum Reality. Přímý kontakt na specialisty pro prodej, pronájem i ocenění nemovitosti v Liberci, Praze a okolí.",
+    "Poznejte realitní makléře Nisa Centrum Reality. Přímý kontakt na specialisty pro prodej, pronájem i ocenění nemovitosti zdarma v Liberci, Praze a okolí.",
   keywords: [
+    "realitní makléř Liberec",
     "realitní makléř",
     "realitní kancelář Liberec",
     "kontakt na makléře",
@@ -19,15 +20,15 @@ export const metadata: Metadata = {
     canonical: `${siteUrl}/nas-tym`,
   },
   openGraph: {
-    type: "profile",
+    type: "website",
     url: `${siteUrl}/nas-tym`,
-    title: "Náš tým makléřů | Liberec, Praha a okolí | Nisa Centrum Reality",
+    title: "Realitní makléři Liberec | Náš tým | Nisa Centrum Reality",
     description:
-      "Kontaktujte konkrétního makléře a domluvte bezpečný postup pro prodej nebo pronájem.",
+      "Kontaktujte konkrétního realitního makléře a domluvte bezpečný postup pro prodej, pronájem nebo ocenění nemovitosti.",
   },
   twitter: {
     card: "summary",
-    title: "Náš tým makléřů | Liberec, Praha a okolí | Nisa Centrum Reality",
+    title: "Realitní makléři Liberec | Náš tým | Nisa Centrum Reality",
     description:
       "Profesionální tým realitních makléřů pro prodej, pronájem a ocenění nemovitostí.",
   },
@@ -40,4 +41,3 @@ export default function NasTymLayout({
 }) {
   return children;
 }
-

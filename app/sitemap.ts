@@ -65,7 +65,7 @@ const staticRoutes: StaticRoute[] = [
   {
     route: "/oceneni-zdarma",
     changeFrequency: "weekly",
-    priority: 0.9,
+    priority: 0.95,
   },
   {
     route: "/co-vse-pro-vas-udelame",
@@ -208,3 +208,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return Array.from(entries.values()).sort((a, b) => a.url.localeCompare(b.url));
 }
+

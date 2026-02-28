@@ -1,85 +1,158 @@
-﻿import Image from "next/image";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import StatsSection from "@/components/StatsSection";
 import AnimatedTestimonials from "@/components/AnimatedTestimonials";
 import { SITE_URL } from "@/lib/site-url";
 
-
-type HomeTestimonialItem = {
-  text: string;
-  author: string;
-  source: "google" | "firmy";
-  url: string;
-  rating: number;
+export const metadata: Metadata = {
+  title:
+    "Realitní kancelář Liberec | Prodej, pronájem a ocenění zdarma | Nisa Centrum Reality",
+  description:
+    "Jsme realitní kancelář z Liberce pro prodej, pronájem i ocenění nemovitosti zdarma. Zajistíme profesionální prezentaci, cílenou propagaci i bezpečný průběh celého obchodu.",
+  keywords: [
+    "realitní kancelář Liberec",
+    "realitní makléř Liberec",
+    "prodej nemovitosti Liberec",
+    "prodej bytu",
+    "prodej domu",
+    "prodat byt",
+    "prodat dům",
+    "pronájem nemovitosti Liberec",
+    "pronájem bytu",
+    "pronájem domu",
+    "pronajmout byt",
+    "pronajmout dům",
+    "ocenění nemovitosti zdarma",
+    "odhad ceny nemovitosti",
+    "odhad ceny bytu",
+    "odhad ceny domu",
+    "odhad ceny pozemku",
+    "realitní služby Liberec",
+  ],
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    title:
+      "Realitní kancelář Liberec | Prodej, pronájem a ocenění zdarma | Nisa Centrum Reality",
+    description:
+      "Jsme realitní kancelář z Liberce pro prodej, pronájem i ocenění nemovitosti zdarma. Zajistíme profesionální prezentaci, cílenou propagaci i bezpečný průběh celého obchodu.",
+    images: [
+      {
+        url: "/og-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Nisa Centrum Reality - realitní kancelář Liberec",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Realitní kancelář Liberec | Prodej, pronájem a ocenění zdarma | Nisa Centrum Reality",
+    description:
+      "Jsme realitní kancelář z Liberce pro prodej, pronájem i ocenění nemovitosti zdarma. Zajistíme profesionální prezentaci, cílenou propagaci i bezpečný průběh celého obchodu.",
+    images: ["/og-logo.png"],
+  },
 };
 
-const homeTestimonials: HomeTestimonialItem[] = [
+const homeTestimonials = [
   {
-    text: "Naprosto úžasná spolupráce. Podruhé jsme využili služby Nisa Centrum Reality a oceňujeme profesionální i lidský přístup.",
+    text: "Naprosto úžasná spolupráce! Již podruhé jsme využili služeb pana Jakoubka a opět vše proběhlo rychle, profesionálně a s lidským přístupem.",
     author: "Hana Richterová",
-    source: "google",
-    url: "https://www.google.com/maps/contrib/104345977813047399669/reviews",
+    source: "google" as const,
+    url: "https://maps.app.goo.gl/MVjJyTkgtVRr1kFZA",
     rating: 5,
   },
   {
-    text: "Naprosto profesionální přístup a služby. Všichni byli velmi milí, ochotní a vyšli vstříc všem požadavkům.",
-    author: "Nela Marková",
-    source: "google",
-    url: "https://www.google.com/maps/contrib/118188176893605864582/reviews",
-    rating: 5,
-  },
-  {
-    text: "Skvělý a profesionální přístup. Díky této firmě jsme našli pronájem podle našich představ. Vše šlo hladce.",
+    text: "Skvělý a profesionální přístup. Jsem velice spokojená. Díky této firmě jsme našli skvělý pronájem podle našich představ.",
     author: "Denisa Nikodýmová",
-    source: "firmy",
+    source: "firmy" as const,
     url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
     rating: 5,
   },
   {
-    text: "Výborná komunikace, dobrá spolupráce a rychlé vyřešení všech problémů. Jsem maximálně spokojená.",
+    text: "Profesionální služby, ochota, vstřícnost a hlavně výborná komunikace. Celý obchod proběhl bezpečně a bez zbytečných komplikací.",
+    author: "Sandra Janků",
+    source: "google" as const,
+    url: "https://maps.app.goo.gl/bzYwM2TzXQ8wA4m69",
+    rating: 5,
+  },
+  {
+    text: "Výborná komunikace, dobrá spolupráce, rychle se vyřešily všechny problémy. Jsem maximálně spokojená a mohu jen doporučit.",
     author: "Mattonidrink",
-    source: "firmy",
+    source: "firmy" as const,
     url: "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni",
     rating: 5,
   },
 ];
 
-const averageHomeRating =
-  homeTestimonials.reduce((sum, item) => sum + item.rating, 0) /
-  homeTestimonials.length;
-
-const homeReviewsJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  "@id": `${SITE_URL}#homepage-reviews`,
-  name: "Nisa Centrum Reality",
-  url: SITE_URL,
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: Number(averageHomeRating.toFixed(1)),
-    reviewCount: homeTestimonials.length,
-    bestRating: 5,
-    worstRating: 1,
+const homeFaqItems = [
+  {
+    q: "Jaké služby nabízíte a co vše je jejich součástí?",
+    a: "Poskytujeme realitní služby pro prodej, pronájem i ocenění nemovitosti zdarma. Zajistíme prodej bytu, prodej domu, pronájem bytu i pronájem domu včetně prezentace, inzerce, propagace, prohlídek, komunikace se zájemci a dohledu nad celým procesem.",
   },
-  review: homeTestimonials.map((item) => ({
-    "@type": "Review",
-    author: {
-      "@type": "Person",
-      name: item.author,
+  {
+    q: "Kolik stojí vaše služby a kdy se hradí provize?",
+    a: "U prodeje se provize typicky pohybuje v rozmezí 3–5 % dle typu nemovitosti a rozsahu služeb. U pronájmu je služba pro majitele zpravidla bez přímé platby a hradí ji budoucí nájemník.",
+  },
+  {
+    q: "Vyhledáváte nemovitosti i na míru podle požadavků klienta?",
+    a: "Ano. Aktivně hledáme podle vašich parametrů, sledujeme aktuální nabídky, spolupracujeme s dalšími makléři a pomáháme prověřit vhodnost vybraných nemovitostí.",
+  },
+  {
+    q: "Jak probíhá prodej nebo pronájem nemovitosti krok za krokem?",
+    a: "Ať chcete prodat byt, prodat dům, nebo bezpečně pronajmout byt či dům, začneme osobní schůzkou a prohlídkou nemovitosti. Navrhneme cenu a strategii, připravíme prezentaci a propagaci. Následně řešíme komunikaci, prohlídky a vyjednávání. U prodeje následují rezervační a kupní smlouvy přes advokátní servis a převod na katastru. U pronájmu prověřujeme zájemce, připravují se smlouvy a proběhne předání.",
+  },
+  {
+    q: "Kolik stojí ocenění nemovitosti a je možné jej získat zdarma?",
+    a: "Ocenění je zdarma a nezávazné. Pomůže vám mít reálný přehled o hodnotě nemovitosti pro budoucí prodej, pronájem i majetková nebo dědická řešení.",
+  },
+  {
+    q: "V jakých lokalitách působíte?",
+    a: "Působíme v Libereckém, Ústeckém, Královéhradeckém a Středočeském kraji, v Praze a okolí. Díky rozsáhlé síti spolupracujících makléřů a hluboké znalosti regionu dokážeme efektivně zajistit prodej, pronájem i vyhledání nemovitostí napříč těmito lokalitami.",
+  },
+  {
+    q: "Jak vás mohu kontaktovat a je možné se nejprve nezávazně poradit?",
+    a: "Ano, nezávazná konzultace je možná. Zavolejte, napište SMS nebo e-mail a zvolíme způsob, který vám vyhovuje.",
+  },
+  {
+    q: "Jak určíte správnou cenu mé nemovitosti?",
+    a: "Cenu neurčujeme od stolu. Podíváme se na nemovitost osobně, zohledníme stav, lokalitu a srovnatelné prodeje. Odhad vždy vysvětlíme a nastavíme společně realistický plán.",
+  },
+];
+
+const homePageStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}#home`,
+      url: SITE_URL,
+      name: "Realitní kancelář Liberec | Nisa Centrum Reality",
+      description:
+        "Jsme realitní kancelář z Liberce pro prodej, pronájem i ocenění nemovitosti zdarma. Zajistíme profesionální prezentaci, cílenou propagaci i bezpečný průběh celého obchodu.",
+      about: {
+        "@id": `${SITE_URL}#real-estate-agent`,
+      },
+      inLanguage: "cs-CZ",
     },
-    reviewBody: item.text,
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: item.rating,
-      bestRating: 5,
-      worstRating: 1,
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}#homepage-faq`,
+      mainEntity: homeFaqItems.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.a,
+        },
+      })),
     },
-    publisher: {
-      "@type": "Organization",
-      name: item.source === "google" ? "Google" : "Firmy.cz",
-    },
-    url: item.url,
-  })),
+  ],
 };
 
 function Icon({
@@ -432,8 +505,9 @@ function HeroSection({
 
           {showDescription ? (
             <p className={descClass}>
-              Ocenění, profesionální prezentace a cílená propagace. Bezpečný
-              průběh zajišťujeme ve spolupráci s advokátní kanceláří.
+              Jsme realitní kancelář z Liberce pro prodej, pronájem i ocenění
+              nemovitosti zdarma. Zajistíme profesionální prezentaci, cílenou
+              propagaci i bezpečný průběh celého obchodu.
             </p>
           ) : null}
         </div>
@@ -449,7 +523,7 @@ function HeroSection({
               className={`btn-main inline-flex items-center justify-center gap-2 rounded-full bg-[color:var(--gold1)] font-semibold text-black lg:col-span-2 ${ctaSizeClass}`}
             >
               <Icon name="handCoins" className="h-5 w-5" />
-              Ocenění nemovitosti
+              Ocenění nemovitosti zdarma
             </Link>
             <Link
               href="/#proc-maklere"
@@ -490,8 +564,11 @@ export default function Home() {
     <div className="relative">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeReviewsJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homePageStructuredData),
+        }}
       />
+
       {/* HERO */}
       <HeroSection
         lowButtons
@@ -511,6 +588,13 @@ export default function Home() {
               a osobním přístupu. Nemovitosti nevnímáme jen jako obchod, ale
               jako důležitý životní krok, ke kterému přistupujeme s respektem a
               maximální péčí.
+            </p>
+
+            <p className="text-lg leading-relaxed">
+              Pomáháme majitelům s prodejem a pronájmem nemovitostí a zároveň
+              nabízíme ocenění nemovitosti zdarma napříč regiony, ve kterých
+              působíme. Právě správně nastavená cena a strategie bývají
+              rozhodující pro rychlost i výsledek celého obchodu.
             </p>
 
             <p className="text-lg leading-relaxed">
@@ -583,7 +667,7 @@ export default function Home() {
           <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-black/10 shadow-xl">
             <Image
               src="/Onas.avif"
-              alt="Tým realitní kanceláře Nisa Centrum Reality"
+              alt="Tým realitní kanceláře Nisa Centrum Reality v kanceláři v Liberci"
               fill
               unoptimized
               className="object-cover"
@@ -644,7 +728,7 @@ export default function Home() {
               <div className="relative aspect-[2/3] w-full">
               <Image
                 src="/fotoVendy.avif"
-                alt="Makléřka Nisa Centrum Reality při práci s klienty"
+                alt="Makléřka Nisa Centrum Reality při prohlídce nemovitosti s klienty"
                 fill
                 className="scale-x-[-1] object-contain object-center"
                 sizes="(min-width: 1024px) 30vw, 0px"
@@ -791,7 +875,7 @@ export default function Home() {
               {
                 icon: "keyRound" as const,
                 t: "Prodej a pronájem nemovitosti",
-                d: "Kompletní servis od ocenění až po předání klíčů: home staging, foto/video, inzerce, propagace, prohlídky, vyjednávání a právní dohled.",
+                d: "Kompletní servis pro prodej bytu, prodej domu i pronájem nemovitosti. Pomůžeme vám prodat byt, prodat dům, pronajmout byt i pronajmout dům včetně prezentace, prohlídek a právního dohledu.",
                 cta: ["Domluvit schůzku", "/kontakt"],
                 detail: "/prodej-pronajem",
               },
@@ -883,7 +967,7 @@ export default function Home() {
             <div className="relative h-full min-h-[680px] w-full">
               <Image
                 src="/Terka.avif"
-                alt="Makléřka Nisa Centrum Reality"
+                alt="Realitní makléřka Nisa Centrum Reality"
                 fill
                 className="object-contain object-center lg:-translate-y-[10%] lg:scale-[0.83]"
                 sizes="(min-width: 1024px) 24vw, 0px"
@@ -906,7 +990,7 @@ export default function Home() {
             <div className="relative aspect-[2/3] w-full">
               <Image
                 src="/Mirek.avif"
-                alt="Makléř Nisa Centrum Reality"
+                alt="Realitní makléř Nisa Centrum Reality"
                 fill
                 className="object-contain object-center scale-x-[-1] lg:translate-y-[20%] lg:scale-x-[-1.1] lg:scale-y-[1.1]"
                 sizes="(min-width: 1024px) 30vw, 0px"
@@ -915,40 +999,7 @@ export default function Home() {
           </div>
 
           <div className="order-1 grid gap-3 text-left lg:order-2 lg:col-span-7">
-            {[
-              {
-                q: "Jaké služby nabízíte a co vše je jejich součástí?",
-                a: "Zajišťujeme ocenění nemovitosti (zdarma a nezávazně), kompletní prodej i pronájem. Součástí je příprava prezentace (home staging, foto/video), inzerce, cílená propagace, prohlídky, komunikace se zájemci a dohled nad celým procesem.",
-              },
-              {
-                q: "Kolik stojí vaše služby a kdy se hradí provize?",
-                a: "U prodeje se provize typicky pohybuje v rozmezí 3–5 % dle typu nemovitosti a rozsahu služeb (vždy je jasně sjednaná předem ve smlouvě). U pronájmu je služba pro majitele zpravidla bez přímé platby – hradí ji budoucí nájemník.",
-              },
-              {
-                q: "Vyhledáváte nemovitosti i na míru podle požadavků klienta?",
-                a: "Ano. Aktivně hledáme podle vašich parametrů, sledujeme aktuální nabídky, spolupracujeme s dalšími makléři a pomáháme prověřit vhodnost vybraných nemovitostí.",
-              },
-              {
-                q: "Jak probíhá prodej nebo pronájem nemovitosti krok za krokem?",
-                a: "Začneme osobní schůzkou a prohlídkou nemovitosti. Navrhneme cenu a strategii, připravíme prezentaci a propagaci. Následně řešíme komunikaci, prohlídky a vyjednávání. U prodeje následují rezervační a kupní smlouvy (přes advokátní servis) a převod na katastru. U pronájmu prověřujeme zájemce, připravují se smlouvy a proběhne předání.",
-              },
-              {
-                q: "Kolik stojí ocenění nemovitosti a je možné jej získat zdarma?",
-                a: "Ocenění je zdarma a nezávazné. Pomůže vám mít reálný přehled o hodnotě nemovitosti – pro budoucí prodej, pronájem i pro majetková/dědická řešení.",
-              },
-              {
-                q: "V jakých lokalitách působíte?",
-                a: "Působíme v Libereckém, Ústeckém, Královéhradeckém a Středočeském kraji, v Praze a okolí. Díky rozsáhlé síti spolupracujících makléřů a hluboké znalosti regionu dokážeme efektivně zajistit prodej, pronájem i vyhledání nemovitostí napříč těmito lokalitami.",
-              },
-              {
-                q: "Jak vás mohu kontaktovat a je možné se nejprve nezávazně poradit?",
-                a: "Ano, nezávazná konzultace je možná. Zavolejte, napište SMS nebo e-mail – zvolíme způsob, který vám vyhovuje.",
-              },
-              {
-                q: "Jak určíte správnou cenu mé nemovitosti?",
-                a: "Cenu neurčujeme od stolu. Podíváme se na nemovitost osobně, zohledníme stav, lokalitu a srovnatelné prodeje. Odhad vždy vysvětlíme a nastavíme společně realistický plán.",
-              },
-            ].map((x) => (
+            {homeFaqItems.map((x) => (
               <details
                 key={x.q}
                 className="group rounded-2xl border border-black/10 bg-white/70 p-5 shadow-sm open:bg-white/80"

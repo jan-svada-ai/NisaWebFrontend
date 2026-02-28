@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   BriefcaseBusiness,
@@ -142,10 +142,7 @@ export const metadata: Metadata = {
       "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
     images: [
       {
-        url: "/og-logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Oceneni nemovitosti zdarma - Nisa Centrum Reality",
+        url: "/android-chrome-512x512.png",
       },
     ],
   },
@@ -154,7 +151,7 @@ export const metadata: Metadata = {
     title: "Ocenění nemovitosti zdarma | Online tržní odhad | Nisa Centrum Reality",
     description:
       "Ocenění nemovitosti zdarma online. Orientační odhad ceny bytu, domu nebo pozemku pro Liberec, Prahu a okolí. Pro přesné nacenění kontaktujte naše makléře.",
-    images: ["/og-logo.png"],
+    images: ["/android-chrome-512x512.png"],
   },
 };
 
@@ -179,20 +176,70 @@ function SectionHeading({
 }
 
 export default function OceneniZdarmaPage() {
-  const faqSchema = {
+  const pageSchema = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "@id": `${SITE_URL}/oceneni-zdarma#faq`,
-    url: `${SITE_URL}/oceneni-zdarma`,
-    inLanguage: "cs-CZ",
-    mainEntity: faqItems.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${SITE_URL}/oceneni-zdarma#page`,
+        url: `${SITE_URL}/oceneni-zdarma`,
+        name: "Ocenění nemovitosti zdarma | Nisa Centrum Reality",
+        description:
+          "Online ocenění nemovitosti zdarma a následná konzultace s makléřem pro přesné nacenění.",
+        inLanguage: "cs-CZ",
+        about: {
+          "@id": `${SITE_URL}#real-estate-agent`,
+        },
       },
-    })),
+      {
+        "@type": "Service",
+        "@id": `${SITE_URL}/oceneni-zdarma#service`,
+        name: "Ocenění nemovitosti zdarma",
+        provider: {
+          "@id": `${SITE_URL}#real-estate-agent`,
+        },
+        serviceType: "Ocenění nemovitosti zdarma",
+        areaServed: [
+          "Liberecký kraj",
+          "Ústecký kraj",
+          "Královéhradecký kraj",
+          "Středočeský kraj",
+          "Praha a okolí",
+        ],
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SITE_URL}/oceneni-zdarma`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Domů",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Ocenění nemovitosti zdarma",
+            item: `${SITE_URL}/oceneni-zdarma`,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
@@ -205,7 +252,7 @@ export default function OceneniZdarmaPage() {
     >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
       />
 
       <section className="relative min-h-dvh">
@@ -408,7 +455,6 @@ export default function OceneniZdarmaPage() {
     </main>
   );
 }
-
 
 
 

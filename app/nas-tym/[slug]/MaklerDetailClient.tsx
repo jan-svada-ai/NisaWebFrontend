@@ -55,6 +55,8 @@ export interface MaklerDetail {
   moto: string | null;
   popis: string | null;
   fotoUrl: string | null;
+  vytvoren?: string | null;
+  zmenen?: string | null;
   inzeraty: Inzerat[];
 }
 

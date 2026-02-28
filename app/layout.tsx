@@ -1,4 +1,4 @@
-﻿import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import "./globals.css";
@@ -28,6 +28,8 @@ const structuredData = {
       url: siteUrl,
       logo: `${siteUrl}/android-chrome-512x512.png`,
       image: [`${siteUrl}/og-logo.png`],
+      description:
+        "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Nisa Centrum Reality působí v Liberci, Praze a dalších regionech.",
       telephone: "+420721292462",
       email: "info@nisacentrum.cz",
       sameAs: socialProfiles,
@@ -54,6 +56,33 @@ const structuredData = {
         "Středočeský kraj",
         "Praha a okolí",
       ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Služby Nisa Centrum Reality",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Ocenění nemovitosti zdarma",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Prodej nemovitostí",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Pronájem nemovitostí",
+            },
+          },
+        ],
+      },
     },
     {
       "@type": "WebSite",
@@ -84,33 +113,37 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
     shortcut: ["/favicon.ico"],
   },
-  title:
-    "Nisa Centrum Reality | Prodej a pronájem nemovitostí v Libereckém kraji, Praze a okolí",
+  title: "Nisa Centrum Reality",
   description:
-    "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma. Profesionální marketing, homestaging a právní servis.",
+    "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Zkušení realitní makléři pro Liberec, Prahu a okolní regiony.",
+  keywords: [
+    "realitní kancelář Liberec",
+    "realitní makléř Liberec",
+    "ocenění nemovitosti zdarma",
+    "prodej nemovitosti Liberec",
+    "pronájem nemovitosti Liberec",
+  ],
   openGraph: {
     type: "website",
     url: siteUrl,
     siteName: "Nisa Centrum Reality",
-    title:
-      "Nisa Centrum Reality | Prodej a pronájem nemovitostí v Libereckém kraji, Praze a okolí",
+    title: "Nisa Centrum Reality",
     description:
-      "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma.",
+      "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Zkušení realitní makléři pro Liberec, Prahu a okolní regiony.",
     images: [
       {
         url: "/og-logo.png",
         width: 1200,
         height: 630,
-        alt: "Nisa Centrum Reality - prodej a pronajem nemovitosti",
+        alt: "Realitní kancelář Liberec - Nisa Centrum Reality",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Nisa Centrum Reality | Prodej a pronájem nemovitostí v Libereckém kraji, Praze a okolí",
+    title: "Nisa Centrum Reality",
     description:
-      "Prodej a pronájem nemovitostí v oblasti Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí. Ocenění nemovitosti zdarma.",
+      "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Zkušení realitní makléři pro Liberec, Prahu a okolní regiony.",
     images: ["/og-logo.png"],
   },
 };
