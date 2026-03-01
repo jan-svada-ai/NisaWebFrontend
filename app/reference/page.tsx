@@ -236,9 +236,16 @@ export default async function ReferencePage() {
                 position: index + 1,
                 item: {
                   "@type": "Review",
-                  author: item.author,
+                  author: {
+                    "@type": "Person",
+                    name: item.author,
+                  },
                   reviewBody: item.text,
                   url: item.url ?? undefined,
+                  itemReviewed: {
+                    "@id": `${SITE_URL}#real-estate-agent`,
+                  },
+                  datePublished: item.date ?? undefined,
                   reviewRating: {
                     "@type": "Rating",
                     ratingValue: item.rating,
