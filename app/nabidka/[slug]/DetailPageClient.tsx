@@ -380,7 +380,7 @@ export default function DetailPageClient({
         </Link>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+          <div className="min-w-0 lg:col-span-2">
             <div
               onClick={() => setIsLightboxOpen(true)}
               className="group relative mb-4 w-full cursor-pointer overflow-hidden rounded-2xl border border-black/10 bg-black/5 aspect-[4/3]"
@@ -459,7 +459,7 @@ export default function DetailPageClient({
             </div>
 
             {hasImages && listing.obrazky.length > 1 && (
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 {showThumbnailPager && (
                   <button
                     type="button"
@@ -467,7 +467,7 @@ export default function DetailPageClient({
                       setThumbnailStart((prev) => Math.max(0, prev - 1))
                     }
                     disabled={thumbnailStart === 0}
-                    className="photo-switch-btn absolute -left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-black shadow disabled:cursor-not-allowed disabled:opacity-40"
+                    className="photo-switch-btn absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-black shadow disabled:cursor-not-allowed disabled:opacity-40 md:-left-2 md:left-auto"
                     aria-label="Předchozí náhledy"
                   >
                     <ChevronLeft className="h-5 w-5" />
@@ -522,7 +522,7 @@ export default function DetailPageClient({
                       setThumbnailStart((prev) => Math.min(maxThumbnailStart, prev + 1))
                     }
                     disabled={thumbnailStart >= maxThumbnailStart}
-                    className="photo-switch-btn absolute -right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-black shadow disabled:cursor-not-allowed disabled:opacity-40"
+                    className="photo-switch-btn absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 text-black shadow disabled:cursor-not-allowed disabled:opacity-40 md:-right-2 md:right-auto"
                     aria-label="Další náhledy"
                   >
                     <ChevronRight className="h-5 w-5" />
@@ -594,17 +594,17 @@ export default function DetailPageClient({
                     <span className="mt-2 h-[5px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
                   </span>
                 </h2>
-                <div className="whitespace-pre-line leading-relaxed text-black/80">
+                <div className="whitespace-pre-line break-words leading-relaxed text-black/80">
                   {listing.popis}
                 </div>
               </div>
             )}
           </div>
 
-          <div className="lg:col-span-1">
-            <div className="sticky top-24 rounded-2xl border border-black/10 bg-white/80 p-6 backdrop-blur-sm">
+          <div className="min-w-0 lg:col-span-1">
+            <div className="sticky top-24 min-w-0 rounded-2xl border border-black/10 bg-white/80 p-6 backdrop-blur-sm">
               <div className="mb-6 border-b border-black/10 pb-6 text-center">
-                <h1 className="text-2xl font-semibold text-black">
+                <h1 className="break-words text-2xl font-semibold text-black">
                   <span className="inline-flex flex-col items-center">
                     <span>{listing.nazev}</span>
                     <span className="mt-2 h-[5px] w-full [clip-path:polygon(0_50%,30%_0,70%_0,100%_50%,70%_100%,30%_100%)] bg-[linear-gradient(90deg,rgba(230,194,94,0.25)_0%,rgba(230,194,94,0.95)_25%,rgba(230,194,94,0.95)_75%,rgba(230,194,94,0.25)_100%)]" />
@@ -656,21 +656,25 @@ export default function DetailPageClient({
                   role={maklerDetailHref ? "link" : undefined}
                   tabIndex={maklerDetailHref ? 0 : undefined}
                 >
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="min-w-0 flex-1">
                       <p className="text-xs uppercase tracking-wide text-black/50">
                         {isCompanyContact ? "Kontakt" : "Váš makléř"}
                       </p>
-                      <p className="mt-2 mb-3 font-semibold text-black">{contactName}</p>
+                      <p className="mt-2 mb-3 break-words font-semibold text-black">
+                        {contactName}
+                      </p>
 
                       {listing.makler.telefon && (
                         <a
                           href={`tel:${listing.makler.telefon}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="mb-2 flex items-center gap-2 text-black/70 transition hover:text-black"
+                          className="mb-2 flex min-w-0 items-center gap-2 text-black/70 transition hover:text-black"
                         >
                           <Phone className="h-4 w-4" />
-                          <span className="text-sm">{listing.makler.telefon}</span>
+                          <span className="min-w-0 break-words text-sm">
+                            {listing.makler.telefon}
+                          </span>
                         </a>
                       )}
 
@@ -678,15 +682,17 @@ export default function DetailPageClient({
                         <a
                           href={`mailto:${listing.makler.email}`}
                           onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-2 text-black/70 transition hover:text-black"
+                          className="flex min-w-0 items-center gap-2 text-black/70 transition hover:text-black"
                         >
                           <Mail className="h-4 w-4" />
-                          <span className="text-sm">{listing.makler.email}</span>
+                          <span className="min-w-0 break-all text-sm">
+                            {listing.makler.email}
+                          </span>
                         </a>
                       )}
                     </div>
                     {!isCompanyContact && listing.makler.fotoUrl ? (
-                      <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-full border border-white/90 bg-black/5 shadow-sm">
+                      <div className="relative mx-auto h-28 w-28 flex-shrink-0 overflow-hidden rounded-full border border-white/90 bg-black/5 shadow-sm sm:mx-0">
                         <Image
                           src={listing.makler.fotoUrl}
                           alt={contactName}
