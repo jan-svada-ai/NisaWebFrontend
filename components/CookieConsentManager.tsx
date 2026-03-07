@@ -152,17 +152,17 @@ gtag('config', '${measurementId}', { anonymize_ip: true });`,
                   Souhlas s cookies
                 </div>
                 <h2 className="mt-3 text-xl font-semibold text-black sm:text-2xl">
-                  SprĂˇva cookies a mÄ›Ĺ™enĂ­ nĂˇvĹˇtÄ›vnosti
+                  Správa cookies a měření návštěvnosti
                 </h2>
                 <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black/70 sm:text-base">
-                  Web pouĹľĂ­vĂˇ nezbytnĂ© cookies pro technickĂ© fungovĂˇnĂ­. AnalytickĂ© cookies
-                  pouĹľĂ­vĂˇme pouze s vaĹˇĂ­m souhlasem pro mÄ›Ĺ™enĂ­ nĂˇvĹˇtÄ›vnosti v Google
-                  Analytics 4. Souhlas mĹŻĹľete kdykoliv zmÄ›nit.
+                  Web používá nezbytné cookies pro technické fungování. Analytické cookies
+                  používáme pouze s vaším souhlasem pro měření návštěvnosti v Google
+                  Analytics 4. Souhlas můžete kdykoliv změnit.
                 </p>
                 <p className="mt-3 text-xs leading-relaxed text-black/55 sm:text-sm">
-                  Podrobnosti najdete na strĂˇnkĂˇch{" "}
+                  Podrobnosti najdete na stránkách{" "}
                   <Link href="/cookies" className="font-medium text-black hover:text-black/70">
-                    ZĂˇsady cookies
+                    Zásady cookies
                   </Link>{" "}
                   a{" "}
                   <Link href="/gdpr" className="font-medium text-black hover:text-black/70">
@@ -180,7 +180,7 @@ gtag('config', '${measurementId}', { anonymize_ip: true });`,
                   }
                 }}
                 className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-black/60"
-                aria-label="ZavĹ™Ă­t nastavenĂ­ cookies"
+                aria-label="Zavřít nastavení cookies"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -189,14 +189,14 @@ gtag('config', '${measurementId}', { anonymize_ip: true });`,
             {isSettingsOpen ? (
               <div className="mt-6 space-y-4">
                 <CookieTypeRow
-                  title="NezbytnĂ© cookies"
-                  description="UmoĹľĹujĂ­ zĂˇkladnĂ­ fungovĂˇnĂ­ webu, uloĹľenĂ­ vaĹˇĂ­ volby a bezpeÄŤnĂ˝ provoz. Tyto cookies nelze vypnout."
+                  title="Nezbytné cookies"
+                  description="Umožňují základní fungování webu, uložení vaší volby a bezpečný provoz. Tyto cookies nelze vypnout."
                   enabled
                   locked
                 />
                 <CookieTypeRow
-                  title="AnalytickĂ© cookies"
-                  description="PomĂˇhajĂ­ nĂˇm mÄ›Ĺ™it nĂˇvĹˇtÄ›vnost a zlepĹˇovat obsah pomocĂ­ Google Analytics 4. Bez souhlasu je nenaÄŤĂ­tĂˇme."
+                  title="Analytické cookies"
+                  description="Pomáhají nám měřit návštěvnost a zlepšovat obsah pomocí Google Analytics 4. Bez souhlasu je nenačítáme."
                   enabled={analyticsEnabled}
                   onChange={setAnalyticsEnabled}
                 />
@@ -209,14 +209,14 @@ gtag('config', '${measurementId}', { anonymize_ip: true });`,
                 onClick={() => saveConsent(true)}
                 className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/15 bg-black px-5 py-3 text-sm font-semibold text-white"
               >
-                Povolit vsechny cookies
+                Povolit všechny cookies
               </button>
               <button
                 type="button"
                 onClick={() => saveConsent(false)}
                 className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/15 bg-white px-5 py-3 text-sm font-semibold text-black"
               >
-                Pouze nezbytne
+                Pouze nezbytné
               </button>
               <button
                 type="button"
@@ -230,7 +230,7 @@ gtag('config', '${measurementId}', { anonymize_ip: true });`,
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-black/15 bg-[color:var(--gold1)]/15 px-5 py-3 text-sm font-semibold text-black"
               >
                 <Settings2 className="h-4 w-4" />
-                {isSettingsOpen ? "UloĹľit nastavenĂ­" : "NastavenĂ­"}
+                {isSettingsOpen ? "Uložit nastavení" : "Nastavení"}
               </button>
             </div>
           </div>

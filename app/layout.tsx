@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import "./globals.css";
@@ -31,13 +31,13 @@ const structuredData = {
       logo: `${siteUrl}/android-chrome-512x512.png`,
       image: [`${siteUrl}/og-logo.png`],
       description:
-        "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Nisa Centrum Reality působí v Liberci, Praze a dalších regionech.",
+        "RealitnĂ­ kancelĂˇĹ™ Liberec pro prodej, pronĂˇjem a ocenÄ›nĂ­ nemovitosti zdarma. Nisa Centrum Reality pĹŻsobĂ­ v Liberci, Praze a dalĹˇĂ­ch regionech.",
       telephone: "+420721292462",
       email: "info@nisacentrum.cz",
       sameAs: socialProfiles,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Zámečnická 563/8",
+        streetAddress: "ZĂˇmeÄŤnickĂˇ 563/8",
         addressLocality: "Liberec",
         postalCode: "46001",
         addressCountry: "CZ",
@@ -52,35 +52,35 @@ const structuredData = {
         },
       ],
       areaServed: [
-        "Liberecký kraj",
-        "Ústecký kraj",
-        "Královéhradecký kraj",
-        "Středočeský kraj",
-        "Praha a okolí",
+        "LibereckĂ˝ kraj",
+        "ĂšsteckĂ˝ kraj",
+        "KrĂˇlovĂ©hradeckĂ˝ kraj",
+        "StĹ™edoÄŤeskĂ˝ kraj",
+        "Praha a okolĂ­",
       ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Služby Nisa Centrum Reality",
+        name: "SluĹľby Nisa Centrum Reality",
         itemListElement: [
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Ocenění nemovitosti zdarma",
+              name: "OcenÄ›nĂ­ nemovitosti zdarma",
             },
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Prodej nemovitostí",
+              name: "Prodej nemovitostĂ­",
             },
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Pronájem nemovitostí",
+              name: "PronĂˇjem nemovitostĂ­",
             },
           },
         ],
@@ -117,13 +117,13 @@ export const metadata: Metadata = {
   },
   title: "Nisa Centrum Reality",
   description:
-    "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Zkušení realitní makléři pro Liberec, Prahu a okolní regiony.",
+    "RealitnĂ­ kancelĂˇĹ™ Liberec pro prodej, pronĂˇjem a ocenÄ›nĂ­ nemovitosti zdarma. ZkuĹˇenĂ­ realitnĂ­ maklĂ©Ĺ™i pro Liberec, Prahu a okolnĂ­ regiony.",
   keywords: [
-    "realitní kancelář Liberec",
-    "realitní makléř Liberec",
-    "ocenění nemovitosti zdarma",
+    "realitnĂ­ kancelĂˇĹ™ Liberec",
+    "realitnĂ­ maklĂ©Ĺ™ Liberec",
+    "ocenÄ›nĂ­ nemovitosti zdarma",
     "prodej nemovitosti Liberec",
-    "pronájem nemovitosti Liberec",
+    "pronĂˇjem nemovitosti Liberec",
   ],
   openGraph: {
     type: "website",
@@ -131,13 +131,13 @@ export const metadata: Metadata = {
     siteName: "Nisa Centrum Reality",
     title: "Nisa Centrum Reality",
     description:
-      "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Zkušení realitní makléři pro Liberec, Prahu a okolní regiony.",
+      "RealitnĂ­ kancelĂˇĹ™ Liberec pro prodej, pronĂˇjem a ocenÄ›nĂ­ nemovitosti zdarma. ZkuĹˇenĂ­ realitnĂ­ maklĂ©Ĺ™i pro Liberec, Prahu a okolnĂ­ regiony.",
     images: [
       {
         url: "/og-logo.png",
         width: 1200,
         height: 630,
-        alt: "Realitní kancelář Liberec - Nisa Centrum Reality",
+        alt: "RealitnĂ­ kancelĂˇĹ™ Liberec - Nisa Centrum Reality",
       },
     ],
   },
@@ -145,7 +145,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nisa Centrum Reality",
     description:
-      "Realitní kancelář Liberec pro prodej, pronájem a ocenění nemovitosti zdarma. Zkušení realitní makléři pro Liberec, Prahu a okolní regiony.",
+      "RealitnĂ­ kancelĂˇĹ™ Liberec pro prodej, pronĂˇjem a ocenÄ›nĂ­ nemovitosti zdarma. ZkuĹˇenĂ­ realitnĂ­ maklĂ©Ĺ™i pro Liberec, Prahu a okolnĂ­ regiony.",
     images: ["/og-logo.png"],
   },
 };
@@ -167,9 +167,9 @@ function Footer() {
 
         <div className="grid gap-5 md:grid-cols-3 md:items-stretch">
           <section className="rounded-2xl border border-black/10 bg-white/80 p-5 shadow-sm backdrop-blur">
-            <p className="font-semibold text-black">Kde působíme</p>
+            <p className="font-semibold text-black">Kde pĹŻsobĂ­me</p>
             <p className="mt-2 leading-relaxed">
-              Liberec, Praha, Ústí nad Labem, Hradec Králové a okolí
+              Liberec, Praha, ĂšstĂ­ nad Labem, Hradec KrĂˇlovĂ© a okolĂ­
             </p>
           </section>
 
@@ -193,9 +193,9 @@ function Footer() {
               <p className="flex items-start gap-2 text-black">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--gold2)]" />
                 <span>
-                  Zámečnická 563/8
+                  ZĂˇmeÄŤnickĂˇ 563/8
                   <br />
-                  Liberec IV - Perštýn
+                  Liberec IV - PerĹˇtĂ˝n
                   <br />
                   46001 Liberec
                 </span>
@@ -204,22 +204,22 @@ function Footer() {
           </section>
 
           <section className="rounded-2xl border border-black/10 bg-white/80 p-5 shadow-sm backdrop-blur">
-            <p className="font-semibold text-black">Firemní údaje</p>
+            <p className="font-semibold text-black">FiremnĂ­ Ăşdaje</p>
             <div className="mt-3 space-y-2">
               <p className="flex items-center gap-2 font-medium text-black">
                 <Building2 className="h-4 w-4 text-[color:var(--gold2)]" />
                 NISACENTRUM s.r.o.
               </p>
               <p>
-                <span className="font-medium text-black/60">IČO: </span>
+                <span className="font-medium text-black/60">IÄŚO: </span>
                 <span className="text-black">27273385</span>
               </p>
               <p>
-                <span className="font-medium text-black/60">DIČ: </span>
+                <span className="font-medium text-black/60">DIÄŚ: </span>
                 <span className="text-black">CZ27273385</span>
               </p>
               <p>
-                <span className="font-medium text-black/60">Datová schránka: </span>
+                <span className="font-medium text-black/60">DatovĂˇ schrĂˇnka: </span>
                 <span className="text-black">yqkqb7n</span>
               </p>
             </div>
@@ -228,10 +228,10 @@ function Footer() {
 
         <div className="mt-8 border-t border-black/10 pt-5">
           <div className="flex flex-col items-center gap-2 text-center text-xs md:text-sm">
-            <p>© {new Date().getFullYear()} Nisa Centrum Reality</p>
-            <p>Prodej • Pronájem • Vyhledání nemovitosti • Ocenění zdarma</p>
+            <p>Â© {new Date().getFullYear()} Nisa Centrum Reality</p>
+            <p>Prodej â€˘ PronĂˇjem â€˘ VyhledĂˇnĂ­ nemovitosti â€˘ OcenÄ›nĂ­ zdarma</p>
             <p>
-              Web vytvořilo{" "}
+              Web vytvoĹ™ilo{" "}
               <a
                 href="https://www.setio.cz/"
                 target="_blank"
@@ -251,14 +251,14 @@ function Footer() {
               Zásady cookies
             </Link>
             <OpenCookieSettingsButton
-              label="Nastaveni cookies"
+              label="Nastavení cookies"
               className="inline-flex items-center gap-1.5 text-xs text-black/70 hover:text-black"
             />
           </div>
 
           <p className="mt-3 text-center text-xs text-black/60">
-            Nisa Centrum Reality si vyhrazuje právo na změny a případné chyby v
-            uvedených textech, cenách a parametrech nabídek.
+            Nisa Centrum Reality si vyhrazuje prĂˇvo na zmÄ›ny a pĹ™Ă­padnĂ© chyby v
+            uvedenĂ˝ch textech, cenĂˇch a parametrech nabĂ­dek.
           </p>
         </div>
       </div>
@@ -292,3 +292,4 @@ export default function RootLayout({
     </html>
   );
 }
+
