@@ -7,6 +7,7 @@ import SiteHeader from "@/components/SiteHeader";
 import ContactDock from "@/components/ContactDock";
 import GlobalClickAnalytics from "@/components/GlobalClickAnalytics";
 import CookieConsentManager from "@/components/CookieConsentManager";
+import OpenCookieSettingsButton from "@/components/OpenCookieSettingsButton";
 import { SITE_URL } from "@/lib/site-url";
 
 const siteUrl = SITE_URL;
@@ -249,6 +250,10 @@ function Footer() {
             <Link href="/cookies" className="hover:text-black">
               Zásady cookies
             </Link>
+            <OpenCookieSettingsButton
+              label="Nastaveni cookies"
+              className="inline-flex items-center gap-1.5 text-xs text-black/70 hover:text-black"
+            />
           </div>
 
           <p className="mt-3 text-center text-xs text-black/60">
