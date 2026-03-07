@@ -6,6 +6,7 @@ import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import ContactDock from "@/components/ContactDock";
 import GlobalClickAnalytics from "@/components/GlobalClickAnalytics";
+import CookieConsentManager from "@/components/CookieConsentManager";
 import { SITE_URL } from "@/lib/site-url";
 
 const siteUrl = SITE_URL;
@@ -268,28 +269,13 @@ export default function RootLayout({
     <html lang="cs">
       <head>
         <meta name="seznam-wmt" content="x8ny2qBSoMqI6qy4h4d09l0Uu4zuEIVq" />
-        {gaMeasurementId ? (
-          <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${gaMeasurementId}');`,
-              }}
-            />
-          </>
-        ) : null}
       </head>
       <body className="min-h-dvh antialiased text-[color:var(--ink)]">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <CookieConsentManager measurementId={gaMeasurementId} />
         <GlobalClickAnalytics />
         <SiteHeader />
         <main>{children}</main>

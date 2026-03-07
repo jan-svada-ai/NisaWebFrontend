@@ -1,5 +1,7 @@
 "use client";
 
+import { hasAnalyticsConsent } from "@/lib/cookie-consent";
+
 type AnalyticsParams = Record<string, string | number | boolean | null | undefined>;
 
 declare global {
@@ -22,6 +24,7 @@ function normalizeParams(params: AnalyticsParams): Record<string, string | numbe
 
 export function trackEvent(eventName: string, params: AnalyticsParams = {}): void {
   if (typeof window === "undefined") return;
+  if (!hasAnalyticsConsent()) return;
 
   const normalizedParams = normalizeParams(params);
 
