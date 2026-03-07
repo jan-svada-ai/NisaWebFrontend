@@ -155,8 +155,8 @@ gtag('config', '${measurementId}', { anonymize_ip: true });`,
       ) : null}
 
       {isBannerVisible ? (
-        <div className="fixed inset-x-0 bottom-0 z-50 p-4 sm:p-6">
-          <div className="mx-auto max-w-5xl rounded-[2rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,244,237,0.98))] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:p-6">
+        <div className="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-6">
+          <div className="mx-auto max-h-[calc(100dvh-5rem)] max-w-5xl overflow-y-auto overscroll-contain rounded-[1.75rem] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,244,237,0.98))] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:max-h-[calc(100dvh-4rem)] sm:rounded-[2rem] sm:p-6">
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <div className="inline-flex items-center gap-2 rounded-full bg-[color:var(--gold1)]/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-black/70">
