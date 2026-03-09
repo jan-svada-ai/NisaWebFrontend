@@ -1,6 +1,6 @@
 # STATUS / Next Steps
 
-Posledni aktualizace: 2026-02-27
+Posledni aktualizace: 2026-03-09
 
 ## Hotovo
 - [x] Web bezi na VPS (`https://www.nisacentrum.cz`) za Nginx + PM2.
@@ -15,6 +15,7 @@ Posledni aktualizace: 2026-02-27
   - formular u detailu inzeratu
   - formular u detailu maklere
 - [x] Globalni tracking kliknuti na `tel:` a `mailto:` odkazy (`contact_click`).
+- [x] Opravena rozbita diakritika ve footeru, metadata a structured data textech.
 
 ## Rozpracovano
 - [ ] Oznacit v GA4 udalost `generate_lead` jako klicovou udalost (konverze).
@@ -36,4 +37,3 @@ Posledni aktualizace: 2026-02-27
 ## Poznamka k praci
 - Tento soubor aktualizuj po kazdem vetsim kroku (deploy, SEO zmena, analytics zmena),
   at se neopakuji uz hotove veci.
-
