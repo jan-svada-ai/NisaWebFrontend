@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Download,
   Facebook,
+  Globe,
   Instagram,
   Mail,
   Phone,
@@ -93,8 +94,7 @@ export default async function VizitkaPage({
   const qrCodeUrl = `/api/qr/${encodeURIComponent(broker.vizitkaSlug)}`;
   const qrSvg = await generateQrSvg(cardUrl);
   const featuredListings = broker.inzeraty.slice(0, 3);
-  const websiteLink = websiteUrl ?? SITE_URL;
-  const websiteLabel = broker.webButtonLabel?.trim() || "Více na nisacentrum.cz";
+  const customWebsiteLabel = broker.webButtonLabel?.trim() || "Můj web";
 
   return (
     <>
@@ -150,7 +150,7 @@ export default async function VizitkaPage({
                 </div>
 
                 {broker.moto ? (
-                  <div className="mt-5 rounded-[22px] bg-black/10 px-4 py-3 text-sm italic leading-relaxed text-white sm:text-[15px]">
+                  <div className="mt-5 rounded-[22px] bg-black/18 px-4 py-3.5 text-sm font-medium leading-relaxed text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] [text-shadow:0_1px_2px_rgba(0,0,0,0.28)] sm:text-[15px]">
                     {broker.moto}
                   </div>
                 ) : null}
@@ -160,13 +160,12 @@ export default async function VizitkaPage({
                 {broker.telefon ? (
                   <a
                     href={`tel:${broker.telefon}`}
-                    className="flex items-center justify-between rounded-2xl bg-black px-4 py-3 text-white shadow-[0_10px_30px_rgba(0,0,0,0.25)] transition hover:translate-y-[-1px]"
+                    className="flex items-center justify-center rounded-2xl bg-black px-4 py-3 text-white shadow-[0_10px_30px_rgba(0,0,0,0.25)] transition hover:translate-y-[-1px]"
                   >
-                    <span className="flex items-center gap-3">
+                    <span className="flex items-center justify-center gap-3 text-center">
                       <Phone className="h-5 w-5 text-[color:var(--gold1)]" />
                       <span className="font-semibold">{broker.telefon}</span>
                     </span>
-                    <ArrowRight className="h-4 w-4 text-white/70" />
                   </a>
                 ) : null}
 
@@ -197,18 +196,29 @@ export default async function VizitkaPage({
                   </div>
                 )}
 
+                {websiteUrl ? (
+                  <a
+                    href={websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px]"
+                  >
+                    <Globe className="h-4 w-4 text-[color:var(--gold2)]" />
+                    {customWebsiteLabel}
+                  </a>
+                ) : null}
+
                 {broker.email ? (
                   <a
                     href={`mailto:${broker.email}`}
-                    className="flex items-center justify-between gap-2 rounded-2xl bg-white px-3.5 py-3 text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px] sm:gap-3 sm:px-4"
+                    className="flex items-center justify-center rounded-2xl bg-white px-3 py-3 text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px] sm:px-4"
                   >
-                    <span className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3">
+                    <span className="flex min-w-0 max-w-full items-center justify-center gap-2.5 text-center sm:gap-3">
                       <Mail className="h-5 w-5 shrink-0 text-[color:var(--gold2)]" />
-                      <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-left text-[13px] font-semibold leading-none sm:text-sm">
+                      <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-center text-[12px] font-semibold leading-none tracking-[-0.01em] sm:text-sm">
                         {broker.email}
                       </span>
                     </span>
-                    <ArrowRight className="hidden h-4 w-4 shrink-0 text-black/50 sm:block" />
                   </a>
                 ) : null}
 
@@ -306,12 +316,12 @@ export default async function VizitkaPage({
 
             <div className="px-5 text-center text-sm text-black/55 sm:px-0">
               <a
-                href={websiteLink}
+                href={SITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold underline underline-offset-4 transition hover:text-black"
               >
-                {websiteLabel}
+                Nisacentrum.cz
               </a>
             </div>
           </div>
