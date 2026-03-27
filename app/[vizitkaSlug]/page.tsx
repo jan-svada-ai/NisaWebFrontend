@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import VizitkaContactForm from "@/components/VizitkaContactForm";
 import VizitkaPhotoLightbox from "@/components/VizitkaPhotoLightbox";
+import VizitkaQrLightbox from "@/components/VizitkaQrLightbox";
 import VizitkaReviews from "@/components/VizitkaReviews";
 import { fetchBrokerByVizitkaSlug, normalizeExternalUrl } from "@/lib/makler-vizitka";
 import { generateQrSvg } from "@/lib/qr-code";
@@ -199,15 +200,15 @@ export default async function VizitkaPage({
                 {broker.email ? (
                   <a
                     href={`mailto:${broker.email}`}
-                    className="flex items-start justify-between gap-3 rounded-2xl bg-white px-4 py-3 text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px]"
+                    className="flex items-center justify-between gap-2 rounded-2xl bg-white px-3.5 py-3 text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px] sm:gap-3 sm:px-4"
                   >
-                    <span className="flex min-w-0 flex-1 items-start gap-3">
-                      <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--gold2)]" />
-                      <span className="min-w-0 break-all text-left font-semibold leading-snug">
+                    <span className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3">
+                      <Mail className="h-5 w-5 shrink-0 text-[color:var(--gold2)]" />
+                      <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-left text-[13px] font-semibold leading-none sm:text-sm">
                         {broker.email}
                       </span>
                     </span>
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-black/50" />
+                    <ArrowRight className="hidden h-4 w-4 shrink-0 text-black/50 sm:block" />
                   </a>
                 ) : null}
 
@@ -290,11 +291,8 @@ export default async function VizitkaPage({
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-black/45">
                 QR kód vizitky
               </p>
-              <div className="mx-auto mt-4 max-w-[270px] bg-white p-2 shadow-[0_10px_24px_rgba(0,0,0,0.05)]">
-                <div
-                  className="mx-auto aspect-square w-full [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
-                  dangerouslySetInnerHTML={{ __html: qrSvg }}
-                />
+              <div className="mt-4">
+                <VizitkaQrLightbox svgMarkup={qrSvg} />
               </div>
               <p className="mt-3 text-sm text-black/60">{displayCardUrl}</p>
               <a

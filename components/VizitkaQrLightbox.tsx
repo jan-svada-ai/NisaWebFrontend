@@ -2,18 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import Image from "next/image";
 import { Expand, X } from "lucide-react";
 
-type VizitkaPhotoLightboxProps = {
-  src: string;
-  alt: string;
+type VizitkaQrLightboxProps = {
+  svgMarkup: string;
 };
 
-export default function VizitkaPhotoLightbox({
-  src,
-  alt,
-}: VizitkaPhotoLightboxProps) {
+export default function VizitkaQrLightbox({
+  svgMarkup,
+}: VizitkaQrLightboxProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -47,54 +44,46 @@ export default function VizitkaPhotoLightbox({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="group relative block h-full w-full"
-        aria-label="Zvětšit profilovou fotku"
+        className="group relative mx-auto block w-full max-w-[270px] bg-white p-2 shadow-[0_10px_24px_rgba(0,0,0,0.05)]"
+        aria-label="Zvětšit QR kód"
       >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(max-width: 640px) 128px, 160px"
-          quality={95}
-          className="object-cover transition duration-300 group-hover:scale-[1.03]"
-          priority
+        <div
+          className="mx-auto aspect-square w-full [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
+          dangerouslySetInnerHTML={{ __html: svgMarkup }}
         />
-        <span className="absolute inset-x-3 bottom-3 inline-flex items-center justify-center gap-1 rounded-full bg-black/55 px-2 py-1 text-[11px] font-semibold text-white opacity-0 transition group-hover:opacity-100">
-          <Expand className="h-3.5 w-3.5" />
-          Zvětšit
+        <span className="absolute bottom-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+          <Expand className="h-4 w-4" />
         </span>
       </button>
 
       {isMounted && isOpen
         ? createPortal(
             <div
-              className="fixed inset-0 z-[9999] bg-black"
+              className="fixed inset-0 z-[9999] bg-black/95 px-4 py-6"
               role="dialog"
               aria-modal="true"
-              aria-label="Zvětšená profilová fotka"
+              aria-label="Zvětšený QR kód"
               onClick={() => setIsOpen(false)}
             >
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 className="absolute right-4 top-4 z-10 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white backdrop-blur transition hover:bg-black/75 sm:right-6 sm:top-6"
-                aria-label="Zavřít zvětšenou fotku"
+                aria-label="Zavřít zvětšený QR kód"
               >
                 <X className="h-6 w-6" />
               </button>
+
               <div
-                className="relative h-full w-full"
+                className="flex h-full items-center justify-center"
                 onClick={(event) => event.stopPropagation()}
               >
-                <Image
-                  src={src}
-                  alt={alt}
-                  fill
-                  sizes="100vw"
-                  quality={100}
-                  className="object-contain"
-                  priority
-                />
+                <div className="w-full max-w-[34rem] bg-white p-4 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:p-5">
+                  <div
+                    className="aspect-square w-full [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
+                    dangerouslySetInnerHTML={{ __html: svgMarkup }}
+                  />
+                </div>
               </div>
             </div>,
             document.body,
