@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Expand, X } from "lucide-react";
+import { Expand } from "lucide-react";
 
 type VizitkaPhotoLightboxProps = {
   src: string;
@@ -42,7 +42,8 @@ export default function VizitkaPhotoLightbox({
           src={src}
           alt={alt}
           fill
-          sizes="(max-width: 640px) 112px, 128px"
+          sizes="(max-width: 640px) 128px, 160px"
+          quality={95}
           className="object-cover transition duration-300 group-hover:scale-[1.03]"
           priority
         />
@@ -53,27 +54,17 @@ export default function VizitkaPhotoLightbox({
       </button>
 
       {isOpen ? (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
-          onClick={() => setIsOpen(false)}
-        >
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
-            className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/18"
-            aria-label="Zavřít zvětšenou fotku"
-          >
-            <X className="h-5 w-5" />
-          </button>
+        <div className="fixed inset-0 z-[120] bg-black" onClick={() => setIsOpen(false)}>
           <div
-            className="relative h-[70vh] w-full max-w-xl overflow-hidden rounded-[32px] border border-white/15 bg-black shadow-2xl"
+            className="relative h-full w-full"
             onClick={(event) => event.stopPropagation()}
           >
             <Image
               src={src}
               alt={alt}
               fill
-              sizes="90vw"
+              sizes="100vw"
+              quality={100}
               className="object-contain"
               priority
             />

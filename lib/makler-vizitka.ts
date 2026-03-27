@@ -32,6 +32,10 @@ export interface MaklerVizitkaDetail {
   moto: string | null;
   popis: string | null;
   fotoUrl: string | null;
+  recenzeGoogleJson?: unknown;
+  recenzeGoogleUrl?: string | null;
+  recenzeSeznamJson?: unknown;
+  recenzeSeznamUrl?: string | null;
   lokalita: string | null;
   poznamka: string | null;
   inzeraty: MaklerVizitkaInzerat[];
