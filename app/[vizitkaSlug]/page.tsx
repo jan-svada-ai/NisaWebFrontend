@@ -155,8 +155,9 @@ export default async function VizitkaPage({
                 </div>
 
                 {broker.moto ? (
-                  <div className="mt-5 rounded-[22px] border border-white/14 bg-[linear-gradient(180deg,rgba(25,21,14,0.42),rgba(25,21,14,0.28))] px-4 py-3.5 text-sm font-medium leading-relaxed text-white shadow-[0_12px_30px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[2px] [text-shadow:0_1px_2px_rgba(0,0,0,0.32)] sm:text-[15px]">
-                    {broker.moto}
+                  <div className="relative mt-5 overflow-hidden rounded-[22px] px-4 py-3.5 text-sm font-medium leading-relaxed text-white shadow-[0_14px_34px_rgba(0,0,0,0.18)] [text-shadow:0_1px_2px_rgba(0,0,0,0.32)] sm:text-[15px]">
+                    <div className="absolute inset-0 rounded-[22px] bg-[radial-gradient(circle_at_center,rgba(24,20,14,0.46)_0%,rgba(24,20,14,0.34)_52%,rgba(24,20,14,0.12)_78%,rgba(24,20,14,0)_100%)] blur-[6px]" />
+                    <div className="relative">{broker.moto}</div>
                   </div>
                 ) : null}
               </div>
@@ -230,6 +231,7 @@ export default async function VizitkaPage({
                 <div className="grid gap-3 sm:grid-cols-2">
                   <a
                     href={vcardUrl}
+                    download={`${broker.slug || broker.vizitkaSlug}.vcf`}
                     className="flex items-center justify-center gap-2 rounded-2xl bg-[color:var(--gold1)] px-4 py-3 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
                   >
                     <Download className="h-4 w-4" />
