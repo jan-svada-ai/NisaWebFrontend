@@ -117,7 +117,7 @@ const nextConfig: NextConfig = {
           return {
             beforeFiles: [
               {
-                source: "/api/:path((?!vcard/).*)",
+                source: "/api/:path((?!vcard/|qr/).*)",
                 destination: `${
                   process.env.BACKEND_URL || "http://127.0.0.1:4000"
                 }/api/:path*`,
