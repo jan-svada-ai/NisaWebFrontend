@@ -121,7 +121,7 @@ export default async function VizitkaPage({
         }}
       >
         <div className="mx-auto max-w-md">
-          <div className="overflow-hidden rounded-[32px] border border-black/10 bg-white/85 shadow-[0_24px_70px_rgba(0,0,0,0.16)] backdrop-blur">
+          <div className="overflow-hidden rounded-[32px] bg-white/88 shadow-[0_24px_70px_rgba(0,0,0,0.16)] backdrop-blur">
             <div className="relative isolate overflow-hidden px-5 pb-6 pt-5 sm:px-6">
               <div className="absolute inset-x-0 top-0 h-56 bg-[linear-gradient(135deg,rgba(230,194,94,0.95),rgba(156,122,23,0.8))]" />
               <div className="absolute -right-10 top-8 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
@@ -133,7 +133,7 @@ export default async function VizitkaPage({
                 </p>
 
                 <div className="mt-6 flex items-start gap-5">
-                  <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-[32px] border border-white/35 bg-white/20 shadow-lg sm:h-36 sm:w-36">
+                  <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-[32px] bg-white/20 shadow-lg sm:h-36 sm:w-36">
                     {broker.fotoUrl ? (
                       <VizitkaPhotoLightbox src={broker.fotoUrl} alt={broker.jmeno} />
                     ) : (
@@ -179,7 +179,7 @@ export default async function VizitkaPage({
                         href={instagramUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-semibold text-black transition hover:border-[color:var(--gold2)]"
+                        className="flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px]"
                       >
                         <Instagram className="h-4 w-4 text-[color:var(--gold2)]" />
                         Instagram
@@ -190,7 +190,7 @@ export default async function VizitkaPage({
                         href={facebookUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-semibold text-black transition hover:border-[color:var(--gold2)]"
+                        className="flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px]"
                       >
                         <Facebook className="h-4 w-4 text-[color:var(--gold2)]" />
                         Facebook
@@ -202,7 +202,7 @@ export default async function VizitkaPage({
                 {broker.email ? (
                   <a
                     href={`mailto:${broker.email}`}
-                    className="flex items-center justify-between rounded-2xl border border-black/10 bg-white px-4 py-3 text-black transition hover:border-[color:var(--gold2)]"
+                    className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px]"
                   >
                     <span className="flex min-w-0 items-center gap-3">
                       <Mail className="h-5 w-5 shrink-0 text-[color:var(--gold2)]" />
@@ -222,7 +222,7 @@ export default async function VizitkaPage({
                   </a>
                   <Link
                     href={profileUrl}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-semibold text-black transition hover:border-[color:var(--gold2)]"
+                    className="flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition hover:translate-y-[-1px]"
                   >
                     Profil makléře
                     <ArrowRight className="h-4 w-4" />
@@ -233,7 +233,7 @@ export default async function VizitkaPage({
 
             <div className="space-y-5 px-5 pb-6 sm:px-6">
               {broker.popis ? (
-                <section className="rounded-[28px] border border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(248,243,231,0.95))] p-5">
+                <section className="rounded-[28px] bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(248,243,231,0.95))] p-5 shadow-[0_14px_35px_rgba(0,0,0,0.06)]">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-black/45">
                     O mně
                   </p>
@@ -241,7 +241,7 @@ export default async function VizitkaPage({
                 </section>
               ) : null}
 
-              <section className="rounded-[28px] border border-black/10 bg-white/80 p-5">
+              <section className="rounded-[28px] bg-white/80 p-5 shadow-[0_14px_35px_rgba(0,0,0,0.06)]">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-[color:var(--gold2)]" />
                   <p className="text-sm font-semibold text-black">{locationLabel}</p>
@@ -250,7 +250,7 @@ export default async function VizitkaPage({
               </section>
 
               {featuredListings.length > 0 ? (
-                <section className="rounded-[28px] border border-black/10 bg-white/80 p-5">
+                <section className="rounded-[28px] bg-white/80 p-5 shadow-[0_14px_35px_rgba(0,0,0,0.06)]">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-black/45">
                     Aktivní nabídky
                   </p>
@@ -259,7 +259,7 @@ export default async function VizitkaPage({
                       <Link
                         key={listing.id}
                         href={`/nabidka/${encodeURIComponent(listing.slug)}`}
-                        className="block rounded-2xl border border-black/10 bg-white px-4 py-3 transition hover:border-[color:var(--gold2)]"
+                        className="block rounded-2xl bg-white px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition hover:translate-y-[-1px]"
                       >
                         <p className="line-clamp-2 text-sm font-semibold text-black">
                           {listing.nazev}
@@ -280,11 +280,11 @@ export default async function VizitkaPage({
             </div>
           </div>
 
-          <section className="mt-5 rounded-[28px] border border-black/10 bg-white/90 p-5 text-center shadow-[0_16px_45px_rgba(0,0,0,0.08)]">
+          <section className="mt-5 rounded-[28px] bg-white/92 p-5 text-center shadow-[0_16px_45px_rgba(0,0,0,0.08)]">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-black/45">
               QR kód vizitky
             </p>
-            <div className="mx-auto mt-4 max-w-[260px] rounded-[28px] border border-black/10 bg-white p-4 shadow-sm">
+            <div className="mx-auto mt-4 max-w-[260px] rounded-[28px] bg-white p-4 shadow-[0_10px_24px_rgba(0,0,0,0.05)]">
               <div
                 className="mx-auto aspect-square w-full [&_svg]:block [&_svg]:h-full [&_svg]:w-full"
                 dangerouslySetInnerHTML={{ __html: qrSvg }}
