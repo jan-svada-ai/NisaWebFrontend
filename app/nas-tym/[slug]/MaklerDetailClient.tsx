@@ -41,6 +41,7 @@ export interface MaklerDetail {
   id: number;
   jmeno: string;
   slug: string;
+  vizitkaSlug?: string | null;
   email: string | null;
   telefon: string | null;
   webUrl?: string | null;
@@ -448,7 +449,9 @@ export default function MaklerDetailClient({
   const recenzeSeznamUrl = normalizeUrl(makler.recenzeSeznamUrl);
   const webUrl = normalizeUrl(makler.webUrl);
   const webButtonLabel = (makler.webButtonLabel ?? "").trim();
+  const vizitkaSlug = (makler.vizitkaSlug ?? "").trim();
   const hasWebButton = Boolean(webUrl && webButtonLabel);
+  const hasVizitka = Boolean(vizitkaSlug);
   const hasActiveInzeraty = makler.inzeraty.length > 0;
   const hasRecenze = Boolean(
     recenzeGoogle.length > 0 ||
@@ -569,6 +572,16 @@ export default function MaklerDetailClient({
                 >
                   <UserRound className="h-4 w-4 text-[color:var(--gold2)]" />
                   {webButtonLabel}
+                </a>
+              )}
+
+              {hasVizitka && (
+                <a
+                  href={`/${encodeURIComponent(vizitkaSlug)}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/15 bg-[color:var(--gold1)] px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                >
+                  <UserRound className="h-4 w-4 text-black" />
+                  Online vizitka
                 </a>
               )}
             </div>
