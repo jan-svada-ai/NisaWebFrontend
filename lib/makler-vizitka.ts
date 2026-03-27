@@ -32,6 +32,8 @@ export interface MaklerVizitkaDetail {
   moto: string | null;
   popis: string | null;
   fotoUrl: string | null;
+  lokalita: string | null;
+  poznamka: string | null;
   inzeraty: MaklerVizitkaInzerat[];
 }
 
