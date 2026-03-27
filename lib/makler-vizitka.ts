@@ -15,6 +15,10 @@ export interface MaklerVizitkaInzerat {
   mena: string | null;
   mesto: { nazev: string } | null;
   obrazky: Array<{ url: string }>;
+  atributy?: {
+    estate?: Record<string, unknown>;
+    estate_readable?: Record<string, unknown>;
+  } | null;
 }
 
 export interface MaklerVizitkaDetail {

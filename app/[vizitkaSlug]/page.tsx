@@ -28,6 +28,59 @@ function summarizeText(text?: string | null, max = 150): string {
   return `${cleaned.slice(0, max - 1).trimEnd()}...`;
 }
 
+function readStringFromObject(
+  source: Record<string, unknown> | null | undefined,
+  keys: string[],
+): string | null {
+  if (!source) return null;
+
+  for (const key of keys) {
+    const value = source[key];
+    if (typeof value === "string" && value.trim()) {
+      return value.trim();
+    }
+  }
+
+  return null;
+}
+
+function resolveCurrencyLabel(value: string | null): string {
+  const normalized = (value ?? "").trim().toUpperCase();
+  if (!normalized || normalized === "CZK" || normalized === "KC" || normalized === "KČ") {
+    return "Kč";
+  }
+  return normalized;
+}
+
+function resolvePriceUnit(listing: {
+  atributy?: {
+    estate?: Record<string, unknown>;
+    estate_readable?: Record<string, unknown>;
+  } | null;
+}): string | null {
+  const unitRaw =
+    readStringFromObject(listing.atributy?.estate_readable, [
+      "advert_price_unit",
+      "price_unit",
+    ]) ??
+    readStringFromObject(listing.atributy?.estate, [
+      "advert_price_unit",
+      "price_unit",
+    ]);
+
+  if (!unitRaw) return null;
+
+  const normalized = unitRaw.toLowerCase();
+  const hasM2 = normalized.includes("m2") || normalized.includes("m²");
+  const hasMonth = normalized.includes("mesic") || normalized.includes("měsíc");
+
+  if (hasM2 && hasMonth) return "m² / měsíc";
+  if (hasM2) return "m²";
+  if (hasMonth) return "měsíc";
+
+  return unitRaw.replace(/^za\s+/i, "").trim();
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -282,23 +335,31 @@ export default async function VizitkaPage({
                 </p>
                 <div className="mt-4 space-y-3">
                   {featuredListings.map((listing) => (
-                    <Link
-                      key={listing.id}
-                      href={`/nabidka/${encodeURIComponent(listing.slug)}`}
-                      className="block rounded-[24px] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition hover:translate-y-[-1px]"
-                    >
-                      <p className="line-clamp-2 text-sm font-semibold text-black">
-                        {listing.nazev}
-                      </p>
-                      <div className="mt-2 flex items-center justify-between gap-3 text-sm text-black/60">
-                        <span>{listing.mesto?.nazev ?? "Lokalita na dotaz"}</span>
-                        {listing.cena ? (
-                          <span className="font-semibold text-black">
-                            {listing.cena.toLocaleString("cs-CZ")} {listing.mena ?? "Kč"}
-                          </span>
-                        ) : null}
-                      </div>
-                    </Link>
+                    (() => {
+                      const priceUnit = resolvePriceUnit(listing);
+                      const currencyLabel = resolveCurrencyLabel(listing.mena);
+
+                      return (
+                        <Link
+                          key={listing.id}
+                          href={`/nabidka/${encodeURIComponent(listing.slug)}`}
+                          className="block rounded-[24px] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.05)] transition hover:translate-y-[-1px]"
+                        >
+                          <p className="line-clamp-2 text-sm font-semibold text-black">
+                            {listing.nazev}
+                          </p>
+                          <div className="mt-2 flex items-center justify-between gap-3 text-sm text-black/60">
+                            <span>{listing.mesto?.nazev ?? "Lokalita na dotaz"}</span>
+                            {listing.cena ? (
+                              <span className="font-semibold text-black">
+                                {listing.cena.toLocaleString("cs-CZ")} {currencyLabel}
+                                {priceUnit ? ` / ${priceUnit}` : ""}
+                              </span>
+                            ) : null}
+                          </div>
+                        </Link>
+                      );
+                    })()
                   ))}
                 </div>
               </section>
