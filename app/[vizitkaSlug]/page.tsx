@@ -232,7 +232,7 @@ export default async function VizitkaPage({
                   <a
                     href={vcardUrl}
                     download={`${broker.slug || broker.vizitkaSlug}.vcf`}
-                    className="flex items-center justify-center gap-2 rounded-2xl bg-[color:var(--gold1)] px-4 py-3 text-sm font-semibold text-black transition hover:bg-[color:var(--gold1)]/90"
+                    className="flex items-center justify-center gap-2 rounded-2xl bg-[color:var(--gold1)] px-4 py-3 text-sm font-semibold text-black shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition duration-150 hover:translate-y-[-1px] hover:bg-[color:var(--gold1)]/90 active:translate-y-[1px] active:scale-[0.985]"
                   >
                     <Download className="h-4 w-4" />
                     Uložit kontakt
@@ -314,7 +314,7 @@ export default async function VizitkaPage({
               <p className="mt-3 text-sm text-black/60">{displayCardUrl}</p>
               <a
                 href={qrCodeUrl}
-                className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+                className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-4 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)] transition duration-150 hover:translate-y-[-1px] hover:bg-black/90 active:translate-y-[1px] active:scale-[0.985]"
               >
                 <Download className="h-4 w-4" />
                 Stáhnout QR kód
