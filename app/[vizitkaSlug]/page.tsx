@@ -126,9 +126,14 @@ export default async function VizitkaPage({
               <div className="absolute left-[-2rem] top-16 h-28 w-28 rounded-full bg-black/10 blur-3xl" />
 
               <div className="relative z-10 text-white">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/80">
+                <a
+                  href={SITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-xs font-semibold uppercase tracking-[0.28em] text-white/80 underline-offset-4 transition hover:text-white hover:underline"
+                >
                   Nisa Centrum Reality
-                </p>
+                </a>
 
                 <div className="mt-6 flex items-start gap-4">
                   <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-[28px] bg-white/18 shadow-lg sm:h-36 sm:w-36">
