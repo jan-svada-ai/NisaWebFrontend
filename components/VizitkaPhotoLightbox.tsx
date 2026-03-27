@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { Expand } from "lucide-react";
 
@@ -14,11 +15,19 @@ export default function VizitkaPhotoLightbox({
   alt,
 }: VizitkaPhotoLightboxProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
       return;
     }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -27,7 +36,10 @@ export default function VizitkaPhotoLightbox({
     };
 
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [isOpen]);
 
   return (
@@ -53,24 +65,30 @@ export default function VizitkaPhotoLightbox({
         </span>
       </button>
 
-      {isOpen ? (
-        <div className="fixed inset-0 z-[120] bg-black" onClick={() => setIsOpen(false)}>
-          <div
-            className="relative h-full w-full"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              sizes="100vw"
-              quality={100}
-              className="object-contain"
-              priority
-            />
-          </div>
-        </div>
-      ) : null}
+      {isMounted && isOpen
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[9999] bg-black"
+              onClick={() => setIsOpen(false)}
+            >
+              <div
+                className="relative h-full w-full"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  sizes="100vw"
+                  quality={100}
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
