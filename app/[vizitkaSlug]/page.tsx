@@ -14,6 +14,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { fetchBrokerByVizitkaSlug, normalizeExternalUrl } from "@/lib/makler-vizitka";
+import { generateQrSvg } from "@/lib/qr-code";
 import { SITE_URL } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -82,22 +83,37 @@ export default async function VizitkaPage({
   const facebookUrl = normalizeExternalUrl(broker.facebookUrl);
   const profileUrl = `/nas-tym/${encodeURIComponent(broker.slug)}`;
   const vcardUrl = `/api/vcard/${encodeURIComponent(broker.vizitkaSlug)}`;
+  const cardUrl = `${SITE_URL}/${encodeURIComponent(broker.vizitkaSlug)}`;
+  const qrCodeUrl = `/api/qr/${encodeURIComponent(broker.vizitkaSlug)}`;
+  const qrSvg = await generateQrSvg(cardUrl);
   const featuredListings = broker.inzeraty.slice(0, 3);
 
   return (
-    <main
-      className="min-h-screen px-4 py-6 sm:px-6 sm:py-8"
-      style={{
-        background: [
-          "radial-gradient(circle at top, rgba(230,194,94,0.36), transparent 32%)",
-          "linear-gradient(180deg, #f8f3e7 0%, #f2ead9 55%, #eadfcb 100%)",
-        ].join(", "),
-      }}
-    >
-      <div className="mx-auto max-w-md">
+    <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            [data-site-header],
+            [data-site-footer],
+            [data-contact-dock] {
+              display: none !important;
+            }
+          `,
+        }}
+      />
+      <main
+        className="min-h-screen px-4 py-6 sm:px-6 sm:py-8"
+        style={{
+          background: [
+            "radial-gradient(circle at top, rgba(230,194,94,0.36), transparent 32%)",
+            "linear-gradient(180deg, #f8f3e7 0%, #f2ead9 55%, #eadfcb 100%)",
+          ].join(", "),
+        }}
+      >
+        <div className="mx-auto max-w-md">
         <div className="overflow-hidden rounded-[32px] border border-black/10 bg-white/85 shadow-[0_24px_70px_rgba(0,0,0,0.16)] backdrop-blur">
           <div className="relative isolate overflow-hidden px-5 pb-6 pt-5 sm:px-6">
-            <div className="absolute inset-x-0 top-0 h-40 bg-[linear-gradient(135deg,rgba(230,194,94,0.95),rgba(156,122,23,0.8))]" />
+            <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(135deg,rgba(230,194,94,0.95),rgba(156,122,23,0.8))]" />
             <div className="absolute -right-10 top-8 h-40 w-40 rounded-full bg-white/20 blur-3xl" />
             <div className="absolute left-[-2rem] top-16 h-28 w-28 rounded-full bg-black/10 blur-3xl" />
 
@@ -114,20 +130,20 @@ export default async function VizitkaPage({
                 </div>
               </div>
 
-              <div className="mt-6 flex items-center gap-4">
-                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[28px] border border-white/35 bg-white/20 shadow-lg">
+              <div className="mt-6 flex items-center gap-5">
+                <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-[32px] border border-white/35 bg-white/20 shadow-lg sm:h-32 sm:w-32">
                   {broker.fotoUrl ? (
                     <Image
                       src={broker.fotoUrl}
                       alt={broker.jmeno}
                       fill
-                      sizes="96px"
+                      sizes="(max-width: 640px) 112px, 128px"
                       className="object-cover"
                       priority
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center text-white/80">
-                      <UserRound className="h-10 w-10" />
+                      <UserRound className="h-12 w-12" />
                     </div>
                   )}
                 </div>
@@ -279,7 +295,38 @@ export default async function VizitkaPage({
             ) : null}
           </div>
         </div>
+        <section className="mt-5 rounded-[28px] border border-black/10 bg-white/90 p-5 text-center shadow-[0_16px_45px_rgba(0,0,0,0.08)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-black/45">
+            QR kód vizitky
+          </p>
+          <div className="mx-auto mt-4 w-full max-w-[230px] overflow-hidden rounded-[28px] border border-black/10 bg-white p-4 shadow-sm">
+            <div
+              className="mx-auto aspect-square w-full"
+              dangerouslySetInnerHTML={{ __html: qrSvg }}
+            />
+          </div>
+          <p className="mt-3 text-sm text-black/60">{cardUrl}</p>
+          <a
+            href={qrCodeUrl}
+            className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+          >
+            <Download className="h-4 w-4" />
+            Stáhnout QR kód
+          </a>
+        </section>
+
+        <div className="mt-5 text-center text-sm text-black/55">
+          <a
+            href={SITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold underline underline-offset-4 transition hover:text-black"
+          >
+            Více na nisacentrum.cz
+          </a>
+        </div>
       </div>
     </main>
+    </>
   );
 }

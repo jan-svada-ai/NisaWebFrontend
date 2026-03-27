@@ -156,7 +156,10 @@ export const viewport: Viewport = {
 
 function Footer() {
   return (
-    <footer className="border-t border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.55),rgba(247,244,237,0.95))]">
+    <footer
+      data-site-footer
+      className="border-t border-black/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.55),rgba(247,244,237,0.95))]"
+    >
       <div className="mx-auto max-w-screen-2xl px-4 py-10 text-sm text-black/70 sm:px-6 xl:px-8">
         <div className="mb-7 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-black/50">

@@ -87,7 +87,7 @@ export default function SiteHeader() {
     `h-5 w-5 ${active ? "text-[color:var(--gold2)]" : "text-black/70"}`;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header data-site-header className="fixed inset-x-0 top-0 z-50">
       <div className="border-b border-black/10 bg-white/70 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-screen-2xl items-stretch gap-1 px-2 sm:px-3 lg:px-4 xl:px-6">
           <Link href="/" className="flex items-stretch self-stretch shrink-0">

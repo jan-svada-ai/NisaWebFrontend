@@ -87,7 +87,7 @@ export default function ContactDock() {
   ];
 
   return (
-    <div ref={ref} className="fixed bottom-5 right-5 z-40">
+    <div data-contact-dock ref={ref} className="fixed bottom-5 right-5 z-40">
       {/* =======================
           DESKTOP (>= xl): fixní lišta + tooltip doleva
           ======================= */}
