@@ -3,7 +3,7 @@ import {
   fetchBrokerByVizitkaSlug,
   normalizeExternalUrl,
 } from "@/lib/makler-vizitka";
-import { SITE_URL } from "@/lib/site-url";
+import { toAbsoluteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +44,9 @@ export async function GET(
 
   const { firstName, lastName } = splitName(broker.jmeno);
   const websiteUrl = normalizeExternalUrl(broker.webUrl);
-  const cardUrl = `${SITE_URL}/${encodeURIComponent(broker.vizitkaSlug)}`;
+  const cardUrl = toAbsoluteUrl(`/${encodeURIComponent(broker.vizitkaSlug)}`, {
+    shortHost: true,
+  });
   const filenameBase = broker.slug?.trim() || broker.vizitkaSlug;
 
   const lines = [

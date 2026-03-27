@@ -14,7 +14,7 @@ import {
 import VizitkaPhotoLightbox from "@/components/VizitkaPhotoLightbox";
 import { fetchBrokerByVizitkaSlug, normalizeExternalUrl } from "@/lib/makler-vizitka";
 import { generateQrSvg } from "@/lib/qr-code";
-import { SITE_URL } from "@/lib/site-url";
+import { SITE_URL, toAbsoluteUrl, toDisplayUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
@@ -82,7 +82,12 @@ export default async function VizitkaPage({
   const facebookUrl = normalizeExternalUrl(broker.facebookUrl);
   const profileUrl = `/nas-tym/${encodeURIComponent(broker.slug)}`;
   const vcardUrl = `/api/vcard/${encodeURIComponent(broker.vizitkaSlug)}`;
-  const cardUrl = `${SITE_URL}/${encodeURIComponent(broker.vizitkaSlug)}`;
+  const cardUrl = toAbsoluteUrl(`/${encodeURIComponent(broker.vizitkaSlug)}`, {
+    shortHost: true,
+  });
+  const displayCardUrl = toDisplayUrl(`/${encodeURIComponent(broker.vizitkaSlug)}`, {
+    shortHost: true,
+  });
   const qrCodeUrl = `/api/qr/${encodeURIComponent(broker.vizitkaSlug)}`;
   const qrSvg = await generateQrSvg(cardUrl);
   const featuredListings = broker.inzeraty.slice(0, 3);
@@ -285,7 +290,7 @@ export default async function VizitkaPage({
                 dangerouslySetInnerHTML={{ __html: qrSvg }}
               />
             </div>
-            <p className="mt-3 break-all text-sm text-black/60">{cardUrl}</p>
+            <p className="mt-3 text-sm text-black/60">{displayCardUrl}</p>
             <a
               href={qrCodeUrl}
               className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl bg-black px-4 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
