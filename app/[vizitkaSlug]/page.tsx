@@ -155,7 +155,7 @@ export default async function VizitkaPage({
                 </div>
 
                 {broker.moto ? (
-                  <div className="mt-5 rounded-[22px] bg-black/18 px-4 py-3.5 text-sm font-medium leading-relaxed text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] [text-shadow:0_1px_2px_rgba(0,0,0,0.28)] sm:text-[15px]">
+                  <div className="mt-5 rounded-[22px] border border-white/14 bg-[linear-gradient(180deg,rgba(25,21,14,0.42),rgba(25,21,14,0.28))] px-4 py-3.5 text-sm font-medium leading-relaxed text-white shadow-[0_12px_30px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-[2px] [text-shadow:0_1px_2px_rgba(0,0,0,0.32)] sm:text-[15px]">
                     {broker.moto}
                   </div>
                 ) : null}
