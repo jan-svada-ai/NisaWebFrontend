@@ -19,25 +19,10 @@ type ReviewItem = {
 
 type ReviewsResponse = {
   data?: ReviewItem[];
-  links?: {
-    google?: string;
-    googleWrite?: string;
-    firmy?: string;
-  };
-  sources?: {
-    google?: string;
-    googleReason?: string;
-    googleStatusText?: string;
-    firmy?: string;
-  };
 };
 
 type ReviewsPageData = {
   items: ReviewItem[];
-  googleUrl: string;
-  googleWriteUrl: string | null;
-  googleReason: string | null;
-  googleStatusText: string | null;
   error: string | null;
 };
 
@@ -48,7 +33,6 @@ const API_BASE = (
   "http://127.0.0.1:4000"
 ).replace(/\/+$/, "");
 
-const GOOGLE_REVIEWS_URL = "https://share.google/mTkMMCC6dhLqSGPAv";
 const FIRMY_PROFILE_URL =
   "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni";
 
@@ -57,7 +41,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Reference klientů | Realitní kancelář Liberec | Nisa Centrum Reality",
   description:
-    "Skutečné reference klientů Nisa Centrum Reality z Google a Firmy.cz. Zjistěte, jak klienti hodnotí naši realitní kancelář, makléře i realitní služby.",
+    "Skutečné reference klientů Nisa Centrum Reality z Firmy.cz. Zjistěte, jak klienti hodnotí naši realitní kancelář, makléře i realitní služby.",
   alternates: {
     canonical: `${SITE_URL}/reference`,
   },
@@ -66,7 +50,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/reference`,
     title: "Reference klientů | Realitní kancelář Liberec | Nisa Centrum Reality",
     description:
-      "Skutečné reference klientů Nisa Centrum Reality z Google a Firmy.cz. Zjistěte, jak klienti hodnotí naši realitní kancelář, makléře i realitní služby.",
+      "Skutečné reference klientů Nisa Centrum Reality z Firmy.cz. Zjistěte, jak klienti hodnotí naši realitní kancelář, makléře i realitní služby.",
     images: [
       {
         url: "/og-logo.png",
@@ -77,26 +61,6 @@ export const metadata: Metadata = {
     ],
   },
 };
-
-function googleReasonLabel(reason: string | null): string | null {
-  if (!reason) return null;
-  switch (reason) {
-    case "missing-google-api-key":
-      return "Chybí GOOGLE_API_KEY nebo GOOGLE_PLACES_API_KEY na backendu.";
-    case "missing-google-place-id":
-      return "Chybí GOOGLE_PLACE_ID na backendu.";
-    case "google-http-error":
-      return "Google API vrátilo HTTP chybu. Ověřte restrikce API klíče a billing.";
-    case "google-status-error":
-      return "Google API odmítlo požadavek, například REQUEST_DENIED nebo INVALID_REQUEST.";
-    case "google-empty-reviews":
-      return "Google API pro zadané místo nevrátilo žádné recenze.";
-    case "google-request-error":
-      return "Backend se nedokázal spojit s Google API.";
-    default:
-      return reason;
-  }
-}
 
 function SourceBadge({ source }: { source: ReviewSource }) {
   return (
@@ -186,31 +150,23 @@ async function getReviews(): Promise<ReviewsPageData> {
 
     const json = (await res.json()) as ReviewsResponse;
     return {
-      items: Array.isArray(json.data) ? json.data : [],
-      googleUrl: json.links?.google ?? GOOGLE_REVIEWS_URL,
-      googleWriteUrl: json.links?.googleWrite ?? null,
-      googleReason: json.sources?.googleReason ?? null,
-      googleStatusText: json.sources?.googleStatusText ?? null,
+      items: Array.isArray(json.data)
+        ? json.data.filter((item) => item.source !== "google")
+        : [],
       error: null,
     };
   } catch (e) {
     return {
       items: [],
-      googleUrl: GOOGLE_REVIEWS_URL,
-      googleWriteUrl: null,
-      googleReason: null,
-      googleStatusText: null,
       error: e instanceof Error ? e.message : "Nepodařilo se načíst reference.",
     };
   }
 }
 
 export default async function ReferencePage() {
-  const { items, googleUrl, googleWriteUrl, googleReason, googleStatusText, error } =
-    await getReviews();
+  const { items, error } = await getReviews();
 
   const grouped = {
-    google: items.filter((x) => x.source === "google"),
     firmy: items.filter((x) => x.source === "firmy"),
   };
 
@@ -223,7 +179,7 @@ export default async function ReferencePage() {
         url: `${SITE_URL}/reference`,
         name: "Reference klientů | Nisa Centrum Reality",
         description:
-          "Skutečné reference klientů Nisa Centrum Reality z Google a Firmy.cz.",
+          "Skutečné reference klientů Nisa Centrum Reality z Firmy.cz.",
         about: {
           "@id": `${SITE_URL}#real-estate-agent`,
         },
@@ -279,7 +235,7 @@ export default async function ReferencePage() {
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-3xl text-center text-black/70">
-          Zobrazujeme aktuální hodnocení z externích portálů. Díky server renderu
+          Zobrazujeme aktuální hodnocení z Firmy.cz. Díky server renderu
           jsou reference dostupné rovnou při načtení stránky i pro vyhledávače.
         </p>
       </div>
@@ -327,62 +283,6 @@ export default async function ReferencePage() {
           )}
         </section>
 
-        <section className="border-t border-black/10 pt-12">
-          <CenterSectionHeading title="Google recenze" />
-
-          <div className="mb-6 flex flex-wrap justify-center gap-3">
-            <a
-              href={googleUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-black/20 bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:border-black/30 hover:bg-black/5"
-            >
-              Zobrazit Google profil
-              <ExternalLink className="h-4 w-4" />
-            </a>
-            {googleWriteUrl ? (
-              <a
-                href={googleWriteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--gold1)] px-5 py-2.5 text-sm font-semibold text-black transition hover:brightness-95"
-              >
-                Napsat recenzi na Google
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            ) : null}
-          </div>
-
-          {grouped.google.length > 0 ? (
-            <ReviewsGrid items={grouped.google} />
-          ) : (
-            <div className="rounded-3xl border border-black/10 bg-white/70 p-8 shadow-sm">
-              <a
-                href={googleUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-base font-semibold text-black underline-offset-4 hover:underline"
-              >
-                Google recenze teď nejsou dostupné přes API. Otevřít recenze na
-                Google
-                <ExternalLink className="h-4 w-4" />
-              </a>
-              {googleReasonLabel(googleReason) ? (
-                <p className="mt-2 text-sm leading-relaxed text-black/70">
-                  {googleReasonLabel(googleReason)}
-                </p>
-              ) : null}
-              {googleStatusText ? (
-                <p className="mt-2 text-xs text-black/60">
-                  Detail z Google API: {googleStatusText}
-                </p>
-              ) : null}
-              {error ? (
-                <p className="mt-3 text-xs text-black/55">Detail: {error}</p>
-              ) : null}
-            </div>
-          )}
-        </section>
       </div>
     </div>
   );
