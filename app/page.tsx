@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import StatsSection from "@/components/StatsSection";
 import AnimatedTestimonials from "@/components/AnimatedTestimonials";
+import TopFirmaBadge from "@/components/TopFirmaBadge";
 import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
@@ -711,6 +712,7 @@ export default function Home() {
         title="Co o nás říkají klienti"
         subtitle="Reálné zkušenosti klientů z prodeje i pronájmu nemovitostí."
       >
+        <TopFirmaBadge />
         <AnimatedTestimonials items={homeTestimonials} />
       </Section>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ExternalLink, MessageSquareQuote, Star } from "lucide-react";
+import TopFirmaBadge from "@/components/TopFirmaBadge";
 import { SITE_URL } from "@/lib/site-url";
 
 type ReviewSource = "google" | "firmy";
@@ -292,6 +293,8 @@ export default async function ReferencePage() {
           Napište nám
         </Link>
       </div>
+
+      <TopFirmaBadge variant="reference" />
 
       <div className="space-y-12">
         <section>
