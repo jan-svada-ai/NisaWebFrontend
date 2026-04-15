@@ -52,7 +52,7 @@ const GOOGLE_REVIEWS_URL = "https://share.google/mTkMMCC6dhLqSGPAv";
 const FIRMY_PROFILE_URL =
   "https://www.firmy.cz/detail/13200814-nisa-centrum-reality-liberec.html#hodnoceni";
 
-export const revalidate = 1800;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Reference klientů | Realitní kancelář Liberec | Nisa Centrum Reality",
@@ -177,7 +177,7 @@ async function getReviews(): Promise<ReviewsPageData> {
   try {
     const res = await fetch(`${API_BASE}/api/reference`, {
       headers: { Accept: "application/json" },
-      next: { revalidate },
+      cache: "no-store",
     });
 
     if (!res.ok) {
