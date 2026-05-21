@@ -75,7 +75,7 @@ function getBusinessFunction(offerType?: string | null): string {
 function buildListingJsonLd(listing: DetailListing, slug: string): Record<string, unknown> {
   const canonical = `${siteUrl}/nabidka/${encodeURIComponent(slug)}`;
   const priceCurrency = listing.mena?.trim() || "CZK";
-  const hasPrice = typeof listing.cena === "number" && listing.cena > 0;
+  const hasPrice = typeof listing.cena === "number" && listing.cena > 1;
   const images = (listing.obrazky ?? [])
     .map((image) => image?.url?.trim())
     .filter((url): url is string => Boolean(url))
@@ -182,7 +182,7 @@ export async function generateMetadata({
   const city = listing.mesto?.nazev?.trim();
   const offerKind = listing.typPonuky?.trim();
   const price =
-    typeof listing.cena === "number" && listing.cena > 0
+    typeof listing.cena === "number" && listing.cena > 1
       ? `${new Intl.NumberFormat("cs-CZ").format(listing.cena)} ${
           listing.mena?.trim() || "Kč"
         }`

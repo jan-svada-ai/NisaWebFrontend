@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -548,7 +548,7 @@ export default function NabidkaPageClient({
                             Cena
                           </p>
                           <p className="font-bold text-black">
-                            {listing.cena && listing.cena > 0 ? (
+                            {listing.cena && listing.cena > 1 ? (
                               <>
                                 {new Intl.NumberFormat("cs-CZ").format(listing.cena)}{" "}
                                 <span className="text-xs text-black/60">

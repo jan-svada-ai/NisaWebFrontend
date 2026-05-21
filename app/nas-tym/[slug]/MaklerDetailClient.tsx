@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -750,7 +750,7 @@ export default function MaklerDetailClient({
                             Cena
                           </p>
                           <p className="font-bold text-black">
-                            {i.cena && i.cena > 0 ? (
+                            {i.cena && i.cena > 1 ? (
                               <>
                                 {new Intl.NumberFormat("cs-CZ").format(i.cena)}{" "}
                                 <span className="text-xs text-black/60">

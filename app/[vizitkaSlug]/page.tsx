@@ -350,12 +350,14 @@ export default async function VizitkaPage({
                           </p>
                           <div className="mt-2 flex items-center justify-between gap-3 text-sm text-black/60">
                             <span>{listing.mesto?.nazev ?? "Lokalita na dotaz"}</span>
-                            {listing.cena ? (
+                            {listing.cena && listing.cena > 1 ? (
                               <span className="font-semibold text-black">
                                 {listing.cena.toLocaleString("cs-CZ")} {currencyLabel}
                                 {priceUnit ? ` / ${priceUnit}` : ""}
                               </span>
-                            ) : null}
+                            ) : (
+                              <span className="font-semibold text-black">Cena na dotaz</span>
+                            )}
                           </div>
                         </Link>
                       );

@@ -84,7 +84,7 @@ export default async function NabidkaPage() {
           url: `${SITE_URL}/nabidka/${encodeURIComponent(listing.slug)}`,
           image: listing.obrazky?.[0]?.url ?? undefined,
           offers:
-            typeof listing.cena === "number" && listing.cena > 0
+            typeof listing.cena === "number" && listing.cena > 1
               ? {
                   "@type": "Offer",
                   price: listing.cena,
